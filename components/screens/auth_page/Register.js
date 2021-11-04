@@ -1,16 +1,16 @@
 import React from 'react'
 import { Button, Text, View } from 'react-native'
 
-const LandingIndex = (props) => {
+const Register = (props) => {
     const {navigation} = props
-    
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View>
             <Text>
-                LANDING PAGE
+                Register
             </Text>
+            <Button onPress={()=>navigation.navigate("Login")} title="Sign Up"/>
         </View>
     )
 }
 
-export default LandingIndex
+export default Register
