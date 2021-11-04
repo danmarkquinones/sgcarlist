@@ -12,28 +12,20 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  useColorScheme,
-  View,
 } from 'react-native';
-// import { AsyncStorage } from '@react-native-community/async-storage'
+import NavigationIndex from './components/routes/NavigationIndex';
 
 
 
 
 const App = () => {
-
-  const [firstLaunch , setFirstLaunch] = useState(false)
-
-  useEffect(()=>{
-    setFirstLaunch(true)
-  },[])
-
   return (
     <SafeAreaView >
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         >
-        <Text>SGCARLIST {firstLaunch} - edit</Text>
+          <Text>HELLO</Text>
+          <NavigationIndex/>
       </ScrollView>
     </SafeAreaView>
   );
