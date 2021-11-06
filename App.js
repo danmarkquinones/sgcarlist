@@ -6,6 +6,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { theme } from './components/contants/colors';
 import NavigationIndex from './components/routes/NavigationIndex';
 
 
