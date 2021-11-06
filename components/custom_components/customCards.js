@@ -1,10 +1,10 @@
 import React from 'react'
 import { Text, View ,Image , Button} from "react-native"
 import { customCardStyles } from '../styles/customCardStyles'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Divider } from 'react-native-elements/dist/divider/Divider';
 
 export const SquareCard = (props) => {
+    const {car , Icon} = props
     return(
         <View 
             style={customCardStyles.squareCardContainer}
@@ -12,7 +12,7 @@ export const SquareCard = (props) => {
             <View
                 style={customCardStyles.iconSquareContainer}
             >
-                <FontAwesome5 name='hotjar' solid />
+                <Icon/>
             </View>
             <View
                 style={customCardStyles.imageSquareContainer} 
@@ -25,15 +25,15 @@ export const SquareCard = (props) => {
             <View
                 style={customCardStyles.textBodyContainer}
             >
-                <Text style={customCardStyles.carName} >SUV High Speed 3145</Text>
-                <Text style={customCardStyles.carPrice} >10,000 USD</Text>
+                <Text style={customCardStyles.carName} >{car.name}</Text>
+                <Text style={customCardStyles.carPrice} >{car.price}</Text>
             </View>
         </View>
     )
 }
 
 export const ListCard = (props) => {
-
+    const {car , Icon} = props
     return(
         <View
             style={customCardStyles.listCardContainer}
@@ -47,21 +47,24 @@ export const ListCard = (props) => {
                 />
             </View>
             <View
-                style={customCardStyles.textBodyContainer}
+                style={customCardStyles.textListBodyContainer}
             >
                 <View
                     style={customCardStyles.listCardHeader}
                 >
-                    <Text style={customCardStyles.carName} >SUV High Speed 3145</Text>
-                    <FontAwesome5 name='hotjar' style={customCardStyles.listIconContainer}/>
+                    <View>
+                        <Text style={customCardStyles.carName} >{car.name}</Text>
+                        <Text>{car.location}</Text>
+                    </View>
+                    <Icon/>
                 </View>
 
-                <Text>Jurong , Singapores</Text>
+                
                 
                 <Divider style={customCardStyles.line}/>
 
                 <View style={customCardStyles.listTextContainer}>
-                    <Text style={customCardStyles.listCarPrice} >10,000 USD</Text>
+                    <Text style={customCardStyles.listCarPrice} >{car.price}</Text>
                     <Button title='Contact'/>
                 </View>
             </View>
@@ -70,6 +73,7 @@ export const ListCard = (props) => {
 }
 
 export const GridCard = (props) => {
+    const {car , Icon} = props
     return(
         <View 
             style={customCardStyles.gridCardContainer}
@@ -77,7 +81,7 @@ export const GridCard = (props) => {
             <View
                 style={customCardStyles.iconSquareContainer}
             >
-                <FontAwesome5 name='hotjar' solid />
+                <Icon />
             </View>
             <View
                 style={customCardStyles.imageSquareContainer} 
@@ -90,13 +94,13 @@ export const GridCard = (props) => {
             <View
                 style={customCardStyles.textBodyContainer}
             >
-                <Text style={customCardStyles.carName} >SUV High Speed 3145</Text>
-                <Text>Jurong , Singapores</Text>
+                <Text style={customCardStyles.carName} >{car.name}</Text>
+                <Text>{car.location}</Text>
 
                 <Divider style={customCardStyles.line}/>
 
                 <View style={customCardStyles.listTextContainer}>
-                    <Text style={customCardStyles.listCarPrice} >10,000 USD</Text>
+                    <Text style={customCardStyles.listCarPrice} >{car.price}</Text>
                     <Button title='Contact'/>
                 </View>
             </View>

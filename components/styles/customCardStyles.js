@@ -6,6 +6,11 @@ export const customCardStyles = StyleSheet.create({
         paddingVertical:10,
         paddingHorizontal:10,
     },
+    textListBodyContainer:{
+        paddingVertical:10,
+        paddingHorizontal:10,
+        flex:1
+    },
     carName:{
         color:theme.black,
         fontSize:15,
@@ -95,7 +100,7 @@ export const customCardStyles = StyleSheet.create({
         color:theme.primaryBlue ,
         fontWeight:"bold",
         fontSize:18,
-        marginRight:10
+        marginRight:20
     },
     listCarImage:{
         height:110,

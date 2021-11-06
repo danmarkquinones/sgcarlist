@@ -1,12 +1,6 @@
 import React , {useState , useEffect} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import { theme } from './components/contants/colors';
+import { StyleSheet } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import NavigationIndex from './components/routes/NavigationIndex';
 
 
@@ -14,7 +8,9 @@ import NavigationIndex from './components/routes/NavigationIndex';
 
 const App = () => {
   return (
-    <NavigationIndex/>
+    <SafeAreaProvider>
+      <NavigationIndex/>
+    </SafeAreaProvider>
   );
 };
 

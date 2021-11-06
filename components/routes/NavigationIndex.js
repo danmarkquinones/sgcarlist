@@ -1,5 +1,6 @@
 import React, {useState , useEffect} from 'react'
-import { NavigationContainer } from '@react-navigation/native';
+import { Text } from 'react-native';
+import { NavigationContainer , getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,6 +10,9 @@ import Register from '../screens/auth_page/Register';
 import { LandingStackNavigation } from './LandingStackNavigation';
 import { FavoritesStackNavigation } from './FavoritesStackNavigation';
 import { ProfileStackNavigation } from './ProfileStackNavigation';
+import MatIcon from 'react-native-vector-icons/MaterialIcons';
+import AntIcon from 'react-native-vector-icons/AntDesign';
+import { theme } from '../contants/colors';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -30,10 +34,60 @@ const RootStack = () => {
 
 const AppTabNavigation = () => {
     return(
-        <Tab.Navigator>
-            <Tab.Screen name="LandingStacks" component={LandingStackNavigation} options={{headerShown:false}}/>
-            <Tab.Screen name="FavoriteStacks" component={FavoritesStackNavigation} options={{headerShown:false}}/>
-            <Tab.Screen name="ProfileStacks" component={ProfileStackNavigation} options={{headerShown:false}}/>
+        <Tab.Navigator
+            screenOptions={{
+                tabBarActiveTintColor: theme.primaryBlue,
+            }}
+        >
+            <Tab.Screen 
+                name="LandingStacks" 
+                component={LandingStackNavigation} 
+                options={{
+                    headerShown:false,
+                    tabBarLabel: ({ color })=>(
+                        <Text style={{color:color }}>Explore</Text>
+                    ),
+                    tabBarIcon: ({ color }) => (
+                        <AntIcon name="search1" color={color} size={25} />
+                    ),
+                }}/>
+            <Tab.Screen 
+                name="FavoriteStacks" 
+                component={FavoritesStackNavigation} 
+                options={{
+                    headerShown:false,
+                    tabBarLabel: ({ color })=>(
+                        <Text style={{color:color }}>Favorites</Text>
+                    ),
+                    tabBarIcon: ({ color }) => (
+                        <AntIcon name="staro" color={color} size={25} />
+                    ),
+                }}
+            />
+            <Tab.Screen 
+                name="ProfileStacks" 
+                component={ProfileStackNavigation}
+                options={({ route }) => ({
+                    headerShown:false,
+                    tabBarLabel: ({ color })=>(
+                        <Text style={{color:color }}>Profile</Text>
+                    ),
+                    tabBarIcon: ({ color }) => (
+                        <AntIcon name="user" color={color} size={25} />
+                    ),
+                    tabBarVisible: ((route) => {
+                        const routeName = getFocusedRouteNameFromRoute(route) ?? ""
+
+                        console.log('hello',routeName)
+            
+                        if (routeName === "Help" || routeName === "TOS") {
+                            return false
+                        }
+            
+                        return true
+                    })(route),
+                })}
+            />
         </Tab.Navigator>
     )
 }

@@ -70,6 +70,20 @@ export const profileStyles = StyleSheet.create({
     },
     logoutBtn : {
         margin:20
+    },
+    line:{
+        backgroundColor:theme.gray
+    },
+    versionText:{
+        color:theme.black,
+        fontSize:10,
+        textAlign:'center',
+        marginTop:10
+    },
+    editContainer:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center'
     }
 })
 
