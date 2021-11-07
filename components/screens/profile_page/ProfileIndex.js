@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React , {useState , useEffect} from 'react'
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { Avatar, Divider, Overlay } from 'react-native-elements'
 import { profileStyles } from '../../styles/profileStyles'
@@ -7,19 +7,18 @@ import { theme } from '../../contants/colors';
 import { globalStyles } from '../../styles/globalStyles';
 import { PrimaryButton } from '../../custom_components/customButtons';
 import { Switch } from 'react-native-elements/dist/switch/switch';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import SwitchSelector from "react-native-switch-selector";
 import NotificationModal from '../../reusable_components/notificationModal';
-import ConfirmationMessage from '../../reusable_components/confirmationMessage';
 
 const ProfileIndex = (props) => {
 
     const {navigation} = props
     // should be store in local storage
     const [isNotifEnabled, setIsNotifEnabled] = useState(false);
-    const [isSellMode,setIsSellMode] = useState(0)
+    const [isSellMode,setIsSellMode] = useState('0')
     //overlays
     const [NotifOverlayVisible, setNotifOverlayVisible] = useState(false);
-    const [confirmationOverlay , setConfirmationOverlay] = useState(false)
 
     const [information , setInformation] = useState([
         {type:'Username' , text:'LoremIpsum123'},
@@ -27,56 +26,68 @@ const ProfileIndex = (props) => {
         {type:'Full Name' , text:'Lorem Ipsum'},
         {type:'Mobile Number' , text:'0912 345 6789'}
     ])
+    //transfer to redux
+    const [userDetails, setUserDetails] = useState({
+        username:"LoremIpsum123",
+        email:'Loremipusm@gmail.com',
+        fname:'Lorem',
+        lname:'Ipsum',
+        contact:'0912 345 6789'
+    })
 
     const options = [
         { label: "Buy", value: "0" },
         { label: "Sell", value: "1" },
     ];
 
+    const getData = async () => {
+        try {
+            const login = await AsyncStorage.getItem('isLaunched')
+            const sellMode = await AsyncStorage.getItem('isSellMode')
+            const notify = await AsyncStorage.getItem('isNotify')
+            console.log('3 values',login,sellMode,notify)
+        } catch(e) {
+          // error reading value
+        }
+    }
+
+    useEffect(()=>{
+        getData()
+    },[])
+
     const onClick = () => {
-        navigation.navigate('Login')
+        navigation.navigate('Login') 
     };
 
     const toggleNotifOverlay = () => {
         setNotifOverlayVisible(!NotifOverlayVisible);
     };
-    const toggleConfirmOverlay = () => {
-        setIsSellMode(isSellMode)
-        setConfirmationOverlay(!confirmationOverlay);
-    };
 
     const toggleSwitchNotif = () => {
         if(isNotifEnabled){
             setIsNotifEnabled(false)
+            AsyncStorage.setItem('isNotify' , '0')
         }else{
             toggleNotifOverlay()
         }
     };
 
+    const handleSellModeChange = (value) => {
+        setIsSellMode(value)
+        AsyncStorage.setItem('isSellMode' , value.toString())
+        navigation.navigate('LoaderScreen')
+    }
+
 
     const onConfirmNotif = () => {
-        setIsNotifEnabled(true)
+        setIsNotifEnabled(true) 
+        AsyncStorage.setItem('isNotify' , '1')
         toggleNotifOverlay()
     }
 
     const onCancelNotif = () => {
         toggleNotifOverlay()
     }
-
-    const onConfirm = () => {
-        if(isSellMode===0){
-            setIsSellMode(1)
-        }else{
-            setIsSellMode(0)
-        }
-        toggleConfirmOverlay()
-    }
-
-    const onCancel = () => {
-        toggleConfirmOverlay()
-    }
-
-    console.log(isSellMode, 'sell mode')
 
     return (
         <ScrollView>
@@ -95,7 +106,7 @@ const ProfileIndex = (props) => {
                 >
                     <View style={profileStyles.infoHead}>
                         <Text style={profileStyles.infoHeadTitle}>Profile Informations</Text>
-                        <TouchableOpacity onPress={navigation.navigate('editProfile')}>
+                        <TouchableOpacity onPress={()=>navigation.navigate('EditProfile', {data:userDetails,callback:setUserDetails})}>
                             <View style={profileStyles.editContainer}>
                                 <Icon name='edit' size={15} />
                                 <Text style={{fontSize:15 , marginLeft:5}}>Edit</Text>
@@ -121,8 +132,9 @@ const ProfileIndex = (props) => {
                         <SwitchSelector
                             style={{width:120}}
                             options={options}
-                            initial={isSellMode}
-                            onPress={() => toggleConfirmOverlay()}
+                            initial={+isSellMode}
+                            value={+isSellMode}
+                            onPress={(value) => handleSellModeChange(value)}
                             textColor={theme.primaryBlue}
                             selectedColor={theme.white}
                             buttonColor={theme.primaryBlue}
@@ -205,10 +217,6 @@ const ProfileIndex = (props) => {
 
             <Overlay isVisible={NotifOverlayVisible} onBackdropPress={toggleNotifOverlay}>
                 <NotificationModal onConfirm={onConfirmNotif} onCancel={onCancelNotif}/>
-            </Overlay>
-
-            <Overlay isVisible={confirmationOverlay} onBackdropPress={toggleConfirmOverlay}>
-                <ConfirmationMessage onConfirm={onConfirm} onCancel={onCancel} message={`Are you sure you want to switch to ${isSellMode?'buy':'sell'} mode`}/>
             </Overlay>
 
         </ScrollView>

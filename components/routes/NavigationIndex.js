@@ -10,9 +10,9 @@ import Register from '../screens/auth_page/Register';
 import { LandingStackNavigation } from './LandingStackNavigation';
 import { FavoritesStackNavigation } from './FavoritesStackNavigation';
 import { ProfileStackNavigation } from './ProfileStackNavigation';
-import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import { theme } from '../contants/colors';
+import LoaderScreen from '../reusable_components/loaderScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,11 +28,13 @@ const RootStack = () => {
             <Stack.Screen name="TabNav" component={AppTabNavigation} options={{headerShown:false}}/>
             <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
             <Stack.Screen name="Register" component={Register} options={{headerShown:false}}/>
+            <Stack.Screen name="LoaderScreen" component={LoaderScreen} options={{headerShown:false}}/>
         </Stack.Navigator>
     )
 }
 
 const AppTabNavigation = () => {
+    
     return(
         <Tab.Navigator
             screenOptions={{
@@ -77,9 +79,7 @@ const AppTabNavigation = () => {
                     ),
                     tabBarVisible: ((route) => {
                         const routeName = getFocusedRouteNameFromRoute(route) ?? ""
-
-                        console.log('hello',routeName)
-            
+                        console.log(routeName)
                         if (routeName === "Help" || routeName === "TOS") {
                             return false
                         }

@@ -41,6 +41,29 @@ export const PrimaryButton = (props) => {
   )
 }
 
+export const OffCancelButton = (props) => {
+  const {title , onPress} = props
+
+  return(
+    <TouchableOpacity onPress={onPress}>
+      <View
+        style={{
+          display:'flex',
+          flexDirection:'row',
+          alignItems:'center',
+          justifyContent:'center',
+          paddingVertical:15,
+          borderRadius:5
+        }}
+      >
+        <Text style={{color:theme.gray , textAlign:'center' , textTransform:'uppercase'}}>
+          {title}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  )
+}
+
 const styles = StyleSheet.create({
   onboardingBtn: {
     backgroundColor: '#254A7C',

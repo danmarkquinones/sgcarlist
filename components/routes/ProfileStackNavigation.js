@@ -4,6 +4,7 @@ import ProfileIndex from '../screens/profile_page/ProfileIndex';
 import TermsService from '../screens/profile_page/tos/TermsService';
 import Help from '../screens/profile_page/help_center/Help';
 import { theme } from '../contants/colors';
+import EditForm from '../screens/profile_page/form/EditForm';
 
 // Edit HEADERS of Stack Navigators under Landing Page
 
@@ -13,6 +14,20 @@ export const ProfileStackNavigation = () => {
     return(
         <Stack.Navigator initialRouteName="Profile">
             <Stack.Screen name="Profile" component={ProfileIndex} options={{headerShown:false}}/>
+            <Stack.Screen 
+                name="EditProfile" 
+                component={EditForm} 
+                options={{ 
+                    title: 'Edit Profile Informations' ,
+                    headerStyle: {
+                        backgroundColor: theme.primaryBlue,
+                    },
+                    headerTintColor: theme.white,
+                    headerTitleStyle: {
+                        color:theme.white
+                    },
+                }}
+            />
             <Stack.Screen 
                 name="TOS" 
                 component={TermsService} 
