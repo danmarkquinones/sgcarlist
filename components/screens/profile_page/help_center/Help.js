@@ -1,5 +1,5 @@
 import React from 'react'
-import { View , Text } from 'react-native'
+import { View , Text, Linking, Alert, Platform } from 'react-native'
 import { globalStyles } from '../../../styles/globalStyles'
 import { helpStyles } from './helpStyles'
 import FAIcon from 'react-native-vector-icons/FontAwesome';
@@ -10,6 +10,34 @@ import { Button } from 'react-native-elements';
 import { PrimaryButton } from '../../../custom_components/customButtons';
 
 const Help = () => {
+
+    const onCall = () => {
+
+        let phoneNumber = '09065092731';
+
+        if (Platform.OS !== 'android') {
+            phoneNumber = `telprompt:09123456789`;
+        }else {
+            phoneNumber = `tel:09123456789`;
+        }
+
+        Linking.canOpenURL(phoneNumber)
+        .then(supported => {
+            if (!supported) {
+            Alert.alert('Phone number is not available');
+            } else {
+            return Linking.openURL(phoneNumber);
+            }
+        })
+        .catch(err => console.log(err));
+    }
+
+    const onEmailLaunch = () => {
+        Linking.openURL(
+            'mailto:support@gmail.com?subject=Support Me&body=Description mo to'
+        )
+    }
+
     return (
         <View
             style={globalStyles.container}
@@ -31,6 +59,7 @@ const Help = () => {
                         <PrimaryButton
                             color={theme.primaryBlue}
                             title="Call Us : 0912 345 6789"
+                            onPress={onCall}
                             Icon={()=><MatIcon name="call" size={20} color={theme.white}/>}
                         />
                     </View>
@@ -38,6 +67,7 @@ const Help = () => {
                         <PrimaryButton
                             color={theme.primaryBlue}
                             title="Email Us : sgcarlist@email.com"
+                            onPress={onEmailLaunch}
                             Icon={()=><MatIcon name="mail" size={20} color={theme.white}/>}
                         />
                     </View>
