@@ -19,13 +19,13 @@ const Tab = createBottomTabNavigator();
 
 const RootStack = () => {
     const [firstLaunch , setFirstLaunch] = useState(true)
-
+    
     // Add AsyncStorage Logic for onboarding first launch here
 
     return(
         <Stack.Navigator initialRouteName={firstLaunch?"Onboarding":"TabNav"}>
             <Stack.Screen name="Onboarding" component={OnboardingIndex} options={{headerShown:false}}/>
-            <Stack.Screen name="TabNav" component={AppTabNavigation} options={{headerShown:false}}/>
+            <Stack.Screen name="TabNav" component={AppTabNavigation} options={{headerShown:false}}/> 
             <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
             <Stack.Screen name="Register" component={Register} options={{headerShown:false}}/>
             <Stack.Screen name="LoaderScreen" component={LoaderScreen} options={{headerShown:false}}/>
@@ -33,7 +33,9 @@ const RootStack = () => {
     )
 }
 
-const AppTabNavigation = () => {
+const AppTabNavigation = ({navigation ,route}) => {
+
+    
     
     return(
         <Tab.Navigator
@@ -76,16 +78,7 @@ const AppTabNavigation = () => {
                     ),
                     tabBarIcon: ({ color }) => (
                         <AntIcon name="user" color={color} size={25} />
-                    ),
-                    tabBarVisible: ((route) => {
-                        const routeName = getFocusedRouteNameFromRoute(route) ?? ""
-                        console.log(routeName)
-                        if (routeName === "Help" || routeName === "TOS") {
-                            return false
-                        }
-            
-                        return true
-                    })(route),
+                    )
                 })}
             />
         </Tab.Navigator>

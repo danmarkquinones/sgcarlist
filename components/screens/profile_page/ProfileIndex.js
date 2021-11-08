@@ -1,5 +1,5 @@
 import React , {useState , useEffect} from 'react'
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, Share, Text, TouchableOpacity, View } from 'react-native'
 import { Avatar, Divider, Overlay } from 'react-native-elements'
 import { profileStyles } from '../../styles/profileStyles'
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -87,6 +87,29 @@ const ProfileIndex = (props) => {
 
     const onCancelNotif = () => {
         toggleNotifOverlay()
+    }
+
+    const onShare = async () => {
+        try{
+            const result = await Share.share({
+                title :'Carlist.SG',
+                message : 'Find your dream car with Carlist.SG. Download the App Now : https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en',
+                url: 'https://play.google.com/store/apps/details?id=nic.goi.aarogyasetu&hl=en'
+            });
+
+            if(result.action === Share.sharedAction){
+                if(result.activityType){
+                    // shared with activity type of result.activityType
+                    console.log('shared result' , result.activityType)
+                }else{
+                    console.log('else shared')
+                }
+            }else if (result.action === Share.dismissedAction) {
+                console.log('dismissed')
+            }
+        }catch(err){
+            alert(err.message)
+        }
     }
 
     return (
@@ -191,7 +214,7 @@ const ProfileIndex = (props) => {
 
                     <Divider style={profileStyles.line}/>
                     
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={onShare}>
                         <View style={profileStyles.otherDetailsContainer}>
                             <Text style={profileStyles.othersDetailsText}>Share this App</Text>
                         </View>
