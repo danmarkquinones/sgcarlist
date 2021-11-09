@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { color } from 'react-native-elements/dist/helpers';
 import { theme } from '../contants/colors';
 
 export const customCardStyles = StyleSheet.create({
@@ -24,6 +25,48 @@ export const customCardStyles = StyleSheet.create({
     line:{
         color:theme.black,
         marginVertical:10,
+    },
+    // white card
+    whiteCard:{
+        backgroundColor:'#fff',
+        borderRadius:5,
+        margin:5,
+        display:'flex',
+        flex:1,
+        alignContent:'center',
+        justifyContent:'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 1, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,  
+        elevation: 5
+    },
+    // dealer
+    dealerContainer:{
+        display:'flex',
+        alignItems:'center',
+        justifyContent:'center',
+        paddingVertical:20
+    },  
+    dealerImageContainer:{
+        height:80,
+        width:80,
+        borderRadius:50,
+        overflow:'hidden',
+        marginBottom:10
+    },
+    dealerImage:{
+        height:80,
+        width:80
+    },
+    dealerName:{
+        fontSize:15,
+        fontWeight:'bold',
+        color:theme.black
+    },
+    dealerDeals:{
+        marginTop:5,
+        color:theme.secondaryBlue
     },
 
     // square card

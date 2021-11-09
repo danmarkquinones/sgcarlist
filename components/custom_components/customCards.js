@@ -1,34 +1,52 @@
 import React from 'react'
-import { Text, View ,Image , Button} from "react-native"
+import { Text, View ,Image , Button, TouchableOpacity} from "react-native"
 import { customCardStyles } from '../styles/customCardStyles'
 import { Divider } from 'react-native-elements/dist/divider/Divider';
+import { theme } from '../contants/colors';
+import { Avatar } from 'react-native-elements/dist/avatar/Avatar';
 
 export const SquareCard = (props) => {
-    const {car , Icon} = props
+    const {car , Icon , onPress} = props
     return(
-        <View 
-            style={customCardStyles.squareCardContainer}
-        >
-            <View
-                style={customCardStyles.iconSquareContainer}
+        <TouchableOpacity onPress={onPress}>
+            <View 
+                style={customCardStyles.squareCardContainer}
             >
-                <Icon/>
+                {Icon&&
+                    <View
+                        style={customCardStyles.iconSquareContainer}
+                    >
+                        <Icon/>
+                    </View>
+                }
+                <View
+                    style={customCardStyles.imageSquareContainer} 
+                >
+                    <Image
+                        style={customCardStyles.carSquareImage}
+                        source={car.url}
+                    />
+                </View>
+                <View
+                    style={customCardStyles.textBodyContainer}
+                >
+                    <Text style={customCardStyles.carName} >{car.name}</Text>
+                    <Text style={customCardStyles.carPrice} >{car.price}</Text>
+                </View>
             </View>
+        </TouchableOpacity>
+    )
+}
+
+export const WhiteCard = ({options, onPress}) => {
+    return(
+        <TouchableOpacity onPress={onPress}>
             <View
-                style={customCardStyles.imageSquareContainer} 
+                style={[customCardStyles.whiteCard, {height:options.height,width:options.width}]}
             >
-                <Image
-                    style={customCardStyles.carSquareImage}
-                    source={require('../../assets/images/car1.jpg')}
-                />
+                <Text style={{textAlign:'center' , color:theme.secondaryBlue , fontSize:20}}>See More</Text>
             </View>
-            <View
-                style={customCardStyles.textBodyContainer}
-            >
-                <Text style={customCardStyles.carName} >{car.name}</Text>
-                <Text style={customCardStyles.carPrice} >{car.price}</Text>
-            </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -105,5 +123,29 @@ export const GridCard = (props) => {
                 </View>
             </View>
         </View>
+    )
+}
+
+
+export const DealerCard = (props) => {
+
+    const {dealer , onPress} = props
+
+    return(
+        <TouchableOpacity onPress={onPress}>
+            <View style={customCardStyles.squareCardContainer}>
+                <View style={customCardStyles.dealerContainer}>
+                    <View style={customCardStyles.dealerImageContainer}>
+                        <Image style={customCardStyles.dealerImage} source={dealer.url}/>
+                    </View>
+                    <Text style={customCardStyles.dealerName}>
+                        {dealer.name}
+                    </Text>
+                    <Text style={customCardStyles.dealerDeals}>
+                        {dealer.deals} deals
+                    </Text>
+                </View>
+            </View>
+        </TouchableOpacity>
     )
 }

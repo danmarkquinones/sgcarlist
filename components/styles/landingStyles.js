@@ -1,0 +1,61 @@
+import { StyleSheet } from 'react-native';
+import { theme } from '../contants/colors';
+
+export const landingStyles = StyleSheet.create({
+    adsImage:{
+        height:50,
+        width:'100%'
+    },
+    adContainer:{
+        marginVertical:10
+    },
+    container:{
+        backgroundColor:theme.lightBlue
+    },
+    listHeaderContainer:{
+        padding:20
+    },
+    listHeaders :{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+    },
+    listHeaderText:{
+        fontSize:20,
+        fontWeight:'bold',
+        marginLeft:10,
+        color:theme.secondaryBlue
+    },
+    listDealerText:{
+        fontSize:20,
+        fontWeight:'bold',
+        color:theme.secondaryBlue
+    },
+    listDesc:{
+        marginTop:5,
+        color:theme.black
+    },
+    newBadge:{
+        backgroundColor:theme.tertiaryBlue,
+        paddingHorizontal:10,
+        paddingVertical:5,
+        borderRadius:5,
+        color:theme.white,
+        fontWeight:'bold'
+    },
+    locationListContainer:{
+        marginVertical:20,
+        padding:20,
+        backgroundColor:theme.white
+    },
+    locationText:{
+        marginVertical:10,
+        fontSize:20,
+    },
+    locationSeeMore:{
+        marginTop:20,
+        textAlign:'center',
+        fontSize:18,
+        color:theme.secondaryBlue
+    }
+})
