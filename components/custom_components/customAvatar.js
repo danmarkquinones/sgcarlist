@@ -20,6 +20,7 @@ const CustomAvatar = (props) => {
                 style={{
                     color:theme.white,
                     fontWeight:'bold',
+                    fontSize:size*0.4
                 }}
             >
                 {initial}
