@@ -1,8 +1,11 @@
 import React from 'react';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import {View, TextInput} from 'react-native';
+import {View, TextInput, TouchableWithoutFeedback} from 'react-native';
+import {useNavigation} from '@react-navigation/core';
 
 const SearcBox = () => {
+  const navigation = useNavigation();
+
   return (
     <View
       style={{
@@ -14,6 +17,7 @@ const SearcBox = () => {
         paddingHorizontal: 16,
       }}>
       <TextInput
+        onFocus={() => navigation.navigate('FilterIndex')}
         placeholder="Find your dream car now"
         style={{
           flex: 1,
