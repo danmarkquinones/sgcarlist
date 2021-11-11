@@ -1,6 +1,6 @@
 import React from 'react';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import {View, TextInput, TouchableWithoutFeedback} from 'react-native';
+import {View, TextInput} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 
 const SearcBox = () => {
