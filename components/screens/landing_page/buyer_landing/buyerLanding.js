@@ -26,7 +26,7 @@ const BuyerLanding = (props) => {
             </View>
 
             <View style={landingStyles.searchContainer}>
-                <TouchableOpacity onPress={()=>navigation.navigate('ProductView')}>
+                <TouchableOpacity onPress={()=>navigation.navigate('FilterIndex')}>
                     <PrimaryInput 
                         editable={false} 
                         placeholder="Find you dream car now" 

@@ -78,42 +78,6 @@ const LandingIndex = props => {
 
   return (
     <View style={landingStyles.container}>
-      <View style={{backgroundColor: '#254A7C', padding: 24}}>
-        <View style={{flexDirection: 'row', marginBottom: 16}}>
-          <View
-            style={{
-              height: 50,
-              width: 50,
-              backgroundColor: '#D1B3B3',
-              borderRadius: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginRight: 16,
-            }}>
-            <Text
-              style={{
-                color: '#fff',
-                fontSize: scaleFont(22),
-                fontWeight: 'bold',
-              }}>
-              L
-            </Text>
-          </View>
-          <View>
-            <Text
-              style={{
-                fontSize: scaleFont(18),
-                color: '#fff',
-                fontWeight: 'bold',
-              }}>
-              Hello Lucy
-            </Text>
-
-            <Text style={{color: '#fff'}}>We have 261,222 cars listed</Text>
-          </View>
-        </View>
-        <SearcBox />
-      </View>
       {/* if !isSellMode */}
       <BuyerLanding items={items} navigation={navigation} dealers={dealers} />
       {/* if isSellMode as AsyncStorage */}
