@@ -3,6 +3,7 @@ import { ScrollView,  View } from 'react-native'
 import { Input } from 'react-native-elements'
 import { theme } from '../../../contants/colors'
 import { OffCancelButton, PrimaryButton } from '../../../custom_components/customButtons'
+import CustomHeader from '../../../custom_components/CustomHeader'
 import { editFormStyles } from './editFormStyles'
 
 const EditForm = (props) => {
@@ -11,7 +12,14 @@ const EditForm = (props) => {
     const data = route.params.data
 
     return (
-        <ScrollView>
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            stickyHeaderIndices={[0]}
+        >
+            <View>
+                <CustomHeader title="Edit Profile Informations"/>
+            </View>
+            
             <View style={editFormStyles.editFormContainer}>
                 <View style={editFormStyles.fieldContainer}>
                     <Input label="Username" value={data.username}/>

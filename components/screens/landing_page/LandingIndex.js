@@ -1,24 +1,7 @@
 import React from 'react'
-import {
-  Button,
-  FlatList,
-  Text,
-  View,
-  ScrollView,
-  TextInput,
-} from 'react-native';
-import {
-  GridCard,
-  ListCard,
-  SquareCard,
-  WhiteCard,
-} from '../../custom_components/customCards';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {theme} from '../../contants/colors';
+import {View} from 'react-native';
 import {landingStyles} from '../../styles/landingStyles';
 import BuyerLanding from './buyer_landing/buyerLanding';
-import SearcBox from '../../custom_components/searchBox';
-import {scaleFont} from '../../../utils/scale';
 
 const LandingIndex = props => {
   const {navigation} = props;
@@ -80,7 +63,7 @@ const LandingIndex = props => {
     <View style={landingStyles.container}>
       {/* if !isSellMode */}
       <BuyerLanding items={items} navigation={navigation} dealers={dealers} />
-      {/* if isSellMode as AsyncStorage */}
+      {/* if isSellMode at AsyncStorage */}
     </View>
   );
 };

@@ -8,6 +8,7 @@ import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import { theme } from '../../../contants/colors';
 import { Button } from 'react-native-elements';
 import { PrimaryButton } from '../../../custom_components/customButtons';
+import CustomHeader from '../../../custom_components/CustomHeader';
 
 const Help = () => {
 
@@ -42,6 +43,8 @@ const Help = () => {
         <View
             style={globalStyles.container}
         >
+            <CustomHeader title="Help & Feedback"/>
+            
             <View style={helpStyles.helpContainer}>
                 <View
                     style={helpStyles.iconContainer}

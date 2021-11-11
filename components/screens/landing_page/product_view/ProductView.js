@@ -1,5 +1,6 @@
 import React from 'react'
 import { View , Text} from 'react-native'
+import CustomHeader from '../../../custom_components/CustomHeader'
 
 const ProductView = (props) => {
 
@@ -8,6 +9,7 @@ const ProductView = (props) => {
 
     return (
         <View>
+            <CustomHeader title={item.name}/>
             <Text>{item.name}</Text>
         </View>
     )

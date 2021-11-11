@@ -10,6 +10,7 @@ import { Switch } from 'react-native-elements/dist/switch/switch';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SwitchSelector from "react-native-switch-selector";
 import NotificationModal from '../../reusable_components/notificationModal';
+import CustomAvatar from '../../custom_components/customAvatar';
 
 const ProfileIndex = (props) => {
 
@@ -113,14 +114,16 @@ const ProfileIndex = (props) => {
     }
 
     return (
-        <ScrollView>
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+        >
             <View
                 style={globalStyles.container}
             >
                 <View
                     style={profileStyles.headerContainer}
                 >
-                    <Avatar rounded title="MD" />
+                    <CustomAvatar initial="L" size={40} color={theme.gray}/>
                     <Text style={profileStyles.headerName}>Lorem Ipsum</Text>
                 </View>
 

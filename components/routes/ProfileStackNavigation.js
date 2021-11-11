@@ -22,51 +22,16 @@ export const ProfileStackNavigation = ({navigation , route}) => {
     }
 
     return(
-        <Stack.Navigator initialRouteName="Profile">
-            <Stack.Screen name="Profile" component={ProfileIndex} options={{headerShown:false}}/>
-            <Stack.Screen 
-                name="EditProfile" 
-                component={EditForm} 
-                options={{ 
-                    title: 'Edit Profile Informations' ,
-                    headerStyle: {
-                        backgroundColor: theme.primaryBlue,
-                    },
-                    headerTintColor: theme.white,
-                    headerTitleStyle: {
-                        color:theme.white
-                    },
-                }}
-            />
-            <Stack.Screen 
-                name="TOS" 
-                component={TermsService} 
-                options={{ 
-                    title: 'Privacy Policy & TOS' ,
-                    headerStyle: {
-                        backgroundColor: theme.primaryBlue,
-                    },
-                    headerTintColor: theme.white,
-                    headerTitleStyle: {
-                        color:theme.white
-                    },
-                }}
-            />
-            <Stack.Screen 
-                name="Help" 
-                component={Help} 
-                options={{ 
-                    title: 'Help & Feedback' ,
-                    headerStyle: {
-                        backgroundColor: theme.primaryBlue,
-                    },
-                    headerTintColor: theme.white,
-                    headerTitleStyle: {
-                        color:theme.white
-                    },
-                }}
-                
-            />
+        <Stack.Navigator 
+            initialRouteName="Profile"
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <Stack.Screen name="Profile" component={ProfileIndex} />
+            <Stack.Screen name="EditProfile" component={EditForm} />
+            <Stack.Screen name="TOS" component={TermsService} />
+            <Stack.Screen name="Help" component={Help} />
         </Stack.Navigator>
     )
 }

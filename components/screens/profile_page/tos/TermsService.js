@@ -5,6 +5,7 @@ import { tosStyles } from './tosStyles'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { theme } from '../../../contants/colors';
 import { Divider } from 'react-native-elements';
+import CustomHeader from '../../../custom_components/CustomHeader';
 
 const TermsService = (props) => {
 
@@ -14,6 +15,8 @@ const TermsService = (props) => {
         <View
             style={globalStyles.container}
         >
+            <CustomHeader title="Privacy Policy & TOS"/>
+            
             <View style={tosStyles.tosContainer}>
                 <TouchableOpacity
                     onPress={()=>navigation.navigate('')}
