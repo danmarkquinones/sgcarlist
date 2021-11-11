@@ -34,7 +34,7 @@ const PrimaryInput = ({
                 onChange={onChange}
                 value={value}
             />
-            <Icon/>
+            {Icon&& <Icon/>}
         </View>
     )
 }
