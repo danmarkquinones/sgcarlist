@@ -2,6 +2,32 @@ import { StyleSheet } from 'react-native';
 import { theme } from '../contants/colors';
 
 export const landingStyles = StyleSheet.create({
+    headerContainer:{
+        backgroundColor:theme.primaryBlue,
+        paddingTop:30,
+        paddingBottom:10,
+        paddingHorizontal:20,
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+    },
+    headerNameView:{
+        marginLeft:10,
+    },
+    greetName:{
+        color:theme.white,
+        fontSize:20,
+        fontWeight:'bold'
+    },
+    listedCar:{
+        color:theme.white
+    },
+    searchContainer:{
+        backgroundColor:theme.primaryBlue,
+        paddingHorizontal:20,
+        paddingVertical:10
+    },
+
     adsImage:{
         height:50,
         width:'100%'

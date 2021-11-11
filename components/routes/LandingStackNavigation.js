@@ -8,8 +8,9 @@ const Stack = createNativeStackNavigator();
 export const LandingStackNavigation = () => {
     return(
         <Stack.Navigator initialRouteName="LandingIndex">
-            <Stack.Screen name="LandingIndex" component={LandingIndex}/>
-            <Stack.Screen name="ProductView" component={ProductView}/>
+            <Stack.Screen name="LandingIndex" component={LandingIndex} options={{headerShown:false}}/>
+            <Stack.Screen name="SearchFilter" component={}/>
+            <Stack.Screen name="ProductView" component={ProductView} options={{headerShown:false}}/>
         </Stack.Navigator>
     )
 }
