@@ -6,10 +6,14 @@ import ProductView from '../screens/landing_page/product_view/ProductView';
 const Stack = createNativeStackNavigator();
 
 export const LandingStackNavigation = () => {
-    return(
-        <Stack.Navigator initialRouteName="LandingIndex">
-            <Stack.Screen name="LandingIndex" component={LandingIndex}/>
-            <Stack.Screen name="ProductView" component={ProductView}/>
-        </Stack.Navigator>
-    )
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+        initialRouteName="LandingIndex">
+        <Stack.Screen name="LandingIndex" component={LandingIndex} />
+        <Stack.Screen name="ProductView" component={ProductView} />
+      </Stack.Navigator>
+    );
 }

@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {scaleFont} from '../../../utils/scale';
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,8 +9,8 @@ export const styles = StyleSheet.create({
   title: {
     marginTop: 48,
     marginBottom: 24,
-    fontSize: 40,
-    color: '#fff',
+    fontSize: scaleFont(40),
+    color: 'red',
     fontWeight: '700',
   },
   subtitle: {
