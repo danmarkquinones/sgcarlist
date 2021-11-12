@@ -3,7 +3,7 @@ import { ScrollView,  View } from 'react-native'
 import { Input } from 'react-native-elements'
 import { theme } from '../../../contants/colors'
 import { OffCancelButton, PrimaryButton } from '../../../custom_components/customButtons'
-import CustomHeader from '../../../custom_components/CustomHeader'
+import CustomHeader from '../../../custom_components/customHeader';
 import { editFormStyles } from './editFormStyles'
 
 const EditForm = (props) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { View , Text} from 'react-native'
-import CustomHeader from '../../../custom_components/CustomHeader'
+import CustomHeader from '../../../custom_components/customHeader';
 
 const ProductView = (props) => {
 

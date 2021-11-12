@@ -5,7 +5,7 @@ import { tosStyles } from './tosStyles'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { theme } from '../../../contants/colors';
 import { Divider } from 'react-native-elements';
-import CustomHeader from '../../../custom_components/CustomHeader';
+import CustomHeader from '../../../custom_components/customHeader';
 
 const TermsService = (props) => {
 
