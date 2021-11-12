@@ -30,7 +30,7 @@ const OnboardingIndex = props => {
       <Text style={styles.subtitle}>
         Search for your dream car from top car list site in Singapore
       </Text>
-      <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+      <View style={{flexDirection: 'row', justifyContent: 'flex-end' , zIndex:2}}>
         <OnboardingButton onPress={onClick} />
       </View>
       <Image

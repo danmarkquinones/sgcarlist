@@ -1,9 +1,8 @@
-import React, {useState , useEffect} from 'react'
+import React, {useState , useEffect, useContext} from 'react'
 import { Text } from 'react-native';
-import { NavigationContainer , getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import OnboardingIndex from '../screens/onboarding_page/OnboardingIndex';
 import Login from '../screens/auth_page/Login';
 import Register from '../screens/auth_page/Register';
@@ -11,19 +10,21 @@ import { LandingStackNavigation } from './LandingStackNavigation';
 import { FavoritesStackNavigation } from './FavoritesStackNavigation';
 import { ProfileStackNavigation } from './ProfileStackNavigation';
 import AntIcon from 'react-native-vector-icons/AntDesign';
+import FAIcon from 'react-native-vector-icons/FontAwesome';
+import FAIcon5 from 'react-native-vector-icons/FontAwesome5';
 import { theme } from '../contants/colors';
 import LoaderScreen from '../reusable_components/loaderScreen';
+import { UserConfigContext } from '../store/context_api/userContext';
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const RootStack = () => {
-    const [firstLaunch , setFirstLaunch] = useState(true)
-    
-    // Add AsyncStorage Logic for onboarding first launch here
+    const [userConfig] = useContext(UserConfigContext)
 
     return(
-        <Stack.Navigator initialRouteName={firstLaunch?"Onboarding":"TabNav"}>
+        <Stack.Navigator initialRouteName={userConfig.isLaunched===0?"Onboarding":"TabNav"}>
             <Stack.Screen name="Onboarding" component={OnboardingIndex} options={{headerShown:false}}/>
             <Stack.Screen name="TabNav" component={AppTabNavigation} options={{headerShown:false}}/> 
             <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
@@ -33,10 +34,11 @@ const RootStack = () => {
     )
 }
 
-const AppTabNavigation = ({navigation ,route}) => {
 
-    
-    
+const AppTabNavigation = () => {
+
+    const [userConfig] = useContext(UserConfigContext)
+
     return(
         <Tab.Navigator
             screenOptions={{
@@ -49,10 +51,12 @@ const AppTabNavigation = ({navigation ,route}) => {
                 options={{
                     headerShown:false,
                     tabBarLabel: ({ color })=>(
-                        <Text style={{color:color }}>Explore</Text>
+                        <Text style={{color:color }}>{userConfig.isSellMode===0?'Explore':'Post Ad'}</Text>
                     ),
                     tabBarIcon: ({ color }) => (
-                        <AntIcon name="search1" color={color} size={25} />
+                        userConfig.isSellMode===0?
+                            <AntIcon name="search1" color={color} size={25}  />
+                            :<FAIcon5 name="buysellads" color={color} size={25}/>
                     ),
                 }}/>
             <Tab.Screen 
@@ -61,23 +65,27 @@ const AppTabNavigation = ({navigation ,route}) => {
                 options={{
                     headerShown:false,
                     tabBarLabel: ({ color })=>(
-                        <Text style={{color:color }}>Favorites</Text>
+                        <Text style={{color:color }}>{userConfig.isSellMode===0?"Favorites":"My Ads"}</Text>
                     ),
                     tabBarIcon: ({ color }) => (
-                        <AntIcon name="staro" color={color} size={25} />
+                        userConfig.isSellMode===0?
+                            <AntIcon name="staro" color={color} size={25} />
+                            :<FAIcon5 name="car" color={color} size={25}/>
                     ),
                 }}
             />
             <Tab.Screen 
                 name="ProfileStacks" 
                 component={ProfileStackNavigation}
-                options={({ route }) => ({
+                options={() => ({
                     headerShown:false,
                     tabBarLabel: ({ color })=>(
                         <Text style={{color:color }}>Profile</Text>
                     ),
                     tabBarIcon: ({ color }) => (
-                        <AntIcon name="user" color={color} size={25} />
+                        userConfig.isSellMode===0?
+                            <AntIcon name="user" color={color} size={25} />
+                            :<FAIcon name="user-circle" color={color} size={25}/>
                     )
                 })}
             />

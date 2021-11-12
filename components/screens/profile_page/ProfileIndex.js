@@ -1,6 +1,6 @@
-import React , {useState , useEffect} from 'react'
+import React , {useState , useEffect , useContext} from 'react'
 import { ScrollView, Share, Text, TouchableOpacity, View } from 'react-native'
-import { Avatar, Divider, Overlay } from 'react-native-elements'
+import { Divider, Overlay } from 'react-native-elements'
 import { profileStyles } from '../../styles/profileStyles'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { theme } from '../../contants/colors';
@@ -11,13 +11,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import SwitchSelector from "react-native-switch-selector";
 import NotificationModal from '../../reusable_components/notificationModal';
 import CustomAvatar from '../../custom_components/customAvatar';
+import { UserConfigContext } from '../../store/context_api/userContext';
+import { useIsFocused } from '@react-navigation/core';
+
 
 const ProfileIndex = (props) => {
 
     const {navigation} = props
-    // should be store in local storage
-    const [isNotifEnabled, setIsNotifEnabled] = useState(false);
-    const [isSellMode,setIsSellMode] = useState('0')
+    const [userConfig , setUserConfig] = useContext(UserConfigContext)
+    const isFocused = useIsFocused()
+
+    useEffect(()=>{
+        if(isFocused){
+            console.log('userContext' , userConfig)
+        }
+    },[isFocused])
+
     //overlays
     const [NotifOverlayVisible, setNotifOverlayVisible] = useState(false);
 
@@ -27,34 +36,11 @@ const ProfileIndex = (props) => {
         {type:'Full Name' , text:'Lorem Ipsum'},
         {type:'Mobile Number' , text:'0912 345 6789'}
     ])
-    //transfer to redux
-    const [userDetails, setUserDetails] = useState({
-        username:"LoremIpsum123",
-        email:'Loremipusm@gmail.com',
-        fname:'Lorem',
-        lname:'Ipsum',
-        contact:'0912 345 6789'
-    })
 
     const options = [
         { label: "Buy", value: "0" },
         { label: "Sell", value: "1" },
     ];
-
-    const getData = async () => {
-        try {
-            const login = await AsyncStorage.getItem('isLaunched')
-            const sellMode = await AsyncStorage.getItem('isSellMode')
-            const notify = await AsyncStorage.getItem('isNotify')
-            console.log('3 values',login,sellMode,notify)
-        } catch(e) {
-          // error reading value
-        }
-    }
-
-    useEffect(()=>{
-        getData()
-    },[])
 
     const onClick = () => {
         navigation.navigate('Login') 
@@ -65,8 +51,8 @@ const ProfileIndex = (props) => {
     };
 
     const toggleSwitchNotif = () => {
-        if(isNotifEnabled){
-            setIsNotifEnabled(false)
+        if(userConfig.isNotificationOn===1){
+            setUserConfig({...userConfig, isNotificationOn:0}) 
             AsyncStorage.setItem('isNotify' , '0')
         }else{
             toggleNotifOverlay()
@@ -74,14 +60,14 @@ const ProfileIndex = (props) => {
     };
 
     const handleSellModeChange = (value) => {
-        setIsSellMode(value)
+        navigation.navigate('LoaderScreen') 
         AsyncStorage.setItem('isSellMode' , value.toString())
-        navigation.navigate('LoaderScreen')
+        setUserConfig({...userConfig , isSellMode:+value})
     }
 
 
     const onConfirmNotif = () => {
-        setIsNotifEnabled(true) 
+        setUserConfig({...userConfig, isNotificationOn:1}) 
         AsyncStorage.setItem('isNotify' , '1')
         toggleNotifOverlay()
     }
@@ -124,7 +110,7 @@ const ProfileIndex = (props) => {
                     style={profileStyles.headerContainer}
                 >
                     <CustomAvatar initial="L" size={40} color={theme.gray}/>
-                    <Text style={profileStyles.headerName}>Lorem Ipsum</Text>
+                    <Text style={profileStyles.headerName}>Lorem Ipsum {userConfig.isSellMode}</Text>
                 </View>
 
                 <View
@@ -132,7 +118,7 @@ const ProfileIndex = (props) => {
                 >
                     <View style={profileStyles.infoHead}>
                         <Text style={profileStyles.infoHeadTitle}>Profile Informations</Text>
-                        <TouchableOpacity onPress={()=>navigation.navigate('EditProfile', {data:userDetails,callback:setUserDetails})}>
+                        <TouchableOpacity onPress={()=>navigation.navigate('EditProfile', {data:userConfig.userDetails,callback:setUserConfig})}>
                             <View style={profileStyles.editContainer}>
                                 <Icon name='edit' size={15} />
                                 <Text style={{fontSize:15 , marginLeft:5}}>Edit</Text>
@@ -158,8 +144,8 @@ const ProfileIndex = (props) => {
                         <SwitchSelector
                             style={{width:120}}
                             options={options}
-                            initial={+isSellMode}
-                            value={+isSellMode}
+                            initial={+userConfig.isSellMode}
+                            value={+userConfig.isSellMode}
                             onPress={(value) => handleSellModeChange(value)}
                             textColor={theme.primaryBlue}
                             selectedColor={theme.white}
@@ -177,10 +163,10 @@ const ProfileIndex = (props) => {
                         <Text style={profileStyles.othersDetailsText}>Notification</Text>
                         <Switch 
                             trackColor={{ false: theme.gray, true: theme.secondaryBlue }}
-                            thumbColor={isNotifEnabled ? theme.primaryBlue : theme.white}
+                            thumbColor={+userConfig.isNotificationOn===1 ? theme.primaryBlue : theme.white}
                             ios_backgroundColor={theme.gray}
                             onValueChange={toggleSwitchNotif}
-                            value={isNotifEnabled}
+                            value={+userConfig.isNotificationOn===1?true:false}
                         />
                     </View>
 
