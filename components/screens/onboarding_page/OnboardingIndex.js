@@ -30,19 +30,32 @@ const OnboardingIndex = props => {
       <Text style={styles.subtitle}>
         Search for your dream car from top car list site in Singapore
       </Text>
-      <View style={{flexDirection: 'row', justifyContent: 'flex-end' , zIndex:2}}>
+      <View
+        style={{flexDirection: 'row', justifyContent: 'flex-end', zIndex: 2}}>
         <OnboardingButton onPress={onClick} />
       </View>
-      <Image
-        source={onboarding}
+      <View
         style={{
           flex: 1,
           position: 'absolute',
           bottom: 0,
           width: width,
           height: height / 2,
-        }}
-      />
+          borderTopRightRadius: 200,
+          borderTopLeftRadius: 25,
+          overflow: 'hidden',
+        }}>
+        <Image
+          source={onboarding}
+          style={{
+            flex: 1,
+            position: 'absolute',
+            bottom: 0,
+            width: width,
+            height: height / 2,
+          }}
+        />
+      </View>
     </View>
   );
 };

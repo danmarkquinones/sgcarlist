@@ -1,10 +1,13 @@
-import React from 'react'
+import React, {useContext} from 'react';
 import {View} from 'react-native';
+import {UserConfigContext} from '../../store/context_api/userContext';
 import {landingStyles} from '../../styles/landingStyles';
 import BuyerLanding from './buyer_landing/buyerLanding';
+import PostAds from './seller_landing/PostAds';
 
 const LandingIndex = props => {
   const {navigation} = props;
+  const [userConfig] = useContext(UserConfigContext);
 
   const items = [
     {
@@ -62,10 +65,15 @@ const LandingIndex = props => {
   return (
     <View style={landingStyles.container}>
       {/* if !isSellMode */}
-      <BuyerLanding items={items} navigation={navigation} dealers={dealers} />
+      {userConfig.isSellMode === 0 ? (
+        <BuyerLanding items={items} navigation={navigation} dealers={dealers} />
+      ) : (
+        <PostAds />
+      )}
+
       {/* if isSellMode at AsyncStorage */}
     </View>
   );
 };
 
-export default LandingIndex
+export default LandingIndex;

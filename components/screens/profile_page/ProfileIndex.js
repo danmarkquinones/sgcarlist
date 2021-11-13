@@ -60,9 +60,9 @@ const ProfileIndex = (props) => {
     };
 
     const handleSellModeChange = (value) => {
-        navigation.navigate('LoaderScreen') 
-        AsyncStorage.setItem('isSellMode' , value.toString())
-        setUserConfig({...userConfig , isSellMode:+value})
+      navigation.navigate('LandingIndex');
+      AsyncStorage.setItem('isSellMode', value.toString());
+      setUserConfig({...userConfig, isSellMode: +value});
     }
 
 

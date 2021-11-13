@@ -8,7 +8,7 @@ import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import { theme } from '../../../contants/colors';
 import { Button } from 'react-native-elements';
 import { PrimaryButton } from '../../../custom_components/customButtons';
-import CustomHeader from '../../../custom_components/CustomHeader';
+import CustomHeader from '../../../custom_components/customHeader';
 
 const Help = () => {
 
