@@ -4,7 +4,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/core';
 import PropTypes from 'prop-types';
 
-const CustomHeader = ({title, canGoBack, titleStyle, isTitleCenter}) => {
+const CustomHeader = ({
+  title,
+  canGoBack,
+  titleStyle,
+  isTitleCenter,
+  onPressBack,
+}) => {
   const navigation = useNavigation();
 
   return (
@@ -19,7 +25,7 @@ const CustomHeader = ({title, canGoBack, titleStyle, isTitleCenter}) => {
       }}>
       {canGoBack && (
         <Icon
-          onPress={() => navigation.goBack(null)}
+          onPress={onPressBack ? onPressBack : () => navigation.goBack(null)}
           name="arrow-left"
           size={25}
           color={'#fff'}
@@ -46,6 +52,7 @@ CustomHeader.prototypes = {
   canGoBack: PropTypes.bool,
   titleStyle: PropTypes.object,
   isTitleCenter: PropTypes.bool,
+  onPressBack: PropTypes.func,
 };
 
 CustomHeader.defaultProps = {

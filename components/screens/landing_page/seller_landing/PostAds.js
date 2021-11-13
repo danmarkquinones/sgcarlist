@@ -3,13 +3,14 @@ import {View, Text, ScrollView, StyleSheet} from 'react-native';
 import {scaleFont} from '../../../../utils/scale';
 import CustomHeader from '../../../custom_components/customHeader';
 import Spacer from '../../../custom_components/spacer';
-import {Card, ListItem, Button, Icon} from 'react-native-elements';
-import AntIcon from 'react-native-vector-icons/AntDesign';
+import {Card} from 'react-native-elements';
 import {theme} from '../../../contants/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {PrimaryButton} from '../../../custom_components/customButtons';
+import {useNavigation} from '@react-navigation/core';
 
 const PostAds = () => {
+  const navigation = useNavigation();
   return (
     <View style={{flex: 1}}>
       <CustomHeader
@@ -173,7 +174,11 @@ const PostAds = () => {
               </View>
             </View>
             <Spacer bottom={24} />
-            <PrimaryButton title="Create Ad" color={theme.primaryBlue} />
+            <PrimaryButton
+              onPress={() => navigation.navigate('CreateAdIndex')}
+              title="Create Ad"
+              color={theme.primaryBlue}
+            />
           </Card>
         </View>
         <Spacer bottom={24} />
