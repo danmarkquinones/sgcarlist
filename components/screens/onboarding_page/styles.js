@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     marginTop: 48,
     marginBottom: 24,
     fontSize: scaleFont(40),
-    color: 'red',
+    color: '#fff',
     fontWeight: '700',
   },
   subtitle: {

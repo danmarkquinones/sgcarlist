@@ -1,9 +1,10 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/core';
+import PropTypes from 'prop-types';
 
-const CustomHeader = ({title}) => {
+const CustomHeader = ({title, canGoBack, titleStyle, isTitleCenter}) => {
   const navigation = useNavigation();
 
   return (
@@ -14,24 +15,44 @@ const CustomHeader = ({title}) => {
         padding: 16,
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: isTitleCenter ? 'center' : 'flex-start',
       }}>
-      <Icon
-        onPress={() => navigation.goBack(null)}
-        name="arrow-left"
-        size={25}
-        color={'#fff'}
-      />
-      <Text
-        style={{
-          color: '#fff',
-          fontWeight: 'bold',
-          fontSize: 18,
-          marginLeft: 16,
-        }}>
+      {canGoBack && (
+        <Icon
+          onPress={() => navigation.goBack(null)}
+          name="arrow-left"
+          size={25}
+          color={'#fff'}
+          style={{marginRight: 16}}
+        />
+      )}
+      <Text style={Object.keys(titleStyle).length ? titleStyle : styles.title}>
         {title}
       </Text>
     </View>
   );
+};
+
+const styles = StyleSheet.create({
+  title: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+});
+
+CustomHeader.prototypes = {
+  title: PropTypes.string,
+  canGoBack: PropTypes.bool,
+  titleStyle: PropTypes.object,
+  isTitleCenter: PropTypes.bool,
+};
+
+CustomHeader.defaultProps = {
+  title: '',
+  canGoBack: true,
+  titleStyle: {},
+  isTitleCenter: false,
 };
 
 export default CustomHeader;
