@@ -55,6 +55,15 @@ const MyAdsIndex = () => {
         title="SGCARLIST"
         isTitleCenter
       />
+      <View
+        style={{
+          paddingVertical: 8,
+          paddingHorizontal: 24,
+          width: '100%',
+          backgroundColor: '#fff',
+        }}>
+        <Text>Price - Lowest</Text>
+      </View>
       <View style={{flex: 1}}>
         <Spacer bottom={16} />
         <View style={{width: '90%', alignSelf: 'center'}}>

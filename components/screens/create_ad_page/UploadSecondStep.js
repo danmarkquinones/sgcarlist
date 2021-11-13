@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {scaleFont} from '../../../utils/scale';
 import {theme} from '../../contants/colors';
 import {PrimaryButton} from '../../custom_components/customButtons';
@@ -13,55 +13,58 @@ const UploadSecondStep = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
-      <Spacer bottom={48} />
+    <ScrollView style={{flex: 1}}>
+      <View style={styles.container}>
+        <Spacer bottom={48} />
 
-      <View>
-        <Text style={{fontWeight: 'bold', fontSize: scaleFont(16)}}>
-          Plate number: AAA-DA059
-        </Text>
-        <Spacer bottom={8} />
-        <View
-          style={{
-            width: '100%',
-            height: 100,
-            backgroundColor: '#fff',
-            borderRadius: 5,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <MaterialCommunityIcons name="camera" size={32} />
-          <Text style={{fontWeight: 'bold'}}>Upload thumbnail</Text>
+        <View>
+          <Text style={{fontWeight: 'bold', fontSize: scaleFont(16)}}>
+            Plate number: AAA-DA059
+          </Text>
+          <Spacer bottom={8} />
+          <View
+            style={{
+              width: '100%',
+              height: 100,
+              backgroundColor: '#fff',
+              borderRadius: 5,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <MaterialCommunityIcons name="camera" size={32} />
+            <Text style={{fontWeight: 'bold'}}>Upload thumbnail</Text>
+          </View>
+          <Spacer bottom={24} />
+          <View>
+            <Text style={styles.label}>Vehicle unit *</Text>
+            <Spacer bottom={8} />
+            <PrimaryInput placeholder="AAA-DA059" />
+          </View>
+          <Spacer bottom={24} />
+          <View>
+            <Text style={styles.label}>Vehicle registration card *</Text>
+            <Spacer bottom={8} />
+            <PrimaryInput placeholder="AS324FASDFAG24" />
+          </View>
+          <Spacer bottom={24} />
+          <View>
+            <Text style={styles.label}>Description</Text>
+            <Spacer bottom={8} />
+            <PrimaryInput placeholder="Plate number" />
+          </View>
         </View>
         <Spacer bottom={24} />
-        <View>
-          <Text style={styles.label}>Vehicle unit *</Text>
-          <Spacer bottom={8} />
-          <PrimaryInput placeholder="AAA-DA059" />
-        </View>
-        <Spacer bottom={24} />
-        <View>
-          <Text style={styles.label}>Vehicle registration card *</Text>
-          <Spacer bottom={8} />
-          <PrimaryInput placeholder="AS324FASDFAG24" />
-        </View>
-        <Spacer bottom={24} />
-        <View>
-          <Text style={styles.label}>Description</Text>
-          <Spacer bottom={8} />
-          <PrimaryInput placeholder="Plate number" />
+        <View style={{flex: 1, justifyContent: 'flex-end'}}>
+          <PrimaryButton
+            onPress={() => navigation.goBack(null)}
+            title="Cancel"
+            color={theme.tertiaryBlue}
+          />
+          <Spacer bottom={16} />
+          <PrimaryButton color={theme.primaryBlue} title="Publish" />
         </View>
       </View>
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
-        <PrimaryButton
-          onPress={() => navigation.goBack(null)}
-          title="Cancel"
-          color={theme.tertiaryBlue}
-        />
-        <Spacer bottom={16} />
-        <PrimaryButton color={theme.primaryBlue} title="Publish" />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
