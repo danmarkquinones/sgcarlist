@@ -1,5 +1,5 @@
 import React , {useEffect} from 'react'
-import { View , Text} from 'react-native'
+import { View , Text , Image} from 'react-native'
 import { useIsFocused } from '@react-navigation/core';
 import { theme } from '../contants/colors';
 
@@ -11,12 +11,9 @@ const LoaderScreen = (props) => {
 
     useEffect(()=>{
         if(isFocused){
-            // if(from==='sellSwitch'){
-
-            // }
-            // setTimeout(()=>{
-            //     navigation.navigate('TabNav')
-            // },3000)
+            setTimeout(()=>{
+                navigation.navigate('TabNav')
+            },3000)
         }
     },[isFocused])
 
@@ -30,6 +27,7 @@ const LoaderScreen = (props) => {
                 justifyContent:'center'
             }}
         >
+            <Image source={require('../../assets/images/loader1.gif')}/>
             <Text>CARLIST.MY</Text>
             <Text>LOADING...</Text>
         </View>
