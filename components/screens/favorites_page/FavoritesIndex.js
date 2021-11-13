@@ -1,14 +1,50 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import React, {useContext} from 'react';
+import {Text, View, FlatList} from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {useNavigation} from '@react-navigation/core';
+import {ListCard} from '../../custom_components/customCards';
+import {theme} from '../../contants/colors';
+import MyAdsIndex from '../my_ads_page/MyAdsIndex';
+import {UserConfigContext} from '../../store/context_api/userContext';
+
+const items = [
+  {
+    id: '1',
+    name: 'SUC High Speed V446',
+    price: '1,499 USD',
+    location: 'Jurong , Singapore',
+    url: require('../../../assets/images/car1.jpg'),
+  },
+  {
+    id: '2',
+    name: 'RPB Meta Build V4374',
+    price: '1,499 USD',
+    location: 'Jurong , Singapore',
+    url: require('../../../assets/images/car2.jpg'),
+  },
+  {
+    id: '3',
+    name: 'ABP Hi Morale V546',
+    price: '1,499 USD',
+    location: 'Jurong , Singapore',
+    url: require('../../../assets/images/car3.jpg'),
+  },
+  {
+    id: '4',
+    name: 'ABB Critical V476',
+    price: '1,499 USD',
+    location: 'Jurong , Singapore',
+    url: '',
+  },
+];
 
 const FavoritesIndex = () => {
-    return (
-        <View>
-            <Text>
-                FAVORITE
-            </Text>
-        </View>
-    )
-}
+  const [userConfig] = useContext(UserConfigContext);
+  return (
+    <View style={{flex: 1}}>
+      {userConfig.isSellMode === 0 ? <></> : <MyAdsIndex />}
+    </View>
+  );
+};
 
-export default FavoritesIndex
+export default FavoritesIndex;

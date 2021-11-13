@@ -5,9 +5,13 @@ import FavoritesIndex from '../screens/favorites_page/FavoritesIndex';
 const Stack = createNativeStackNavigator();
 
 export const FavoritesStackNavigation = () => {
-    return(
-        <Stack.Navigator initialRouteName="Favorites">
-            <Stack.Screen name="Favorites" component={FavoritesIndex}/>
-        </Stack.Navigator>
-    )
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+        initialRouteName="Favorites">
+        <Stack.Screen name="Favorites" component={FavoritesIndex} />
+      </Stack.Navigator>
+    );
 }

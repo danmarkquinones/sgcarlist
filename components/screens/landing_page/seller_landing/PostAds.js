@@ -101,7 +101,11 @@ const PostAds = () => {
               </View>
             </View>
             <Spacer bottom={24} />
-            <PrimaryButton title="Create Ad" color={theme.primaryBlue} />
+            <PrimaryButton
+              onPress={() => navigation.navigate('CreateAdIndex')}
+              title="Create Ad"
+              color={theme.primaryBlue}
+            />
           </Card>
         </View>
 
