@@ -1,69 +1,59 @@
-import React from 'react'
-import { View , Text , TouchableOpacity } from 'react-native'
+import React , {useState} from 'react'
+import { View , ScrollView, Text , TouchableOpacity } from 'react-native'
 import { globalStyles } from '../../../styles/globalStyles'
 import { tosStyles } from './tosStyles'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { theme } from '../../../contants/colors';
 import { Divider } from 'react-native-elements';
 import CustomHeader from '../../../custom_components/customHeader';
+import Collapsible from 'react-native-collapsible';
+import {TOSContent} from './tosContent';
+import {PPContent} from './ppContent'
 
 const TermsService = (props) => {
 
     const {navigation} = props
+    const [isCollapsed , setIsCollapsed] = useState({
+        tos:true,
+        pp:true
+    })
 
     return (
-        <View
-            style={globalStyles.container}
-        >
-            <CustomHeader title="Privacy Policy & TOS"/>
-            
-            <View style={tosStyles.tosContainer}>
-                <TouchableOpacity
-                    onPress={()=>navigation.navigate('')}
-                >
-                    <View style={tosStyles.textContainer}>
-                        <Text style={tosStyles.text}>Terms & Conditions of Use</Text>
-                        <Icon name="keyboard-arrow-right" size={25}  color={theme.gray}/>
-                    </View>
-                </TouchableOpacity>
+        <View style={{display:'flex' , flex:1, backgroundColor:theme.white}}>
+            <ScrollView showsVerticalScrollIndicator={false} >
+                <CustomHeader title="Privacy Policy & TCOS"/>
+                <View style={tosStyles.tosContainer}>
+                    <TouchableOpacity
+                        onPress={()=>setIsCollapsed({...isCollapsed , tos:!isCollapsed.tos})}
+                    >
+                        <View style={tosStyles.textContainer}>
+                            <Text style={isCollapsed.tos? tosStyles.text:tosStyles.textActive}>Terms & Conditions of Use</Text>
+                            <Icon name={isCollapsed.tos?"keyboard-arrow-down":"keyboard-arrow-up"} size={25}  color={theme.gray}/>
+                        </View>
+                    </TouchableOpacity>
 
-                <Divider/>
+                    <Collapsible collapsed={isCollapsed.tos}>
+                        <TOSContent/>
+                    </Collapsible>
 
-                <TouchableOpacity
-                    onPress={()=>navigation.navigate('')}
-                >
-                    <View style={tosStyles.textContainer}>
-                        <Text style={tosStyles.text}>Terms & Conditions for Advertisers</Text>
-                        <Icon name="keyboard-arrow-right" size={25}  color={theme.gray}/>
-                    </View>
-                </TouchableOpacity>
+                    <Divider style={{marginTop : isCollapsed.tos? 0:20}}/>
 
-                <Divider/>
-                
-                <TouchableOpacity
-                    onPress={()=>navigation.navigate('')}
-                >
-                    <View style={tosStyles.textContainer}>
-                        <Text style={tosStyles.text}>Personal Data Protection Notice</Text>
-                        <Icon name="keyboard-arrow-right" size={25}  color={theme.gray}/>
-                    </View>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=>setIsCollapsed({...isCollapsed , pp:!isCollapsed.pp})}
+                    >
+                        <View style={tosStyles.textContainer}>
+                            <Text style={isCollapsed.pp? tosStyles.text:tosStyles.textActive}>Privacy Policy</Text>
+                            <Icon name={isCollapsed.pp?"keyboard-arrow-down":"keyboard-arrow-up"} size={25}  color={theme.gray}/>
+                        </View>
+                    </TouchableOpacity>
 
-                <Divider/>
+                    <Collapsible collapsed={isCollapsed.pp}>
+                        <PPContent/>
+                    </Collapsible>
 
-                <TouchableOpacity
-                    onPress={()=>navigation.navigate('')}
-                >
-                    <View style={tosStyles.textContainer}>
-                        <Text style={tosStyles.text}>Privacy Policy</Text>
-                        <Icon name="keyboard-arrow-right" size={25}  color={theme.gray}/>
-                    </View>
-                </TouchableOpacity>
-
-                <Divider/>
-
-            </View>
-            
+                    <Divider style={{marginTop : isCollapsed.pp? 0:20}}/>
+                </View>
+            </ScrollView>
         </View>
     )
 }

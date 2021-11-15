@@ -21,5 +21,11 @@ export const tosStyles = StyleSheet.create({
         fontSize:18,
         marginVertical:10
     },
+    textActive:{
+        color:theme.primaryBlue,
+        fontSize:18,
+        marginVertical:10,
+        fontWeight:'bold'
+    },
 })
 
