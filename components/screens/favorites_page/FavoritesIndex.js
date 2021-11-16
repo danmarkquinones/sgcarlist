@@ -6,6 +6,7 @@ import {ListCard} from '../../custom_components/customCards';
 import {theme} from '../../contants/colors';
 import MyAdsIndex from '../my_ads_page/MyAdsIndex';
 import {UserConfigContext} from '../../store/context_api/userContext';
+import BuyerFavorites from './BuyerFavorites';
 
 const items = [
   {
@@ -42,7 +43,7 @@ const FavoritesIndex = () => {
   const [userConfig] = useContext(UserConfigContext);
   return (
     <View style={{flex: 1}}>
-      {userConfig.isSellMode === 0 ? <></> : <MyAdsIndex />}
+      {userConfig.isSellMode === 0 ? <BuyerFavorites/> : <MyAdsIndex />}
     </View>
   );
 };

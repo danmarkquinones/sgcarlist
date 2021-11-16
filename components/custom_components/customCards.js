@@ -3,7 +3,6 @@ import { Text, View ,Image , Button, TouchableOpacity} from "react-native"
 import { customCardStyles } from '../styles/customCardStyles'
 import { Divider } from 'react-native-elements/dist/divider/Divider';
 import { theme } from '../contants/colors';
-import { Avatar } from 'react-native-elements/dist/avatar/Avatar';
 import Spacer from './spacer';
 import PropTypes from 'prop-types';
 
@@ -51,13 +50,13 @@ export const WhiteCard = ({options, onPress}) => {
 };
 
 export const ListCard = props => {
-  const {car, Icon, sellerMode} = props;
+  const {car, Icon, sellerMode , inFavorites , onPress} = props;
   return (
     <View style={customCardStyles.listCardContainer}>
       <View style={customCardStyles.imageSquareContainer}>
         <Image
           style={customCardStyles.listCarImage}
-          source={require('../../assets/images/car1.jpg')}
+          source={car.url}
         />
       </View>
       <View style={customCardStyles.textListBodyContainer}>
@@ -66,7 +65,15 @@ export const ListCard = props => {
             <Text style={customCardStyles.carName}>{car.name}</Text>
             <Text>{car.location}</Text>
           </View>
-          {!sellerMode ? <Icon /> : null}
+          {Icon&&
+            <View style={customCardStyles.iconSquareContainer}>
+              {inFavorites? 
+                <TouchableOpacity onPress={onPress}>
+                  <Icon />
+                </TouchableOpacity>
+              :<Icon />}
+            </View>
+          }
         </View>
 
         <Divider style={customCardStyles.line} />
@@ -89,16 +96,22 @@ export const ListCard = props => {
 };
 
 export const GridCard = props => {
-  const {car, Icon} = props;
+  const {car, Icon , inFavorites , onPress} = props;
   return (
     <View style={customCardStyles.gridCardContainer}>
-      <View style={customCardStyles.iconSquareContainer}>
-        <Icon />
-      </View>
+      {Icon&&
+        <View style={customCardStyles.iconSquareContainer}>
+          {inFavorites? 
+            <TouchableOpacity onPress={onPress}>
+              <Icon />
+            </TouchableOpacity>
+          :<Icon />}
+        </View>
+      }
       <View style={customCardStyles.imageSquareContainer}>
         <Image
           style={customCardStyles.gridCarImage}
-          source={require('../../assets/images/car1.jpg')}
+          source={car.url}
         />
       </View>
       <View style={customCardStyles.textBodyContainer}>
@@ -107,7 +120,7 @@ export const GridCard = props => {
 
         <Divider style={customCardStyles.line} />
 
-        <View style={customCardStyles.listTextContainer}>
+        <View style={customCardStyles.gridTextContainer}>
           <Text style={customCardStyles.listCarPrice}>{car.price}</Text>
           <Button title="Contact" />
         </View>

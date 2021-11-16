@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlatList, Text, View , ScrollView , Image, TouchableOpacity } from 'react-native'
 import { theme } from '../../../contants/colors'
-import { DealerCard, SquareCard, WhiteCard } from '../../../custom_components/customCards'
+import { DealerCard, GridCard, SquareCard, WhiteCard } from '../../../custom_components/customCards'
 import { landingStyles } from '../../../styles/landingStyles'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Divider } from 'react-native-elements/dist/divider/Divider'

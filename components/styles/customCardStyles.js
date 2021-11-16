@@ -1,6 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { color } from 'react-native-elements/dist/helpers';
 import { theme } from '../contants/colors';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 export const customCardStyles = StyleSheet.create({
     textBodyContainer:{
@@ -155,11 +158,11 @@ export const customCardStyles = StyleSheet.create({
     gridCardContainer :{
         backgroundColor:'#fff',
         borderRadius:5,
-        margin:5,
+        margin:7,
         position:"relative",
         overflow:"hidden",
         display:'flex',
-        width:'50%',
+        width:windowWidth*0.46,
         shadowColor: '#000',
         shadowOffset: { width: 1, height: 1 },
         shadowOpacity: 0.8,
@@ -169,5 +172,11 @@ export const customCardStyles = StyleSheet.create({
     gridCarImage:{
         width:220,
         height:100
-    }
+    },
+    gridTextContainer:{
+        display:"flex",
+        flexDirection:'row',
+        alignItems:"center",
+        justifyContent:"space-evenly"
+    },
 });
