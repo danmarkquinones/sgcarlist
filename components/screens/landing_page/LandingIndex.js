@@ -7,6 +7,7 @@ import BuyerLanding from './buyer_landing/buyerLanding';
 import PostAds from './seller_landing/PostAds';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import { theme } from '../../contants/colors';
+import { cars, dealers } from '../../contants/dummyCarData';
 
 const LandingIndex = props => {
   const {navigation} = props;
@@ -16,59 +17,6 @@ const LandingIndex = props => {
   useEffect(()=>{
     toggleOverlay() 
   },[])
-
-  const items = [
-    {
-      id: '1',
-      name: 'SUC High Speed V446',
-      price: '1,499 USD',
-      location: 'Jurong , Singapore',
-      url: require('../../../assets/images/car1.jpg'),
-    },
-    {
-      id: '2',
-      name: 'RPB Meta Build V4374',
-      price: '1,499 USD',
-      location: 'Jurong , Singapore',
-      url: require('../../../assets/images/car2.jpg'),
-    },
-    {
-      id: '3',
-      name: 'ABP Hi Morale V546',
-      price: '1,499 USD',
-      location: 'Jurong , Singapore',
-      url: require('../../../assets/images/car3.jpg'),
-    },
-    {
-      id: '4',
-      name: 'ABB Critical V476',
-      price: '1,499 USD',
-      location: 'Jurong , Singapore',
-      url: '',
-    },
-  ];
-
-  const dealers = [
-    {
-      id: '1',
-      url: require('../../../assets/images/bm2.jpg'),
-      name: 'Lorem Ipsum',
-      deals: 503,
-    },
-    {
-      id: '2',
-      url: require('../../../assets/images/bm3.png'),
-      name: 'Johnny Cage',
-      deals: 393,
-    },
-    {
-      id: '3',
-      url: require('../../../assets/images/car3.jpg'),
-      name: 'Sky Maviricks',
-      deals: 295,
-    },
-    {id: '4', url: '', name: 'Sky Maviricks', deals: 295},
-  ];
 
   const toggleOverlay = () => {
     setShowAdModal(!showAdModal)
@@ -89,7 +37,7 @@ const LandingIndex = props => {
                 <Image style={{height: 350 , width:350 }} source={require('../../../assets/images/main_ad.jpg')}/>
               </View>
             </Overlay>
-            <BuyerLanding items={items} navigation={navigation} dealers={dealers} />
+            <BuyerLanding items={cars} navigation={navigation} dealers={dealers} />
         </View>
         
       ) : (

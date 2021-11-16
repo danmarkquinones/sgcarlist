@@ -58,3 +58,33 @@ export const pinnedFilters = [
         max:1200000,
     }
 ]
+
+export const dealers = [
+  {
+    id: '1',
+    url: require('../../assets/images/bm2.jpg'),
+    name: 'Lorem Ipsum',
+    deals: 503,
+  },
+  {
+    id: '2',
+    url: require('../../assets/images/bm3.png'),
+    name: 'Johnny Cage',
+    deals: 393,
+  },
+  {
+    id: '3',
+    url: require('../../assets/images/car3.jpg'),
+    name: 'Sky Maviricks',
+    deals: 295,
+  },
+  {id: '4', url: '', name: 'Sky Maviricks', deals: 295},
+];
+
+export const locations=[
+  {id:'1' , name:'Jurong, Singapore'},
+  {id:'2' , name:'Yishun, Singapore'},
+  {id:'3' , name:'Tampines, Singapore'},
+  {id:'4' , name:'Punggol, Singapore'},
+  {id:'5' , name:'Seletar, Singapore'}
+]

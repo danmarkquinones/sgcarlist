@@ -7,6 +7,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Divider } from 'react-native-elements/dist/divider/Divider'
 import CustomAvatar from '../../../custom_components/customAvatar'
 import PrimaryInput from '../../../custom_components/customInput'
+import { locations } from '../../../contants/dummyCarData'
 
 const BuyerLanding = (props) => {
 
@@ -182,26 +183,21 @@ const BuyerLanding = (props) => {
             <View style={landingStyles.locationListContainer}>
 
                 <View style={landingStyles.listHeaders}>
-                    <Text style={landingStyles.listDealerText}>Top Location</Text>
+                    <Text style={landingStyles.listDealerText}>Top 5 Location</Text>
                 </View>
 
                 <FlatList
-                    data={dealers}
+                    data={locations}
                     keyExtractor={(item) => item.id}
                     showsHorizontalScrollIndicator={false}
                     renderItem={({item , index})=>(
                         <View>
-                            {index!==3 ?
-                                <View style={landingStyles.locationItemContainer}>
-                                    <Text style={landingStyles.locationText}>
-                                       {index+1}. Jurong , Singapore
-                                    </Text>
-                                    <Divider/>
-                                </View>
-                                :<Text style={landingStyles.locationSeeMore}>
-                                    See More
+                            <View style={landingStyles.locationItemContainer}>
+                                <Text style={landingStyles.locationText}>
+                                    {index+1}. {item.name}
                                 </Text>
-                            }
+                                <Divider/>
+                            </View>
                         </View>
                     )}
                 />
