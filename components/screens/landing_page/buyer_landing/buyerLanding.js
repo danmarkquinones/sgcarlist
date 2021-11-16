@@ -12,6 +12,13 @@ const BuyerLanding = (props) => {
 
     const {items , dealers ,  navigation} = props
 
+    const handleSeeMore = (route , type) => {
+        const filter = {
+            type
+        }
+        navigation.navigate(route , filter)
+    }
+
     return (
         <ScrollView 
             showsVerticalScrollIndicator={false}
@@ -60,7 +67,7 @@ const BuyerLanding = (props) => {
                             car={item} 
                             Icon={()=><FontAwesome5 name='star' size={20} solid color={theme.yellow}/>}
                         />
-                        :<WhiteCard onPress={()=>navigation.navigate('SearchResult')} options={{width:150}}/>
+                        :<WhiteCard onPress={()=>handleSeeMore('FavoriteStacks')} options={{width:150}}/>
                     )}
                 />
             </View>
@@ -83,10 +90,11 @@ const BuyerLanding = (props) => {
                     renderItem={({item , index})=>(
                         index!==3 ?
                         <SquareCard 
+                            onPress={()=>navigation.navigate('ProductView', item)}
                             car={item} 
                             Icon={()=><FontAwesome5 name='check-circle' size={20} solid color={theme.green}/>}
                         />
-                        :<WhiteCard options={{width:150}}/>
+                        :<WhiteCard onPress={()=>handleSeeMore('FilterIndex' , 'qualified')} options={{width:150}}/>
                     )}
                 />
             </View>
@@ -109,10 +117,11 @@ const BuyerLanding = (props) => {
                     renderItem={({item , index})=>(
                         index!==3 ?
                         <SquareCard 
+                            onPress={()=>navigation.navigate('ProductView', item)}
                             car={item} 
                             Icon={()=><FontAwesome5 name='hotjar' size={20} solid color={theme.red}/>}
                         />
-                        :<WhiteCard options={{width:150}}/>
+                        :<WhiteCard onPress={()=>handleSeeMore('FilterIndex' , 'hotdeals')} options={{width:150}}/>
                     )}
                 />
             </View>
@@ -134,10 +143,11 @@ const BuyerLanding = (props) => {
                     renderItem={({item , index})=>(
                         index!==3 ?
                         <SquareCard 
+                            onPress={()=>navigation.navigate('ProductView', item)}
                             car={item} 
                             // Icon={()=><Entypo name='new' size={20} solid color={theme.tertiaryBlue}/>}
                         />
-                        :<WhiteCard options={{width:150}}/>
+                        :<WhiteCard onPress={()=>handleSeeMore('FilterIndex' , 'newcars')} options={{width:150}}/>
                     )}
                 />
             </View>
