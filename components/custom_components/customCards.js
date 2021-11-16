@@ -7,6 +7,7 @@ import Spacer from './spacer';
 import PropTypes from 'prop-types';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import EntIcon from 'react-native-vector-icons/Entypo';
+import { PrimaryButton, SmallButton } from './customButtons';
 
 export const SquareCard = props => {
   const {car, Icon, onPress} = props;
@@ -83,13 +84,13 @@ export const ListCard = props => {
         {!sellerMode ? (
           <View style={customCardStyles.listTextContainer}>
             <Text style={customCardStyles.listCarPrice}>{car.price}</Text>
-            <Button title="Contact" />
+            <SmallButton title="Contact" options={{color:theme.primaryBlue , textColor:theme.white , height:30}}/>
           </View>
         ) : (
           <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-            <Button title="Edit" />
+            <SmallButton title="Edit" options={{color:theme.tertiaryBlue , textColor:theme.white , height:30}}/>
             <Spacer right={8} />
-            <Button title="Remove" color={'red'} />
+            <SmallButton title="Contact" options={{color:theme.red , textColor:theme.white , height:30}}/>
           </View>
         )}
       </View>
@@ -124,7 +125,7 @@ export const GridCard = props => {
 
         <View style={customCardStyles.gridTextContainer}>
           <Text style={customCardStyles.listCarPrice}>{car.price}</Text>
-          <Button title="Contact" />
+          <SmallButton title="Contact" options={{color:theme.primaryBlue , textColor:theme.white , height:30}}/>
         </View>
       </View>
     </View>

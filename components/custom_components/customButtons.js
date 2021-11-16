@@ -1,3 +1,4 @@
+import { optionalCallExpression } from '@babel/types';
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import { theme } from '../contants/colors';
@@ -11,6 +12,32 @@ export const OnboardingButton = ({onPress}) => {
     </TouchableOpacity>
   );
 };
+
+export const SmallButton = (props) => {
+
+  const {title , onPress , options} = props
+
+  return(
+    <TouchableOpacity onPress={onPress}>
+      <View
+        style={{
+          height:options.height,
+          backgroundColor:options.color,
+          paddingVertical:5,
+          paddingHorizontal:10,
+          borderRadius:5
+        }}
+      >
+        <Text
+          style={{
+            textAlign:'center',
+            color:options.textColor
+          }}
+        >{title}</Text>
+      </View>
+    </TouchableOpacity>
+  )
+}
 
 export const PrimaryButton = (props) => {
   const {color,title,onPress,Icon} = props
