@@ -39,11 +39,11 @@ const items = [
   },
 ];
 
-const FavoritesIndex = () => {
+const FavoritesIndex = (props) => {
   const [userConfig] = useContext(UserConfigContext);
   return (
     <View style={{flex: 1}}>
-      {userConfig.isSellMode === 0 ? <BuyerFavorites/> : <MyAdsIndex />}
+      {userConfig.isSellMode === 0 ? <BuyerFavorites {...props} /> : <MyAdsIndex />}
     </View>
   );
 };

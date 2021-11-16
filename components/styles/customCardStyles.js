@@ -118,7 +118,7 @@ export const customCardStyles = StyleSheet.create({
         display:'flex',
         flexDirection:'row',
         height:110,
-        width:'90%',
+        width:windowWidth * 0.95,
         shadowColor: '#000',
         shadowOffset: { width: 1, height: 1 },
         shadowOpacity: 0.8,
@@ -178,5 +178,38 @@ export const customCardStyles = StyleSheet.create({
         flexDirection:'row',
         alignItems:"center",
         justifyContent:"space-evenly"
+    },
+
+    // Pinn filter styles
+    filterContainer:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'space-between',
+        marginVertical:10,
+        paddingHorizontal:20,
+    },
+    filterNameContainer:{
+        width:windowWidth*0.3
+    },
+    filterBrand:{
+        fontSize:20,
+        fontWeight:'500',
+        color:theme.primaryBlue
+    },  
+    filterLocation:{
+        color:theme.gray
+    },
+    filterPriceContainer:{
+        width:windowWidth*0.3,
+        justifyContent:'flex-start'
+    },
+    filterMinPrice:{
+        color:theme.yellow,
+        fontWeight:'500'
+    },
+    filterMaxPrice:{
+        color:theme.green,
+        fontWeight:'500'
     },
 });

@@ -28,3 +28,33 @@ export const cars = [
         url: '',
       },
 ]
+
+export const pinnedFilters = [
+    {
+        id:'1',
+        name:'Toyota',
+        location:'Jurong ,Signapore',
+        min:8000,
+        max:12000,
+    },
+    {
+        id:'2',
+        name:'Hyundai',
+        location:'Jurong ,Signapore',
+        min:2000,
+        max:11000,
+    },
+    {
+        id:'3',
+        name:'Suzuki',
+        location:'Jurong ,Signapore',
+        min:7000,
+        max:12000,
+    },{
+        id:'4',
+        name:'Optimus',
+        location:'Jurong ,Signapore',
+        min:100000,
+        max:1200000,
+    }
+]

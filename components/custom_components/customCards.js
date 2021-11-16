@@ -5,6 +5,8 @@ import { Divider } from 'react-native-elements/dist/divider/Divider';
 import { theme } from '../contants/colors';
 import Spacer from './spacer';
 import PropTypes from 'prop-types';
+import MatIcon from 'react-native-vector-icons/MaterialIcons';
+import EntIcon from 'react-native-vector-icons/Entypo';
 
 export const SquareCard = props => {
   const {car, Icon, onPress} = props;
@@ -146,6 +148,34 @@ export const DealerCard = props => {
     </TouchableOpacity>
   );
 };
+
+export const PinnedFilterCard = props => {
+  const {filter , onPress , onUnpin} = props
+
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <View style={customCardStyles.filterContainer}>
+
+        <TouchableOpacity onPress={onUnpin}>
+          <EntIcon name="pin" size={25} color={theme.green}/>
+        </TouchableOpacity>
+
+        <View style={customCardStyles.filterNameContainer}>
+          <Text style={customCardStyles.filterBrand}>{filter.name}</Text>
+          <Text style={customCardStyles.filterLocation}>{filter.location}</Text>
+        </View>
+
+        <View style={customCardStyles.filterPriceContainer}>
+          <Text style={customCardStyles.filterMinPrice}>min : $ {filter.min}</Text>
+          <Text style={customCardStyles.filterMaxPrice}>max : $ {filter.max}</Text>
+        </View>
+
+        <MatIcon name="keyboard-arrow-right" size={25} color={theme.black}/>
+      </View>
+      <Divider/>
+    </TouchableOpacity>
+  );
+}
 
 ListCard.prototypes = {
   sellerMode: PropTypes.bool,
