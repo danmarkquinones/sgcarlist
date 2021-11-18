@@ -4,6 +4,7 @@ import { Rating , Overlay , Divider } from 'react-native-elements'
 import { theme } from '../../../contants/colors'
 import { GridCard, ListCard } from '../../../custom_components/customCards'
 import PrimaryInput from '../../../custom_components/customInput'
+import CommentForm from '../../../reusable_components/commentForm'
 import SorterComponent from '../../../reusable_components/sorterComponent'
 import { sellersStyles } from '../../../styles/sellersStyles'
 
@@ -78,6 +79,32 @@ export const Reviews = (props) => {
     }
 
     const [showForm , setShowForm] = useState(false)
+    const [form , setForm] = useState({
+        rating:3,
+        comment:'',
+        id:''
+    })
+
+    const onSubmit = () => {
+        const id = config.reviews.length + 1
+
+        const data = {
+            rate:form.rating,
+            comment:form.comment,
+            commenterName:'Sample Human',
+            id:id.toString()
+        }
+        setConfig({
+            ...config,
+            reviews:[data , ...config.reviews]
+        })
+        clearForm()
+    }
+
+    const clearForm = () => {
+        setForm({rating:3,comment:''})
+        setShowForm(!showForm)
+    }
 
     return (
         <ScrollView
@@ -100,8 +127,9 @@ export const Reviews = (props) => {
                 </TouchableOpacity>
                 <Text style={{marginTop:10}}>{config.reviews.length} review(s)</Text>
             </View>
-            
+            <View style={{flex:1}}>
             <FlatList
+                contentContainerStyle={{ paddingBottom: 40 }}
                 data={config.reviews}
                 keyExtractor={(item)=>item.id}
                 renderItem={({item,i})=>
@@ -114,9 +142,15 @@ export const Reviews = (props) => {
                     </View>
                 }
             />
+            </View>
 
-            <Overlay isVisible={showForm} onBackdropPress={()=>setShowForm(!showForm)}>
-                <Text>HELLO</Text>
+            <Overlay isVisible={showForm} onBackdropPress={clearForm}>
+                <CommentForm
+                    form={form}
+                    setForm={setForm}
+                    onSubmit={onSubmit}
+                    onCancel={clearForm}
+                />
             </Overlay>
         </ScrollView>
     )

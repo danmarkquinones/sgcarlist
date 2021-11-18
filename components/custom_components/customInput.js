@@ -8,7 +8,10 @@ const PrimaryInput = ({
     value,
     borderColor,
     Icon,
-    editable
+    editable,
+    multiline,
+    height,
+    textAlignVertical
 }) => {
     return (
       <View
@@ -25,13 +28,15 @@ const PrimaryInput = ({
         }}>
         <TextInput
           style={{
-            height: 50,
+            height: height??50,
             fontSize: 15,
           }}
           editable={editable}
           placeholder={placeholder}
-          onChange={onChange}
+          onChangeText={(text)=>onChange(text)}
           value={value}
+          multiline={multiline}
+          textAlignVertical={textAlignVertical}
         />
         {Icon && <Icon />}
       </View>

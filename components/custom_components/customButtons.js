@@ -40,7 +40,7 @@ export const SmallButton = (props) => {
 }
 
 export const PrimaryButton = (props) => {
-  const {color,title,onPress,Icon} = props
+  const {color,title,onPress,Icon } = props
 
   return(
     <TouchableOpacity onPress={onPress}>
