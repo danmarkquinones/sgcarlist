@@ -10,6 +10,7 @@ const SorterComponent = (props) => {
     const toggleSwitchView = () => {
         setConfig({...config,isGridView:!config.isGridView})
     }
+    
     return (
         <View
             style={styles.container}

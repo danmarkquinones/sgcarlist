@@ -14,6 +14,8 @@ const PrimaryInput = ({
       <View
         style={{
           backgroundColor: theme.white,
+          borderWidth:borderColor?2:0,
+          borderColor:borderColor??'',
           borderRadius: 5,
           display: 'flex',
           flexDirection: 'row',

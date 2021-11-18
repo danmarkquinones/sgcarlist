@@ -174,8 +174,12 @@ const BuyerLanding = (props) => {
                         index!==3 ?
                         <DealerCard 
                             dealer={item}
+                            onPress={()=>navigation.navigate('SellerView' , item)}
                         />
-                        :<WhiteCard options={{width:150}}/>
+                        :<WhiteCard 
+                            options={{width:150}}
+                            onPress={()=>navigation.navigate('TopDealers')}
+                        />
                     )}
                 />
             </View>
