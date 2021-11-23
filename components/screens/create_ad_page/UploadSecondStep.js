@@ -15,53 +15,153 @@ const UploadSecondStep = () => {
   return (
     <ScrollView style={{flex: 1}}>
       <View style={styles.container}>
-        <Spacer bottom={48} />
+        <Spacer bottom={8} />
 
+        <Text style={styles.title}>Package Options</Text>
+        <Text style={styles.subtitle}>
+          Packages that we offer for your car advertisement:
+        </Text>
+        <Spacer bottom={48} />
         <View>
-          <Text style={{fontWeight: 'bold', fontSize: scaleFont(16)}}>
-            Plate number: AAA-DA059
-          </Text>
           <Spacer bottom={8} />
           <View
             style={{
               width: '100%',
-              height: 100,
               backgroundColor: '#fff',
               borderRadius: 5,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              padding: 16,
             }}>
-            <MaterialCommunityIcons name="camera" size={32} />
-            <Text style={{fontWeight: 'bold'}}>Upload thumbnail</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <Text
+                style={{fontSize: 32, color: '#2C9C22', fontWeight: 'bold'}}>
+                S$90{' '}
+              </Text>
+              <Text style={{fontSize: 20, color: '#4F4A4A'}}>
+                till vehicle is sold
+              </Text>
+            </View>
+            <View
+              style={{
+                width: '100%',
+                borderBottomWidth: StyleSheet.hairlineWidth,
+                borderBottomColor: '#bbb',
+                marginVertical: 8,
+              }}
+            />
+            <Text>
+              This package will allow you to post a normal "Direct Owner"
+              advertisement.
+            </Text>
+          </View>
+          <Spacer bottom={24} />
+
+          <View
+            style={{
+              width: '100%',
+              backgroundColor: '#fff',
+              borderRadius: 5,
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              overflow: 'hidden',
+            }}>
+            <View
+              style={{
+                backgroundColor: '#EA3636',
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 8,
+              }}>
+              <Text style={{color: theme.white}}>
+                GET 3x MORE SALES INQUIRIES
+              </Text>
+            </View>
+            <View
+              style={{
+                backgroundColor: theme.primaryBlue,
+                width: '100%',
+                padding: 16,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{fontSize: 32, color: '#36D828', fontWeight: 'bold'}}>
+                  S$108{' '}
+                </Text>
+                <View>
+                  <Text style={{fontSize: 14, color: '#fff', paddingRight: 16}}>
+                    till vehicle is sold (with 1 day StarAd {'\n'}exposure)
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  width: '100%',
+                  borderBottomWidth: StyleSheet.hairlineWidth,
+                  borderBottomColor: '#bbb',
+                  marginVertical: 8,
+                }}
+              />
+              <Text style={{color: theme.white}}>
+                Sell it fast with StarAd package as you will get over 100,000
+                views a day.{'\n'}
+              </Text>
+            </View>
           </View>
           <Spacer bottom={24} />
           <View>
-            <Text style={styles.label}>Vehicle unit *</Text>
+            <Text style={styles.label}>Date of insertion *</Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="AAA-DA059" />
+            <PrimaryInput placeholder="MM/DD/YYYY" />
           </View>
           <Spacer bottom={24} />
           <View>
-            <Text style={styles.label}>Vehicle registration card *</Text>
+            <Text style={styles.label}>Title *</Text>
+            <Text style={styles.sublabel}>
+              Title : Eg. 2004 Toyota Vios 1.5A at $35K
+            </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="AS324FASDFAG24" />
+            <PrimaryInput placeholder="Title" />
           </View>
           <Spacer bottom={24} />
           <View>
             <Text style={styles.label}>Description</Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Plate number" />
+            <PrimaryInput placeholder="" />
           </View>
         </View>
         <Spacer bottom={24} />
-        <View style={{flex: 1, justifyContent: 'flex-end'}}>
-          <PrimaryButton
-            onPress={() => navigation.goBack(null)}
-            title="Cancel"
-            color={theme.tertiaryBlue}
-          />
-          <Spacer bottom={16} />
-          <PrimaryButton color={theme.primaryBlue} title="Publish" />
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
+          }}>
+          <View style={{flex: 1}}>
+            <PrimaryButton
+              onPress={() => navigation.goBack(null)}
+              title="Cancel"
+              color={theme.gray}
+            />
+          </View>
+          <Spacer left={16} />
+          <View style={{flex: 1}}>
+            <PrimaryButton
+              onPress={() => onScreenChange(1)}
+              color={theme.primaryBlue}
+              title="Next"
+            />
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -75,19 +175,20 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   title: {
-    textAlign: 'center',
     fontWeight: 'bold',
     fontSize: scaleFont(20),
     color: '#4F4A4A',
   },
   subtitle: {
-    color: '#C2BEBE',
-    textAlign: 'center',
-    paddingHorizontal: 32,
+    color: '#4F4A4A',
   },
   label: {
     fontWeight: 'bold',
     color: '#4F4A4A',
+  },
+  sublabel: {
+    color: '#4F4A4A',
+    fontSize: 10,
   },
 });
 export default UploadSecondStep;
