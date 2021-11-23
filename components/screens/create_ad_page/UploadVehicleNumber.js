@@ -1,49 +1,103 @@
 import {useNavigation} from '@react-navigation/core';
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {scaleFont} from '../../../utils/scale';
 import {theme} from '../../contants/colors';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import CustomHeader from '../../custom_components/customHeader';
 import PrimaryInput from '../../custom_components/customInput';
+import CustomRadioButton from '../../custom_components/customRadioButton';
 import Spacer from '../../custom_components/spacer';
 
 const UploadVehicleNumber = ({onScreenChange}) => {
   const navigation = useNavigation();
+  const [selectedValueContact, setSelectedValueContact] = useState('yes');
+  const [selectedValueEmail, setSelectedValueEmail] = useState('yes');
   return (
     <View style={styles.container}>
-      <Spacer bottom={48} />
-      <Text style={styles.title}>Let's upload a vehicle</Text>
+      <Spacer bottom={8} />
+      <Text style={styles.title}>Personal Details</Text>
       <Text style={styles.subtitle}>
-        A vehicle plate number or a reference number will help you find ads
-        easily
+        note: (*) fields are compulsory to be filled up
       </Text>
-      <Spacer bottom={60} />
+      <Spacer bottom={40} />
       <View>
         <View>
-          <Text style={styles.label}>Vehicle plate number *</Text>
+          <Text style={styles.label}>Name *</Text>
           <Spacer bottom={8} />
-          <PrimaryInput placeholder="Plate number" />
+          <PrimaryInput placeholder="Name" />
         </View>
         <Spacer bottom={24} />
         <View>
-          <Text style={styles.label}>Reference number *</Text>
+          <Text style={styles.label}>Contact No. *</Text>
           <Spacer bottom={8} />
-          <PrimaryInput placeholder="Plate number" />
+          <PrimaryInput placeholder="Contact No." />
+        </View>
+        <Spacer bottom={24} />
+
+        <View style={{flexDirection: 'row'}}>
+          <Text style={styles.label}>Display Contact Number?</Text>
+          <CustomRadioButton
+            data={[
+              {value: 'yes', label: 'Yes'},
+              {value: 'no', label: 'No'},
+            ]}
+            selectedValue={selectedValueContact}
+            onSelectRadio={value => setSelectedValueContact(value)}
+          />
+        </View>
+        <Spacer bottom={24} />
+
+        <View>
+          <Text style={styles.label}>Email Address *</Text>
+          <Spacer bottom={8} />
+          <PrimaryInput placeholder="Email Address" />
+        </View>
+        <Spacer bottom={24} />
+
+        <View style={{flexDirection: 'row'}}>
+          <Text style={styles.label}>Enable inquiry via email?</Text>
+          <CustomRadioButton
+            data={[
+              {value: 'yes', label: 'Yes'},
+              {value: 'no', label: 'No'},
+            ]}
+            selectedValue={selectedValueEmail}
+            onSelectRadio={value => setSelectedValueEmail(value)}
+          />
+        </View>
+        <Spacer bottom={24} />
+
+        <View>
+          <Text style={styles.label}>Preferred Viewing Area *</Text>
+          <Spacer bottom={8} />
+          <PrimaryInput placeholder="Preferred Viewing Area" />
         </View>
       </View>
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
-        <PrimaryButton
-          onPress={() => navigation.goBack(null)}
-          title="Cancel"
-          color={theme.tertiaryBlue}
-        />
-        <Spacer bottom={16} />
-        <PrimaryButton
-          onPress={() => onScreenChange(1)}
-          color={theme.primaryBlue}
-          title="Next"
-        />
+
+      <Spacer bottom={24} />
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+        }}>
+        <View style={{flex: 1}}>
+          <PrimaryButton
+            onPress={() => navigation.goBack(null)}
+            title="Cancel"
+            color={theme.gray}
+          />
+        </View>
+        <Spacer left={16} />
+        <View style={{flex: 1}}>
+          <PrimaryButton
+            onPress={() => onScreenChange(1)}
+            color={theme.primaryBlue}
+            title="Next"
+          />
+        </View>
       </View>
     </View>
   );
@@ -56,18 +110,14 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   title: {
-    textAlign: 'center',
     fontWeight: 'bold',
     fontSize: scaleFont(20),
     color: '#4F4A4A',
   },
   subtitle: {
-    color: '#C2BEBE',
-    textAlign: 'center',
-    paddingHorizontal: 32,
+    color: '#4F4A4A',
   },
   label: {
-    fontWeight: 'bold',
     color: '#4F4A4A',
   },
 });
