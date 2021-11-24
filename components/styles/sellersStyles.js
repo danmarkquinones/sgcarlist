@@ -94,6 +94,18 @@ export const sellersStyles = StyleSheet.create({
         fontSize:20,
         color:theme.primaryBlue,
         fontWeight:'bold',
+    },
+    sellerDetailsInProduct:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+        marginVertical:10
+    },
+    sellerDetailsInProductName:{
+        fontSize:20,
+        fontWeight:'bold',
+        color:theme.primaryBlue,
+        marginLeft:10
     }
 })
 

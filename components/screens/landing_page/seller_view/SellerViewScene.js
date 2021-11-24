@@ -2,6 +2,7 @@ import React , {useState} from 'react'
 import { ScrollView, Text, View , TouchableOpacity , FlatList} from 'react-native'
 import { Rating , Overlay , Divider } from 'react-native-elements'
 import { theme } from '../../../contants/colors'
+import CustomAvatar from '../../../custom_components/customAvatar'
 import { GridCard, ListCard } from '../../../custom_components/customCards'
 import PrimaryInput from '../../../custom_components/customInput'
 import CommentForm from '../../../reusable_components/commentForm'
@@ -114,7 +115,14 @@ export const Reviews = (props) => {
             showsVerticalScrollIndicator={false}
         >
             <View style={sellersStyles.ratingHeaderContainer}>
-                <Text style={sellersStyles.headerText}>Overall Rating :</Text>
+                {config.sellerDetails?
+                    <View style={sellersStyles.sellerDetailsInProduct}>
+                        <CustomAvatar initial='L' color={theme.secondaryBlue} size={40}/>
+                        <Text style={sellersStyles.sellerDetailsInProductName}>{config.sellerDetails.name}</Text>
+                    </View>
+                    :<Text style={sellersStyles.headerText}>Overall Rating :</Text>
+                }
+                
                 <View style={sellersStyles.ratingContainer}> 
                     <Text style={sellersStyles.headerRate}>{getAverage()}</Text>
                     <Rating imageSize={15} readonly startingValue={getAverage()} ratingCount={5}/>

@@ -19,7 +19,7 @@ const SellerView = (props) => {
         sortBy:'ascending',
         isGridView:true,
         ads:cars,
-        reviews:reviews
+        reviews:reviews,
     })
     const [scrollY , setScrollY] = useState()
 
