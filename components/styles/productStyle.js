@@ -20,7 +20,15 @@ export const productStyles = StyleSheet.create({
         position:'absolute',
         zIndex:2,
         bottom:10,
-        right:10
+        right:10,
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    imageIconNumber:{
+        color:theme.white,
+        marginRight:10,
+        fontSize:20
     },
     sliderContainer:{
         height:200
