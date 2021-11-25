@@ -12,6 +12,7 @@ import { cars, reviews } from '../../../contants/dummyCarData';
 import { FlatList } from 'react-native-gesture-handler';
 import { SquareCard } from '../../../custom_components/customCards';
 import { theme } from '../../../contants/colors';
+import ImageSlider from './ImageSlider';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -40,14 +41,14 @@ const ProductView = (props) => {
                     style={productStyles.backIcon}
                 />
                 <EntIcon
-                    onPress={() => null}
+                    onPress={() => navigation.navigate('ImageViewer')}
                     name="images"
                     size={25}
                     color={'#fff'}
                     style={productStyles.imageIcon}
                 />
                 <View style={productStyles.sliderContainer}>
-                    <Image source={item.url} style={{height:200 , width:windowWidth}}/>
+                    <ImageSlider/>
                 </View>
             </View>
 
