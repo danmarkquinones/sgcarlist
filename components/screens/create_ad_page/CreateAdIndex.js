@@ -6,7 +6,10 @@ import {PrimaryButton} from '../../custom_components/customButtons';
 import CustomHeader from '../../custom_components/customHeader';
 import PrimaryInput from '../../custom_components/customInput';
 import Spacer from '../../custom_components/spacer';
+import UploadFifthStep from './UploadFifthStep';
+import UploadFourthStep from './UploadFourthStep';
 import UploadSecondStep from './UploadSecondStep';
+import UploadThirdStep from './UploadThirdStep';
 import UploadVehicleNumber from './UploadVehicleNumber';
 
 const CreateAd = ({navigation}) => {
@@ -27,6 +30,9 @@ const CreateAd = ({navigation}) => {
   const screens = [
     <UploadVehicleNumber onScreenChange={onScreenChange} />,
     <UploadSecondStep onScreenChange={onScreenChange} />,
+    <UploadThirdStep onScreenChange={onScreenChange} />,
+    <UploadFourthStep onScreenChange={onScreenChange} />,
+    <UploadFifthStep onScreenChange={onScreenChange} />,
   ];
 
   return (

@@ -9,7 +9,7 @@ import Spacer from '../../custom_components/spacer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/core';
 
-const UploadSecondStep = () => {
+const UploadSecondStep = ({onScreenChange}) => {
   const navigation = useNavigation();
 
   return (
@@ -21,7 +21,7 @@ const UploadSecondStep = () => {
         <Text style={styles.subtitle}>
           Packages that we offer for your car advertisement:
         </Text>
-        <Spacer bottom={48} />
+        <Spacer bottom={24} />
         <View>
           <Spacer bottom={8} />
           <View
@@ -131,12 +131,18 @@ const UploadSecondStep = () => {
             </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Title" />
+            <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/52</Text>
           </View>
           <Spacer bottom={24} />
           <View>
             <Text style={styles.label}>Description</Text>
+            <Text style={styles.sublabel}>
+              Description : Eg. Very low mileage, immaculate condition, cheapest
+              in the market, etc.
+            </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="" />
+            <PrimaryInput placeholder="" height={100} multiline={true} />
+            <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/80</Text>
           </View>
         </View>
         <Spacer bottom={24} />
@@ -157,7 +163,7 @@ const UploadSecondStep = () => {
           <Spacer left={16} />
           <View style={{flex: 1}}>
             <PrimaryButton
-              onPress={() => onScreenChange(1)}
+              onPress={() => onScreenChange(2)}
               color={theme.primaryBlue}
               title="Next"
             />

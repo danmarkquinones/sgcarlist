@@ -2,15 +2,21 @@ import React from 'react';
 import {View, Text, TouchableWithoutFeedback} from 'react-native';
 import {theme} from '../contants/colors';
 
-const CustomRadioButton = ({data, selectedValue, onSelectRadio}) => {
+const CustomRadioButton = ({
+  data,
+  selectedValue,
+  onSelectRadio,
+  isHorizontal,
+}) => {
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{flexDirection: isHorizontal ? 'column' : 'row'}}>
       {data.map(item => (
         <TouchableWithoutFeedback onPress={() => onSelectRadio(item.value)}>
           <View
             style={{
               flexDirection: 'row',
-              marginLeft: 16,
+              marginLeft: isHorizontal ? 0 : 16,
+              marginBottom: isHorizontal ? 16 : 0,
               alignItems: 'center',
             }}>
             <View
@@ -35,7 +41,9 @@ const CustomRadioButton = ({data, selectedValue, onSelectRadio}) => {
                 }}
               />
             </View>
-            <Text>{item.label}</Text>
+            <View>
+              <Text>{item.label}</Text>
+            </View>
           </View>
         </TouchableWithoutFeedback>
       ))}

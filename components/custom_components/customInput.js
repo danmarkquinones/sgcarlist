@@ -17,8 +17,8 @@ const PrimaryInput = ({
       <View
         style={{
           backgroundColor: theme.white,
-          borderWidth:borderColor?2:0,
-          borderColor:borderColor??'',
+          borderWidth: borderColor ? 2 : 0,
+          borderColor: borderColor ?? '',
           borderRadius: 5,
           display: 'flex',
           flexDirection: 'row',
@@ -28,12 +28,12 @@ const PrimaryInput = ({
         }}>
         <TextInput
           style={{
-            height: height??50,
+            height: height ?? 50,
             fontSize: 15,
           }}
           editable={editable}
           placeholder={placeholder}
-          onChangeText={(text)=>onChange(text)}
+          onChangeText={text => onChange(text)}
           value={value}
           multiline={multiline}
           textAlignVertical={textAlignVertical}
