@@ -21,11 +21,11 @@ const SpecsView = (props) => {
     const renderScene = ({ route }) => {
         switch (route.key) {
             case 'first':
-                return <Text>DESCRIPTION</Text>; 
+                return <Text style={{paddingVertical:10 , paddingHorizontal:20}}>DESCRIPTION</Text>; 
             case 'second':
-                return <Text>EQUIPMENTS</Text>; 
+                return <Text style={{paddingVertical:10 , paddingHorizontal:20}}>EQUIPMENTS</Text>; 
             case 'third':
-                return <Text>SPECIFICATION</Text>; 
+                return <Text style={{paddingVertical:10 , paddingHorizontal:20}}>SPECIFICATION</Text>; 
             default:
                 return null;
         }

@@ -102,6 +102,10 @@ export const productStyles = StyleSheet.create({
     similarCarsText:{
         fontSize:18,
         color:theme.black
+    },
+    contactButtonContainer:{
+        backgroundColor:theme.white,
+        padding:10,
     }
 })
 
