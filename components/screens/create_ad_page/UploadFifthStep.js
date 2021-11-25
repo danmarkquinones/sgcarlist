@@ -142,7 +142,7 @@ const UploadFifthStep = ({onScreenChange}) => {
           <Spacer left={16} />
           <View style={{flex: 1}}>
             <PrimaryButton
-              onPress={() => onScreenChange(1)}
+              onPress={() => onScreenChange(5)}
               color={theme.primaryBlue}
               title="Next"
             />

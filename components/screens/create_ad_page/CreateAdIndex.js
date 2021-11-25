@@ -9,6 +9,7 @@ import Spacer from '../../custom_components/spacer';
 import UploadFifthStep from './UploadFifthStep';
 import UploadFourthStep from './UploadFourthStep';
 import UploadSecondStep from './UploadSecondStep';
+import UploadSixthStep from './UploadSixthStep';
 import UploadThirdStep from './UploadThirdStep';
 import UploadVehicleNumber from './UploadVehicleNumber';
 
@@ -33,6 +34,7 @@ const CreateAd = ({navigation}) => {
     <UploadThirdStep onScreenChange={onScreenChange} />,
     <UploadFourthStep onScreenChange={onScreenChange} />,
     <UploadFifthStep onScreenChange={onScreenChange} />,
+    <UploadSixthStep onScreenChange={onScreenChange} />,
   ];
 
   return (
