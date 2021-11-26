@@ -39,57 +39,58 @@ export const SmallButton = (props) => {
   )
 }
 
-export const PrimaryButton = (props) => {
-  const {color,title,onPress,Icon } = props
+export const PrimaryButton = props => {
+  const {color, title, onPress, Icon, txtStyle} = props;
 
-  return(
-    <TouchableOpacity onPress={onPress}>
-      <View 
-        style={{
-          backgroundColor: color,
-          display:'flex',
-          flexDirection:'row',
-          alignItems:'center',
-          justifyContent:'center',
-          paddingVertical:15,
-          borderRadius:5
-        }}
-      >
-        {Icon&& <View style={{marginHorizontal:10}}><Icon /></View> }
-        <Text 
-          style={{
-            color:theme.white,
-            textTransform:'uppercase',
-
-          }}
-        >{title}</Text>
-      </View>
-    </TouchableOpacity>
-  )
-}
-
-export const OffCancelButton = (props) => {
-  const {title , onPress} = props
-
-  return(
+  return (
     <TouchableOpacity onPress={onPress}>
       <View
         style={{
-          display:'flex',
-          flexDirection:'row',
-          alignItems:'center',
-          justifyContent:'center',
-          paddingVertical:15,
-          borderRadius:5
-        }}
-      >
-        <Text style={{color:theme.gray , textAlign:'center' , textTransform:'uppercase'}}>
+          backgroundColor: color,
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingVertical: 15,
+          borderRadius: 5,
+        }}>
+        {Icon && (
+          <View style={{marginHorizontal: 10}}>
+            <Icon />
+          </View>
+        )}
+        <Text style={txtStyle ? txtStyle : styles.primaryBtnTxt}>{title}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+export const OffCancelButton = props => {
+  const {title, onPress} = props;
+
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingVertical: 15,
+          borderRadius: 5,
+        }}>
+        <Text
+          style={{
+            color: theme.gray,
+            textAlign: 'center',
+            textTransform: 'uppercase',
+          }}>
           {title}
         </Text>
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   onboardingBtn: {
@@ -101,6 +102,10 @@ const styles = StyleSheet.create({
   },
   onboardingBtnText: {
     color: '#fff',
+    textTransform: 'uppercase',
+  },
+  primaryBtnTxt: {
+    color: theme.white,
     textTransform: 'uppercase',
   },
 });
