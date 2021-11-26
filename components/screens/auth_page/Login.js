@@ -43,7 +43,7 @@ const Login = props => {
         </View>
         <Spacer bottom={height / 5} />
 
-        <View>
+        <View style={{zIndex: 20}}>
           <View
             style={{
               padding: 24,
