@@ -68,6 +68,7 @@ const Login = props => {
             <PrimaryInput height={40} placeholder="Password" />
             <Spacer bottom={24} />
             <Text
+              onPress={() => navigation.navigate('Verification')}
               style={{
                 textAlign: 'right',
                 color: '#20A8F4',

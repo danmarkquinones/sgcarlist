@@ -35,13 +35,13 @@ const MyAdsIndex = () => {
         title="SGCARLIST"
         isTitleCenter
       />
-      
-      <SorterComponent config={config} setConfig={setConfig}/>
+
+      <SorterComponent config={config} setConfig={setConfig} />
 
       <View style={{flex: 1}}>
         <Spacer bottom={16} />
         <View style={{width: '90%', alignSelf: 'center'}}>
-          <PrimaryInput placeholder="Search you listed car" />
+          <PrimaryInput placeholder="Search your listed car" />
         </View>
         <Spacer bottom={16} />
         <FlatList

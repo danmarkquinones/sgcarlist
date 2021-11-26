@@ -25,6 +25,7 @@ const PrimaryInput = ({
           alignItems: 'center',
           justifyContent: 'space-between',
           paddingHorizontal: 10,
+          overflow: 'hidden',
         }}>
         <TextInput
           style={{

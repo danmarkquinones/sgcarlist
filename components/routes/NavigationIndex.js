@@ -15,24 +15,56 @@ import FAIcon5 from 'react-native-vector-icons/FontAwesome5';
 import { theme } from '../contants/colors';
 import LoaderScreen from '../reusable_components/loaderScreen';
 import { UserConfigContext } from '../store/context_api/userContext';
-
+import ResetPassword from '../screens/reset_password_page/reset_password';
+import Verification from '../screens/verification_page/verification';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const RootStack = () => {
-    const [userConfig] = useContext(UserConfigContext)
+  const [userConfig] = useContext(UserConfigContext);
 
-    return(
-        <Stack.Navigator initialRouteName={userConfig.isLaunched===0?"Onboarding":"TabNav"}>
-            <Stack.Screen name="Onboarding" component={OnboardingIndex} options={{headerShown:false}}/>
-            <Stack.Screen name="TabNav" component={AppTabNavigation} options={{headerShown:false}}/> 
-            <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
-            <Stack.Screen name="Register" component={Register} options={{headerShown:false}}/>
-            <Stack.Screen name="LoaderScreen" component={LoaderScreen} options={{headerShown:false}}/>
-        </Stack.Navigator>
-    )
-}
+  return (
+    <Stack.Navigator
+      initialRouteName={userConfig.isLaunched === 0 ? 'Onboarding' : 'TabNav'}>
+      <Stack.Screen
+        name="Onboarding"
+        component={OnboardingIndex}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="TabNav"
+        component={AppTabNavigation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ResetPassword"
+        component={ResetPassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Verification"
+        component={Verification}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="LoaderScreen"
+        component={LoaderScreen}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+};
 
 
 const AppTabNavigation = () => {
