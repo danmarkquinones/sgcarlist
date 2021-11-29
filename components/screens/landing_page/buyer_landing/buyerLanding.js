@@ -1,17 +1,21 @@
 import React from 'react'
-import { FlatList, Text, View , ScrollView , Image, TouchableOpacity } from 'react-native'
+import { Text, View , ScrollView , Image, TouchableOpacity } from 'react-native'
 import { theme } from '../../../contants/colors'
-import { DealerCard, GridCard, SquareCard, WhiteCard } from '../../../custom_components/customCards'
 import { landingStyles } from '../../../styles/landingStyles'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { Divider } from 'react-native-elements/dist/divider/Divider'
 import CustomAvatar from '../../../custom_components/customAvatar'
 import PrimaryInput from '../../../custom_components/customInput'
-import { locations } from '../../../contants/dummyCarData'
+import FavoritesLists from './FavoritesLists'
+import QualifiedLists from './QualifiedLists'
+import HotDealsLists from './HotDealsLists'
+import NewCarLists from './NewCarLists'
+import TopDealersLists from './TopDealersLists'
+import TopLocations from './TopLocations'
 
 const BuyerLanding = (props) => {
 
-    const {items , dealers ,  navigation} = props
+    const {navigation} = props
+
 
     const handleSeeMore = (route , type) => {
         const filter = {
@@ -19,6 +23,7 @@ const BuyerLanding = (props) => {
         }
         navigation.navigate(route , filter)
     }
+
 
     return (
         <ScrollView 
@@ -56,21 +61,7 @@ const BuyerLanding = (props) => {
             </View>
 
             <View>
-                <FlatList
-                    horizontal
-                    data={items}
-                    keyExtractor={(item) => item.id}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({item , index})=>(
-                        index!==3 ?
-                        <SquareCard
-                            onPress={()=>navigation.navigate('ProductView', item)}
-                            car={item} 
-                            Icon={()=><FontAwesome5 name='star' size={20} solid color={theme.yellow}/>}
-                        />
-                        :<WhiteCard onPress={()=>handleSeeMore('FavoriteStacks')} options={{width:150}}/>
-                    )}
-                />
+                <FavoritesLists handleSeeMore={handleSeeMore} {...props}/>
             </View>
             
 
@@ -83,21 +74,7 @@ const BuyerLanding = (props) => {
             </View>
 
             <View>
-                <FlatList
-                    horizontal
-                    data={items}
-                    keyExtractor={(item) => item.id}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({item , index})=>(
-                        index!==3 ?
-                        <SquareCard 
-                            onPress={()=>navigation.navigate('ProductView', item)}
-                            car={item} 
-                            Icon={()=><FontAwesome5 name='check-circle' size={20} solid color={theme.green}/>}
-                        />
-                        :<WhiteCard onPress={()=>handleSeeMore('FilterIndex' , 'qualified')} options={{width:150}}/>
-                    )}
-                />
+                <QualifiedLists {...props} handleSeeMore={handleSeeMore}/>
             </View>
             
 
@@ -110,21 +87,7 @@ const BuyerLanding = (props) => {
             </View>
 
             <View>
-                <FlatList
-                    horizontal
-                    data={items}
-                    keyExtractor={(item) => item.id}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({item , index})=>(
-                        index!==3 ?
-                        <SquareCard 
-                            onPress={()=>navigation.navigate('ProductView', item)}
-                            car={item} 
-                            Icon={()=><FontAwesome5 name='hotjar' size={20} solid color={theme.red}/>}
-                        />
-                        :<WhiteCard onPress={()=>handleSeeMore('FilterIndex' , 'hotdeals')} options={{width:150}}/>
-                    )}
-                />
+                <HotDealsLists {...props} handleSeeMore={handleSeeMore}/>
             </View>
 
             <View style={landingStyles.listHeaderContainer}>
@@ -136,21 +99,7 @@ const BuyerLanding = (props) => {
             </View>
             
             <View>
-                <FlatList
-                    horizontal
-                    data={items}
-                    keyExtractor={(item) => item.id}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({item , index})=>(
-                        index!==3 ?
-                        <SquareCard 
-                            onPress={()=>navigation.navigate('ProductView', item)}
-                            car={item} 
-                            // Icon={()=><Entypo name='new' size={20} solid color={theme.tertiaryBlue}/>}
-                        />
-                        :<WhiteCard onPress={()=>handleSeeMore('FilterIndex' , 'newcars')} options={{width:150}}/>
-                    )}
-                />
+                <NewCarLists {...props} handleSeeMore={handleSeeMore}/> 
             </View>
 
             <View style={landingStyles.adContainer}>
@@ -165,23 +114,7 @@ const BuyerLanding = (props) => {
             </View>
             
             <View>
-                <FlatList
-                    horizontal
-                    data={dealers}
-                    keyExtractor={(item) => item.id}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({item , index})=>(
-                        index!==3 ?
-                        <DealerCard 
-                            dealer={item}
-                            onPress={()=>navigation.navigate('SellerView' , item)}
-                        />
-                        :<WhiteCard 
-                            options={{width:150}}
-                            onPress={()=>navigation.navigate('TopDealers')}
-                        />
-                    )}
-                />
+                <TopDealersLists {...props} handleSeeMore={handleSeeMore}/>
             </View>
             
             <View style={landingStyles.locationListContainer}>
@@ -190,21 +123,7 @@ const BuyerLanding = (props) => {
                     <Text style={landingStyles.listDealerText}>Top 5 Location</Text>
                 </View>
 
-                <FlatList
-                    data={locations}
-                    keyExtractor={(item) => item.id}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({item , index})=>(
-                        <View>
-                            <View style={landingStyles.locationItemContainer}>
-                                <Text style={landingStyles.locationText}>
-                                    {index+1}. {item.name}
-                                </Text>
-                                <Divider/>
-                            </View>
-                        </View>
-                    )}
-                />
+                <TopLocations {...props} handleSeeMore={handleSeeMore}/>
             </View>
             
             
