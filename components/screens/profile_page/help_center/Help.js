@@ -34,8 +34,11 @@ const Help = () => {
     }
 
     const onEmailLaunch = () => {
+        const email = 'support@gmail.com'
+        const subject = 'Carlist.SG Report System'
+        const body = 'To report any fraud or misconduct that such employees or parties suspect is happening in Client organisation.%0D%0A%0D%0AAll reports received will be referred to Client organisation for follow-up actions or investigations.%0D%0A%0D%0AWhile you are encouraged to disclose your identity, this is not mandatory. We respect your desire for anonymity, and to preserve the confidentiality of the information you provide. However, our ability to contact you if required to seek further clarification or information may play a role in determining the effectiveness of any investigation.%0D%0A%0D%0A1.1 About who would you like to make this report?%0D%0AEmployee name:%0D%0A%0D%0A%0D%0A1.2 Please indicate date, time of conversation and subject :%0D%0ADepartment:%0D%0ADate & Time :%0D%0ASubject (s) :%0D%0A%0D%0A1.3Would you like to provide your name and contact details?%0D%0AName :%0D%0AContact information :%0D%0AEmail :'
         Linking.openURL(
-            'mailto:support@gmail.com?subject=Support Me&body=Description mo to'
+            `mailto:${email}?subject=${subject}&body=${body}`
         )
     }
 
