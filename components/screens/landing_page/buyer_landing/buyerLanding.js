@@ -11,6 +11,7 @@ import HotDealsLists from './HotDealsLists'
 import NewCarLists from './NewCarLists'
 import TopDealersLists from './TopDealersLists'
 import TopLocations from './TopLocations'
+import { SkeletonSquareCard } from '../../../custom_components/customCardLoaders';
 
 const BuyerLanding = (props) => {
 
@@ -57,7 +58,7 @@ const BuyerLanding = (props) => {
                     <FontAwesome5 name='star' size={20} solid color={theme.yellow}/>
                     <Text style={landingStyles.listHeaderText}>Your Favorites</Text>
                 </View>
-                <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text>
+                {/* <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text> */}
             </View>
 
             <View>
@@ -68,9 +69,9 @@ const BuyerLanding = (props) => {
             <View style={landingStyles.listHeaderContainer}>
                 <View style={landingStyles.listHeaders}>
                     <FontAwesome5 name='check-circle' size={20} solid color={theme.green}/>
-                    <Text style={landingStyles.listHeaderText}>Qualified Cars</Text>
+                    <Text style={landingStyles.listHeaderText}>Carlist Qualified</Text>
                 </View>
-                <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text>
+                {/* <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text> */}
             </View>
 
             <View>
@@ -81,9 +82,9 @@ const BuyerLanding = (props) => {
             <View style={landingStyles.listHeaderContainer}>
                 <View style={landingStyles.listHeaders}>
                     <FontAwesome5 name='hotjar' size={20} solid color={theme.red}/>
-                    <Text style={landingStyles.listHeaderText}>Hot Deals</Text>
+                    <Text style={landingStyles.listHeaderText}>Popular Deals</Text>
                 </View>
-                <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text>
+                {/* <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text> */}
             </View>
 
             <View>
@@ -93,9 +94,9 @@ const BuyerLanding = (props) => {
             <View style={landingStyles.listHeaderContainer}>
                 <View style={landingStyles.listHeaders}>
                     <Text style={landingStyles.newBadge}>NEW</Text>
-                    <Text style={landingStyles.listHeaderText}>Car Deals</Text>
+                    <Text style={landingStyles.listHeaderText}>Listings</Text>
                 </View>
-                <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text>
+                {/* <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text> */}
             </View>
             
             <View>
@@ -108,9 +109,9 @@ const BuyerLanding = (props) => {
 
             <View style={landingStyles.listHeaderContainer}>
                 <View style={landingStyles.listHeaders}>
-                    <Text style={landingStyles.listDealerText}>Top Dealers</Text>
+                    <Text style={landingStyles.listDealerText}>Dealer - Car Sold</Text>
                 </View>
-                <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text>
+                {/* <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text> */}
             </View>
             
             <View>

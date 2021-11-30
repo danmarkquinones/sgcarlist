@@ -3,6 +3,8 @@ import { FlatList , Text } from 'react-native'
 import { SquareCard, WhiteCard } from '../../../custom_components/customCards'
 import { cars } from '../../../contants/dummyCarData';
 import { fetchCars } from '../../../store/api_calls/cars_api';
+import { SkeletonSquareCard } from '../../../custom_components/customCardLoaders';
+import { FetchFailed } from '../../../custom_components/customFallbacks';
 
 const NewCarLists = (props) => {
 
@@ -26,9 +28,17 @@ const NewCarLists = (props) => {
 
     return (
         isLoading?
-            <Text>Loading</Text>
+            <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={[...Array(3)]}
+                keyExtractor={(item,index)=>index}
+                renderItem={({item})=>
+                    <SkeletonSquareCard width={150} height={150} borderRadius={5} marginLeft={10}/>
+                }
+            />
         :!isLoading&&data.length===0?
-            <Text>No Data</Text>
+            <FetchFailed message="There seems to be a problem getting your request, please try again later"/>
         :<FlatList
             horizontal
             data={data}
