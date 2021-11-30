@@ -29,6 +29,7 @@ const ProfileIndex = (props) => {
 
     //overlays
     const [NotifOverlayVisible, setNotifOverlayVisible] = useState(false);
+    const [languageOverlayVisible,setLanguageOverlayVisible] = useState(false);
 
     const [information , setInformation] = useState([
         {type:'Username' , text:'LoremIpsum123'},
@@ -48,6 +49,9 @@ const ProfileIndex = (props) => {
 
     const toggleNotifOverlay = () => {
         setNotifOverlayVisible(!NotifOverlayVisible);
+    };
+    const toggleLanguageOverlay = () => {
+        setLanguageOverlayVisible(!languageOverlayVisible)
     };
 
     const toggleSwitchNotif = () => {
@@ -74,6 +78,11 @@ const ProfileIndex = (props) => {
 
     const onCancelNotif = () => {
         toggleNotifOverlay()
+    }
+
+    const handleLanguageChange = (language) => {
+        setUserConfig({...userConfig , language})
+        toggleLanguageOverlay()
     }
 
     const onShare = async () => {
@@ -172,10 +181,12 @@ const ProfileIndex = (props) => {
 
                     <Divider style={profileStyles.line}/>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={toggleLanguageOverlay}
+                    >
                         <View style={profileStyles.otherDetailsContainer}>
                             <Text style={profileStyles.othersDetailsText}>Language</Text>
-                            <Text>English</Text>
+                            <Text>{userConfig.language==="en"?"English" : "Chinese"}</Text>
                         </View>
                     </TouchableOpacity>
 
@@ -229,6 +240,18 @@ const ProfileIndex = (props) => {
 
             <Overlay isVisible={NotifOverlayVisible} onBackdropPress={toggleNotifOverlay}>
                 <NotificationModal onConfirm={onConfirmNotif} onCancel={onCancelNotif}/>
+            </Overlay>
+
+            <Overlay isVisible={languageOverlayVisible} onBackdropPress={toggleLanguageOverlay}>
+                <View style={profileStyles.languageOverlay}>
+                    <TouchableOpacity onPress={()=>handleLanguageChange('en')}>
+                        <Text>English</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={()=>handleLanguageChange('zh')}>
+                        <Text>Chinese</Text>
+                    </TouchableOpacity>
+                </View>
             </Overlay>
 
         </ScrollView>

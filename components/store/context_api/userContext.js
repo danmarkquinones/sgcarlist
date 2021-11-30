@@ -39,7 +39,7 @@ export const UserConfigContextProvider = (props) => {
             isLoggedIn:1,
             isSellMode:0,
             isNotificationOn:1,
-            language:'English',
+            language:'en',
             userDetails:{
                 username:"LoremIpsum123",
                 email:'Loremipusm@gmail.com',

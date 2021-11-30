@@ -84,6 +84,15 @@ export const profileStyles = StyleSheet.create({
         display:'flex',
         flexDirection:'row',
         alignItems:'center'
+    },
+
+    languageOverlay:{
+        height:80,
+        width:200,
+        padding:10,
+        display:'flex',
+        justifyContent:'space-between'
+        
     }
 })
 
