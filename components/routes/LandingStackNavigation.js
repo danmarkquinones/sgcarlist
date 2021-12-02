@@ -8,17 +8,23 @@ import CreateAdIndex from '../screens/create_ad_page/CreateAdIndex';
 import SellerView from '../screens/landing_page/seller_view/SellerView';
 import Sellers from '../screens/landing_page/seller_view/Sellers';
 import ImageViewer from '../screens/landing_page/product_view/ImageViewer';
+import SearchResult from '../screens/search_result_page/search_result';
 
 const Stack = createNativeStackNavigator();
 
-export const LandingStackNavigation = ({navigation , route}) => {
+export const LandingStackNavigation = ({navigation, route}) => {
+  const tabHiddenRoutes = [
+    'ProductView',
+    'ImageViewer',
+    'FilterIndex',
+    'SellerView',
+    'SearchResult',
+  ];
 
-  const tabHiddenRoutes = ["ProductView","ImageViewer" , "FilterIndex" , "SellerView"];
-
-  if(tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))){
-      navigation.setOptions({tabBarStyle: {display: 'none'}});
+  if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
+    navigation.setOptions({tabBarStyle: {display: 'none'}});
   } else {
-      navigation.setOptions({tabBarStyle: {display: 'flex'}});
+    navigation.setOptions({tabBarStyle: {display: 'flex'}});
   }
 
   return (
@@ -34,6 +40,7 @@ export const LandingStackNavigation = ({navigation , route}) => {
       <Stack.Screen name="CreateAdIndex" component={CreateAdIndex} />
       <Stack.Screen name="SellerView" component={SellerView} />
       <Stack.Screen name="TopDealers" component={Sellers} />
+      <Stack.Screen name="SearchResult" component={SearchResult} />
     </Stack.Navigator>
   );
 };

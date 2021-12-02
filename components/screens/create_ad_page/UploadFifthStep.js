@@ -135,8 +135,8 @@ const UploadFifthStep = ({onScreenChange}) => {
           <View style={{flex: 1}}>
             <PrimaryButton
               onPress={() => navigation.goBack(null)}
-              title="Cancel"
-              color={theme.gray}
+              title="Back"
+              color={theme.secondaryBlue}
             />
           </View>
           <Spacer left={16} />

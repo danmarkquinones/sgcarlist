@@ -22,6 +22,7 @@ const CustomHeader = ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: isTitleCenter ? 'center' : 'flex-start',
+        zIndex: 20,
       }}>
       {canGoBack && (
         <Icon

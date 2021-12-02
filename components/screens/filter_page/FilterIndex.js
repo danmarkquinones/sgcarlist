@@ -9,7 +9,7 @@ import CustomPicker from '../../custom_components/customPicker';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import Spacer from '../../custom_components/spacer';
 
-const FilterIndex = () => {
+const FilterIndex = ({navigation}) => {
   const [selectedCarBrand, setSelectedCarBrand] = useState(null);
   const [selectedCarCondition, setSelectedCarCondition] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -201,7 +201,7 @@ const FilterIndex = () => {
         <PrimaryButton
           color={'#254A7C'}
           title={'Apply filter'}
-          onPress={() => {}}
+          onPress={() => navigation.navigate('SearchResult')}
         />
       </View>
     </View>

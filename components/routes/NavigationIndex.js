@@ -17,16 +17,29 @@ import LoaderScreen from '../reusable_components/loaderScreen';
 import { UserConfigContext } from '../store/context_api/userContext';
 import ResetPassword from '../screens/reset_password_page/reset_password';
 import Verification from '../screens/verification_page/verification';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const RootStack = () => {
   const [userConfig] = useContext(UserConfigContext);
+  const [isFirstLaunched, setIsFirstLauncehd] = useState(null);
+
+  useEffect(() => {
+    getIsFirstLaunched();
+  }, []);
+
+  const getIsFirstLaunched = async () => {
+    const value = await AsyncStorage.getItem('isFirstLaunched');
+    setIsFirstLauncehd(value);
+  };
+
+  if (isFirstLaunched === null) return <></>;
 
   return (
     <Stack.Navigator
-      initialRouteName={userConfig.isLaunched === 0 ? 'Onboarding' : 'TabNav'}>
+      initialRouteName={isFirstLaunched === '1' ? 'Onboarding' : 'TabNav'}>
       <Stack.Screen
         name="Onboarding"
         component={OnboardingIndex}

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Text, View, Image, Dimensions, ScrollView} from 'react-native';
 import onboarding from '../../../assets/images/login.png';
-import logo from '../../../assets/images/sgcarlist_logo.png';
+import logo from '../../../assets/images/carlistsg_white.png';
 import {theme} from '../../contants/colors';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import PrimaryInput from '../../custom_components/customInput';
@@ -11,61 +11,32 @@ const Login = props => {
   const {width, height} = Dimensions.get('screen');
   const {navigation} = props;
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: theme.white}}>
       <ScrollView
         contentContainerStyle={{flex: 1}}
         showsVerticalScrollIndicator={false}>
-        <View
-          style={{
-            width: width,
-            height: height,
-            position: 'absolute',
-          }}>
-          <View
-            style={{
-              backgroundColor: 'rgba(0, 0, 0 ,.5)',
-              width: width,
-              height: height,
-              zIndex: 10,
-            }}
-          />
-
-          <Image
-            source={onboarding}
-            style={{
-              position: 'absolute',
-              flex: 1,
-              width: width,
-              height: height,
-              resizeMode: 'cover',
-            }}
-          />
-        </View>
-        <Spacer bottom={height / 5} />
-
         <View style={{zIndex: 20}}>
-          <View
+          <Image
+            source={logo}
             style={{
-              padding: 24,
-              backgroundColor: 'rgba(255, 255, 255 ,.8)',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={logo}
-              style={{
-                width: '90%',
-                height: 50,
-                resizeMode: 'contain',
-              }}
-            />
-          </View>
+              width: '100%',
+              height: '50%',
+              resizeMode: 'contain',
+            }}
+          />
 
-          <Spacer bottom={48} />
           <View style={{paddingHorizontal: 24}}>
-            <PrimaryInput height={40} placeholder="Username" />
+            <PrimaryInput
+              borderColor={theme.primaryBlue}
+              height={50}
+              placeholder="Username"
+            />
             <Spacer bottom={16} />
-            <PrimaryInput height={40} placeholder="Password" />
+            <PrimaryInput
+              borderColor={theme.primaryBlue}
+              height={50}
+              placeholder="Password"
+            />
             <Spacer bottom={24} />
             <Text
               onPress={() => navigation.navigate('Verification')}
@@ -82,14 +53,13 @@ const Login = props => {
               color={'#254A7C'}
               onPress={() => navigation.navigate('LandingStacks')}
               title="Login"
-              txtStyle={{color: theme.white}}
+              txtStyle={{color: theme.white, fontWeight: 'bold'}}
             />
 
             <Spacer bottom={16} />
             <Text
               style={{
                 textAlign: 'center',
-                color: theme.white,
                 fontWeight: 'bold',
               }}>
               Don't have an account?{' '}
@@ -101,8 +71,7 @@ const Login = props => {
             </Text>
             <Spacer bottom={48} />
 
-            <Text
-              style={{textAlign: 'center', color: theme.white, fontSize: 12}}>
+            <Text style={{textAlign: 'center', fontSize: 12}}>
               By using this service, you confirm that you have read, understood
               and that you accept our{' '}
               <Text style={{color: '#20A8F4'}}>Terms and Conditions</Text>

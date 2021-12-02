@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  Image,
+} from 'react-native';
 import {scaleFont} from '../../../utils/scale';
 import {theme} from '../../contants/colors';
 import {PrimaryButton} from '../../custom_components/customButtons';
@@ -46,6 +53,28 @@ const UploadSixthStep = ({onScreenChange}) => {
             <Icon name="images" size={50} color="#C2BEBE" />
             <Text>Upload Images</Text>
           </View>
+
+          <Text style={{marginVertical: 16}}>Image Preview</Text>
+
+          <Image
+            style={{
+              width: '100%',
+              height: 200,
+              borderRadius: 8,
+              marginBottom: 16,
+            }}
+            source={require('../../../assets/images/car2.jpg')}
+          />
+
+          <Image
+            style={{
+              width: '100%',
+              height: 200,
+              borderRadius: 8,
+              marginBottom: 16,
+            }}
+            source={require('../../../assets/images/car3.jpg')}
+          />
         </View>
 
         <View
@@ -57,14 +86,14 @@ const UploadSixthStep = ({onScreenChange}) => {
           <View style={{flex: 1}}>
             <PrimaryButton
               onPress={() => navigation.goBack(null)}
-              title="Cancel"
-              color={theme.gray}
+              title="Back"
+              color={theme.secondaryBlue}
             />
           </View>
           <Spacer left={16} />
           <View style={{flex: 1}}>
             <PrimaryButton
-              onPress={() => onScreenChange(1)}
+              onPress={() => onScreenChange(6)}
               color={theme.primaryBlue}
               title="Next"
             />

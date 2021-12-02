@@ -10,12 +10,13 @@ const MobileVerification = () => {
   return (
     <View>
       <Spacer bottom={48} />
-      <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 18}}>
+      <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 20}}>
         We will send you a One Time Password on this mobile number
       </Text>
       <Spacer bottom={24} />
       <PrimaryInput
-        height={40}
+        borderColor={theme.primaryBlue}
+        height={50}
         placeholder="Mobile Number"
         Icon={() => (
           <View
@@ -24,7 +25,7 @@ const MobileVerification = () => {
               height: '100%',
               width: 60,
               marginRight: -10,
-              paddingTop: 10,
+              paddingTop: 15,
               alignItems: 'center',
             }}>
             <Text style={{color: theme.white}}>Send</Text>
@@ -32,7 +33,11 @@ const MobileVerification = () => {
         )}
       />
       <Spacer bottom={24} />
-      <PrimaryInput height={40} placeholder="OTP" />
+      <PrimaryInput
+        borderColor={theme.primaryBlue}
+        height={50}
+        placeholder="OTP"
+      />
       <Spacer bottom={24} />
       <Text
         style={{
@@ -42,12 +47,6 @@ const MobileVerification = () => {
         Didn't receive code?{' '}
         <Text style={{color: '#20A8F4'}}>Request Again!</Text>
       </Text>
-      <Spacer bottom={24} />
-      <PrimaryButton
-        color={theme.primaryBlue}
-        title="Submit"
-        txtStyle={{textTransform: 'capitalize', color: theme.white}}
-      />
     </View>
   );
 };
