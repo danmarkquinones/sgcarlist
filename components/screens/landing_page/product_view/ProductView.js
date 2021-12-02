@@ -1,5 +1,6 @@
-import React , {useState} from 'react'
-import { View , Text , Image , Dimensions, ScrollView} from 'react-native'
+import React , {useState} from 'react';
+import { View , Text , Image , Dimensions, ScrollView} from 'react-native';
+import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import MatComIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EntIcon from 'react-native-vector-icons/Entypo';
 import FA5Icon from 'react-native-vector-icons/FontAwesome5';
@@ -157,7 +158,7 @@ const ProductView = (props) => {
             </ScrollView>
 
             <View style={productStyles.contactButtonContainer}>
-                <PrimaryButton title="CONTACT DEALER" color={theme.primaryBlue}/>
+                <PrimaryButton title="CONTACT DEALER" color={theme.primaryBlue} Icon={()=><MatIcon name="call" size={20} color={theme.white}/>}/>
             </View>
         </View>
     )

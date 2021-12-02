@@ -27,5 +27,31 @@ export const tosStyles = StyleSheet.create({
         marginVertical:10,
         fontWeight:'bold'
     },
+
+    ppQuestion:{
+        marginBottom:10,
+        fontWeight:'500',
+        fontSize:15
+    },
+    ppSubTitle:{
+        fontWeight:'300',
+        marginLeft:10,
+        marginTop:5
+    },
+    ppBullets:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'flex-start',
+        marginLeft:20,
+        marginVertical:5
+    },
+    ppHeader:{
+        fontWeight:'bold',
+        fontSize:18,
+        marginBottom:5
+    },
+    ppContent:{
+        marginBottom:5
+    }
 })
 

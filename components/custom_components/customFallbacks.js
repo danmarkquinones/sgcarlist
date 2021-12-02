@@ -21,3 +21,14 @@ export const SimpleFallback = ({message}) => {
     )
 }
 
+export const FetchFailed = ({message}) => {
+    return (
+        <View
+            style={{
+                paddingHorizontal:10
+            }}
+        >
+            <Text style={{color:theme.gray , fontSize:20 , fontWeight:'500' , textAlign:'center'}}>{message}</Text>
+        </View>
+    )
+}
