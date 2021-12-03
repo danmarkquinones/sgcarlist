@@ -28,16 +28,20 @@ const ResetPassword = ({}) => {
         <Spacer bottom={40} />
 
         <PrimaryInput
+          onChange={() => {}}
           borderColor={theme.primaryBlue}
           height={50}
           placeholder="New Password"
+          isPassword
         />
         <Spacer bottom={16} />
 
         <PrimaryInput
+          onChange={() => {}}
           borderColor={theme.primaryBlue}
           height={50}
           placeholder="Confirm Password"
+          isPassword
         />
 
         <Spacer bottom={48} />

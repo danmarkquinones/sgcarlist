@@ -33,7 +33,7 @@ const UploadThirdStep = ({onScreenChange}) => {
               Car Plate Number <Text style={{color: theme.red}}>*</Text>
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="AAA-DA059" />
+            <PrimaryInput onChange={() => {}} placeholder="AAA-DA059" />
           </View>
 
           <Spacer bottom={24} />
@@ -43,7 +43,7 @@ const UploadThirdStep = ({onScreenChange}) => {
               Owner ID Type <Text style={{color: theme.red}}>*</Text>
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="ID Type" />
+            <PrimaryInput onChange={() => {}} placeholder="ID Type" />
           </View>
 
           <Spacer bottom={24} />
@@ -53,7 +53,7 @@ const UploadThirdStep = ({onScreenChange}) => {
               Owner ID <Text style={{color: theme.red}}>*</Text>
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Owner ID" />
+            <PrimaryInput onChange={() => {}} placeholder="Owner ID" />
           </View>
           <Spacer bottom={24} />
 

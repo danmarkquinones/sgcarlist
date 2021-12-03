@@ -15,6 +15,7 @@ const MobileVerification = () => {
       </Text>
       <Spacer bottom={24} />
       <PrimaryInput
+        onChange={() => {}}
         borderColor={theme.primaryBlue}
         height={50}
         placeholder="Mobile Number"
@@ -34,6 +35,7 @@ const MobileVerification = () => {
       />
       <Spacer bottom={24} />
       <PrimaryInput
+        onChange={() => {}}
         borderColor={theme.primaryBlue}
         height={50}
         placeholder="OTP"

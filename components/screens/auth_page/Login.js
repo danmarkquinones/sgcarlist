@@ -10,6 +10,8 @@ import Spacer from '../../custom_components/spacer';
 const Login = props => {
   const {width, height} = Dimensions.get('screen');
   const {navigation} = props;
+
+
   return (
     <View style={{flex: 1, backgroundColor: theme.white}}>
       <ScrollView
@@ -27,15 +29,18 @@ const Login = props => {
 
           <View style={{paddingHorizontal: 24}}>
             <PrimaryInput
+              onChange={() => {}}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Username"
             />
             <Spacer bottom={16} />
             <PrimaryInput
+              onChange={() => {}}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Password"
+              isPassword
             />
             <Spacer bottom={24} />
             <Text

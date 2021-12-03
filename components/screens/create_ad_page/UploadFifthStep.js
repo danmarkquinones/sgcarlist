@@ -34,7 +34,7 @@ const UploadFifthStep = ({onScreenChange}) => {
               Car Model <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Select Car Model" />
+            <PrimaryInput onChange={() => {}} placeholder="Select Car Model" />
           </View>
           <Spacer bottom={8} />
 
@@ -80,7 +80,7 @@ const UploadFifthStep = ({onScreenChange}) => {
               Asking Price <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Asking Price" />
+            <PrimaryInput onChange={() => {}} placeholder="Asking Price" />
           </View>
           <Spacer bottom={8} />
 
@@ -89,7 +89,7 @@ const UploadFifthStep = ({onScreenChange}) => {
               Transmission <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Transmission" />
+            <PrimaryInput onChange={() => {}} placeholder="Transmission" />
           </View>
           <Spacer bottom={8} />
 
@@ -98,7 +98,7 @@ const UploadFifthStep = ({onScreenChange}) => {
               Fuel Type <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Fuel Type" />
+            <PrimaryInput onChange={() => {}} placeholder="Fuel Type" />
           </View>
           <Spacer bottom={8} />
 
@@ -107,14 +107,19 @@ const UploadFifthStep = ({onScreenChange}) => {
               Mileage <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Mileage" />
+            <PrimaryInput onChange={() => {}} placeholder="Mileage" />
           </View>
           <Spacer bottom={8} />
 
           <View>
             <Text style={styles.label}>Vehicle Features :</Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="" height={100} multiline={true} />
+            <PrimaryInput
+              onChange={() => {}}
+              placeholder=""
+              height={100}
+              multiline={true}
+            />
             <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/150</Text>
           </View>
           <Spacer bottom={8} />
@@ -122,7 +127,12 @@ const UploadFifthStep = ({onScreenChange}) => {
           <View>
             <Text style={styles.label}>Accessories :</Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="" height={100} multiline={true} />
+            <PrimaryInput
+              onChange={() => {}}
+              placeholder=""
+              height={100}
+              multiline={true}
+            />
             <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/150</Text>
           </View>
           <Spacer bottom={8} />
@@ -130,7 +140,12 @@ const UploadFifthStep = ({onScreenChange}) => {
           <View>
             <Text style={styles.label}>Description :</Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="" height={100} multiline={true} />
+            <PrimaryInput
+              onChange={() => {}}
+              placeholder=""
+              height={100}
+              multiline={true}
+            />
             <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/150</Text>
           </View>
           <Spacer bottom={8} />
