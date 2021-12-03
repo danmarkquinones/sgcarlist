@@ -32,6 +32,7 @@ const RootStack = () => {
 
   const getIsFirstLaunched = async () => {
     const value = await AsyncStorage.getItem('isLaunched');
+    // AsyncStorage.setItem('isLaunched', '0');
     setIsFirstLauncehd(value);
   };
 

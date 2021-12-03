@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View , ScrollView , Image, TouchableOpacity } from 'react-native'
+import { Text, View , ScrollView , Image, TouchableOpacity , RefreshControl } from 'react-native'
 import { theme } from '../../../contants/colors'
 import { landingStyles } from '../../../styles/landingStyles'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -13,9 +13,20 @@ import TopDealersLists from './TopDealersLists'
 import TopLocations from './TopLocations'
 import { SkeletonSquareCard } from '../../../custom_components/customCardLoaders';
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
+
 const BuyerLanding = (props) => {
 
     const {navigation} = props
+
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
 
 
     const handleSeeMore = (route , type) => {
@@ -30,6 +41,12 @@ const BuyerLanding = (props) => {
         <ScrollView 
             showsVerticalScrollIndicator={false}
             stickyHeaderIndices={[1]}
+            refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={onRefresh}
+                />
+            }
         >
             <View style={landingStyles.headerContainer}>
                 <CustomAvatar initial='L' color={theme.secondaryBlue} size={50}/>
@@ -62,7 +79,7 @@ const BuyerLanding = (props) => {
             </View>
 
             <View>
-                <FavoritesLists handleSeeMore={handleSeeMore} {...props}/>
+                <FavoritesLists refreshing={refreshing} handleSeeMore={handleSeeMore} {...props}/>
             </View>
             
 

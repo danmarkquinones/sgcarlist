@@ -10,23 +10,36 @@ import { FetchFailed } from '../../../custom_components/customFallbacks';
 
 const FavoritesLists = (props) => {
 
-    const {navigation , handleSeeMore} = props 
+    const {navigation , handleSeeMore , refreshing} = props 
 
     const [data , setData] = useState([])
     const [isLoading , setIsLoading] = useState(false)
 
-    useEffect(() => {
+    const fetchData = () => {
         setIsLoading(true)
+        console.log('call api')
         const getCars = fetchCars()
         getCars.then((res)=>{
+            console.log('call success' , res)
             if(res.data){
                 setData(cars)
                 setIsLoading(false)
             }
         }).catch((e)=>{
+            console.log('call failed' , e)
             setIsLoading(false)
         })
+    }
+
+    useEffect(() => {
+        fetchData()
     }, [])
+
+    useEffect(() => {
+        if(refreshing){
+            fetchData()
+        }
+    }, [refreshing])
 
     return (
         isLoading?
