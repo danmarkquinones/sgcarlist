@@ -19,6 +19,7 @@ export const LandingStackNavigation = ({navigation, route}) => {
     'FilterIndex',
     'SellerView',
     'SearchResult',
+    'CreateAdIndex',
   ];
 
   if (tabHiddenRoutes.includes(getFocusedRouteNameFromRoute(route))) {
