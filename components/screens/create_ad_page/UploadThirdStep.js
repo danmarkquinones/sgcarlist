@@ -29,7 +29,9 @@ const UploadThirdStep = ({onScreenChange}) => {
           <Spacer bottom={24} />
 
           <View>
-            <Text style={styles.label}>Car Plate Number *</Text>
+            <Text style={styles.label}>
+              Car Plate Number <Text style={{color: theme.red}}>*</Text>
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="AAA-DA059" />
           </View>
@@ -37,7 +39,9 @@ const UploadThirdStep = ({onScreenChange}) => {
           <Spacer bottom={24} />
 
           <View>
-            <Text style={styles.label}>Owner ID Type *</Text>
+            <Text style={styles.label}>
+              Owner ID Type <Text style={{color: theme.red}}>*</Text>
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="ID Type" />
           </View>
@@ -45,7 +49,9 @@ const UploadThirdStep = ({onScreenChange}) => {
           <Spacer bottom={24} />
 
           <View>
-            <Text style={styles.label}>Owner ID *</Text>
+            <Text style={styles.label}>
+              Owner ID <Text style={{color: theme.red}}>*</Text>
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Owner ID" />
           </View>
@@ -81,12 +87,12 @@ const UploadThirdStep = ({onScreenChange}) => {
           }}>
           <View style={{flex: 1}}>
             <PrimaryButton
-              onPress={() => navigation.goBack(null)}
+              onPress={() => onScreenChange(1)}
               title="Back"
               color={theme.secondaryBlue}
             />
           </View>
-          <Spacer left={16} />
+          <Spacer left={48} />
           <View style={{flex: 1}}>
             <PrimaryButton
               onPress={() => onScreenChange(3)}

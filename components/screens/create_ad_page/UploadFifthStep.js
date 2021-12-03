@@ -30,7 +30,9 @@ const UploadFifthStep = ({onScreenChange}) => {
           <Spacer bottom={24} />
 
           <View>
-            <Text style={styles.label}>Car Model *:</Text>
+            <Text style={styles.label}>
+              Car Model <Text style={{color: theme.red}}>*</Text>:
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Select Car Model" />
           </View>
@@ -74,28 +76,36 @@ const UploadFifthStep = ({onScreenChange}) => {
           </View>
 
           <View>
-            <Text style={styles.label}>Asking Price *:</Text>
+            <Text style={styles.label}>
+              Asking Price <Text style={{color: theme.red}}>*</Text>:
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Asking Price" />
           </View>
           <Spacer bottom={8} />
 
           <View>
-            <Text style={styles.label}>Transmission *:</Text>
+            <Text style={styles.label}>
+              Transmission <Text style={{color: theme.red}}>*</Text>:
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Transmission" />
           </View>
           <Spacer bottom={8} />
 
           <View>
-            <Text style={styles.label}>Fuel Type *:</Text>
+            <Text style={styles.label}>
+              Fuel Type <Text style={{color: theme.red}}>*</Text>:
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Fuel Type" />
           </View>
           <Spacer bottom={8} />
 
           <View>
-            <Text style={styles.label}>Mileage *:</Text>
+            <Text style={styles.label}>
+              Mileage <Text style={{color: theme.red}}>*</Text>:
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Mileage" />
           </View>
@@ -134,12 +144,12 @@ const UploadFifthStep = ({onScreenChange}) => {
           }}>
           <View style={{flex: 1}}>
             <PrimaryButton
-              onPress={() => navigation.goBack(null)}
+              onPress={() => onScreenChange(3)}
               title="Back"
               color={theme.secondaryBlue}
             />
           </View>
-          <Spacer left={16} />
+          <Spacer left={48} />
           <View style={{flex: 1}}>
             <PrimaryButton
               onPress={() => onScreenChange(5)}
