@@ -24,7 +24,7 @@ const Tab = createBottomTabNavigator();
 
 const RootStack = () => {
   const [userConfig] = useContext(UserConfigContext);
-  const [isFirstLaunched, setIsFirstLauncehd] = useState(null);
+  const [isFirstLaunched, setIsFirstLaunched] = useState(null);
 
   useEffect(() => {
     getIsFirstLaunched();
@@ -33,7 +33,7 @@ const RootStack = () => {
   const getIsFirstLaunched = async () => {
     const value = await AsyncStorage.getItem('isLaunched');
     // AsyncStorage.setItem('isLaunched', '0');
-    setIsFirstLauncehd(value);
+    setIsFirstLaunched(value);
   };
 
   if (isFirstLaunched === null) return <></>;
