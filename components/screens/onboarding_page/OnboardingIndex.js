@@ -26,7 +26,7 @@ const OnboardingIndex = ({navigation}) => {
   const [showRealApp, setShowRealApp] = useState(false);
 
   useEffect(() => {
-    AsyncStorage.setItem('isFirstLaunched', '1');
+    AsyncStorage.setItem('isLaunched', '1');
   }, []);
 
   const onDone = () => {
