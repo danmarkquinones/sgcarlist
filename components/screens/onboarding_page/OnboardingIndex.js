@@ -25,7 +25,7 @@ const {width, height} = Dimensions.get('window');
 
 const OnboardingIndex = ({navigation}) => {
   const onDone = () => {
-    AsyncStorage.setItem('isFirstLaunched', '1');
+    AsyncStorage.setItem('isLaunched', '1');
     navigation.navigate('TabNav');
   };
 
