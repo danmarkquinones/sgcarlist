@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/core';
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {scaleFont} from '../../../utils/scale';
 import {theme} from '../../contants/colors';
 import {PrimaryButton} from '../../custom_components/customButtons';
@@ -9,28 +9,35 @@ import PrimaryInput from '../../custom_components/customInput';
 import CustomRadioButton from '../../custom_components/customRadioButton';
 import Spacer from '../../custom_components/spacer';
 
+const {width, height} = Dimensions.get('screen');
+
 const UploadVehicleNumber = ({onScreenChange}) => {
   const navigation = useNavigation();
   const [selectedValueContact, setSelectedValueContact] = useState('yes');
   const [selectedValueEmail, setSelectedValueEmail] = useState('yes');
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView
+      contentContainerStyle={{flex: 1, backgroundColor: theme.lightBlue}}>
       <View style={styles.container}>
-        <Spacer bottom={8} />
-        <Text style={styles.title}>Personal Details</Text>
-        <Text style={styles.subtitle}>
-          note: (*) fields are compulsory to be filled up
-        </Text>
-        <Spacer bottom={40} />
         <View>
+          <Spacer bottom={8} />
+          <Text style={styles.title}>Personal Details</Text>
+          <Text style={styles.subtitle}>
+            note: (*) fields are compulsory to be filled up
+          </Text>
+          <Spacer bottom={40} />
           <View>
-            <Text style={styles.label}>Name *</Text>
+            <Text style={styles.label}>
+              Name <Text style={{color: theme.red}}>*</Text>:
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Name" />
           </View>
           <Spacer bottom={24} />
           <View>
-            <Text style={styles.label}>Contact No. *</Text>
+            <Text style={styles.label}>
+              Contact No. <Text style={{color: theme.red}}>*</Text>:
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Contact No." />
           </View>
@@ -50,7 +57,9 @@ const UploadVehicleNumber = ({onScreenChange}) => {
           <Spacer bottom={24} />
 
           <View>
-            <Text style={styles.label}>Email Address *</Text>
+            <Text style={styles.label}>
+              Email Address <Text style={{color: theme.red}}>*</Text>:
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Email Address" />
           </View>
@@ -70,19 +79,18 @@ const UploadVehicleNumber = ({onScreenChange}) => {
           <Spacer bottom={24} />
 
           <View>
-            <Text style={styles.label}>Preferred Viewing Area *</Text>
+            <Text style={styles.label}>
+              Preferred Viewing Area <Text style={{color: theme.red}}>*</Text>:
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Preferred Viewing Area" />
           </View>
         </View>
-
-        <Spacer bottom={24} />
+      </View>
+      <View style={{flex: 1, justifyContent: 'flex-end', padding: 24}}>
         <View
           style={{
-            flex: 1,
             flexDirection: 'row',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
           }}>
           <View style={{flex: 1}}>
             <PrimaryButton
@@ -91,7 +99,7 @@ const UploadVehicleNumber = ({onScreenChange}) => {
               color={theme.secondaryBlue}
             />
           </View>
-          <Spacer left={16} />
+          <Spacer left={48} />
           <View style={{flex: 1}}>
             <PrimaryButton
               onPress={() => onScreenChange(1)}
@@ -107,8 +115,6 @@ const UploadVehicleNumber = ({onScreenChange}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: theme.lightBlue,
     padding: 24,
   },
   title: {

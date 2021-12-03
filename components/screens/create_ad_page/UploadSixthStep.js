@@ -85,12 +85,12 @@ const UploadSixthStep = ({onScreenChange}) => {
           }}>
           <View style={{flex: 1}}>
             <PrimaryButton
-              onPress={() => navigation.goBack(null)}
+              onPress={() => onScreenChange(4)}
               title="Back"
               color={theme.secondaryBlue}
             />
           </View>
-          <Spacer left={16} />
+          <Spacer left={48} />
           <View style={{flex: 1}}>
             <PrimaryButton
               onPress={() => onScreenChange(6)}

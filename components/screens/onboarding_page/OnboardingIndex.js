@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'left',
     marginTop: 60,
-    fontWeight: 'bold',
+    fontFamily: 'RobotoSlab-Bold',
     marginLeft: 24,
   },
 });

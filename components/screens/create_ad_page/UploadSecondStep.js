@@ -119,13 +119,15 @@ const UploadSecondStep = ({onScreenChange}) => {
           </View>
           <Spacer bottom={24} />
           <View>
-            <Text style={styles.label}>Date of insertion *</Text>
+            <Text style={styles.label}>
+              Date of insertion <Text style={{color: theme.red}}>*</Text>
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="MM/DD/YYYY" />
           </View>
           <Spacer bottom={24} />
           <View>
-            <Text style={styles.label}>Title *</Text>
+            <Text style={styles.label}>Title</Text>
             <Text style={styles.sublabel}>
               Title : Eg. 2004 Toyota Vios 1.5A at $35K
             </Text>
@@ -155,12 +157,12 @@ const UploadSecondStep = ({onScreenChange}) => {
           }}>
           <View style={{flex: 1}}>
             <PrimaryButton
-              onPress={() => navigation.goBack(null)}
+              onPress={() => onScreenChange(0)}
               title="Back"
               color={theme.secondaryBlue}
             />
           </View>
-          <Spacer left={16} />
+          <Spacer left={48} />
           <View style={{flex: 1}}>
             <PrimaryButton
               onPress={() => onScreenChange(2)}

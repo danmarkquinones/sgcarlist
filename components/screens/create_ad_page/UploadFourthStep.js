@@ -29,14 +29,18 @@ const UploadFourthStep = ({onScreenChange}) => {
           <Spacer bottom={24} />
 
           <View>
-            <Text style={styles.label}>Registration Date *:</Text>
+            <Text style={styles.label}>
+              Registration Date <Text style={{color: theme.red}}>*</Text>:
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="MM/DD/YYYY" />
           </View>
           <Spacer bottom={8} />
 
           <View>
-            <Text style={styles.label}>Engine Capacity *:</Text>
+            <Text style={styles.label}>
+              Engine Capacity <Text style={{color: theme.red}}>*</Text>:
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Engine Capacity" />
           </View>
@@ -71,14 +75,18 @@ const UploadFourthStep = ({onScreenChange}) => {
           <Spacer bottom={8} />
 
           <View>
-            <Text style={styles.label}>Number of Owners *:</Text>
+            <Text style={styles.label}>
+              Number of Owners <Text style={{color: theme.red}}>*</Text>:
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Number of Owners" />
           </View>
           <Spacer bottom={8} />
 
           <View>
-            <Text style={styles.label}>Type of Vehicle *:</Text>
+            <Text style={styles.label}>
+              Type of Vehicle <Text style={{color: theme.red}}>*</Text>:
+            </Text>
             <Spacer bottom={8} />
             <PrimaryInput placeholder="Type of Vehicle" />
           </View>
@@ -93,12 +101,12 @@ const UploadFourthStep = ({onScreenChange}) => {
           }}>
           <View style={{flex: 1}}>
             <PrimaryButton
-              onPress={() => navigation.goBack(null)}
+              onPress={() => onScreenChange(2)}
               title="Back"
               color={theme.secondaryBlue}
             />
           </View>
-          <Spacer left={16} />
+          <Spacer left={48} />
           <View style={{flex: 1}}>
             <PrimaryButton
               onPress={() => onScreenChange(4)}
