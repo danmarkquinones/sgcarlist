@@ -1,20 +1,20 @@
 import React, {useState , useEffect, useContext} from 'react'
-import { Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {Text, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import OnboardingIndex from '../screens/onboarding_page/OnboardingIndex';
 import Login from '../screens/auth_page/Login';
 import Register from '../screens/auth_page/Register';
-import { LandingStackNavigation } from './LandingStackNavigation';
-import { FavoritesStackNavigation } from './FavoritesStackNavigation';
-import { ProfileStackNavigation } from './ProfileStackNavigation';
+import {LandingStackNavigation} from './LandingStackNavigation';
+import {FavoritesStackNavigation} from './FavoritesStackNavigation';
+import {ProfileStackNavigation} from './ProfileStackNavigation';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import FAIcon5 from 'react-native-vector-icons/FontAwesome5';
-import { theme } from '../contants/colors';
+import {theme} from '../contants/colors';
 import LoaderScreen from '../reusable_components/loaderScreen';
-import { UserConfigContext } from '../store/context_api/userContext';
+import {UserConfigContext} from '../store/context_api/userContext';
 import ResetPassword from '../screens/reset_password_page/reset_password';
 import Verification from '../screens/verification_page/verification';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -32,16 +32,19 @@ const RootStack = () => {
 
   const getIsFirstLaunched = async () => {
     const value = await AsyncStorage.getItem('isLaunched');
-    // AsyncStorage.setItem('isLaunched', '0');
-    setIsFirstLaunched(value);
+    if (value) {
+      setIsFirstLaunched(value);
+    } else {
+      setIsFirstLaunched('0');
+    }
   };
 
   if (isFirstLaunched === null) return <></>;
 
   return (
     <Stack.Navigator
-      // initialRouteName={isFirstLaunched === '0' ? 'Onboarding' : 'TabNav'}
-      initialRouteName="TabNav"
+      initialRouteName={isFirstLaunched === '1' ? 'TabNav' : 'Onboarding'}
+      // initialRouteName="TabNav"
     >
       <Stack.Screen
         name="Onboarding"
