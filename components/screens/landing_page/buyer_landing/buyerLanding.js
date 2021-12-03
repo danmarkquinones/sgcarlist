@@ -51,7 +51,7 @@ const BuyerLanding = (props) => {
             <View style={landingStyles.headerContainer}>
                 <CustomAvatar initial='L' color={theme.secondaryBlue} size={50}/>
                 <View style={landingStyles.headerNameView}>
-                    <Text style={landingStyles.greetName}>HELLO , LOREM IPSUM</Text>
+                    <Text style={landingStyles.greetName}>HELLO , LOREM IPSUM - 2ndbuild</Text>
                     <Text style={landingStyles.listedCar}>We have 123,342 cars listed</Text>
                 </View>
             </View>
