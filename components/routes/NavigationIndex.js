@@ -40,7 +40,7 @@ const RootStack = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={isFirstLaunched === '1' ? 'Onboarding' : 'TabNav'}>
+      initialRouteName={isFirstLaunched === '0' ? 'Onboarding' : 'TabNav'}>
       <Stack.Screen
         name="Onboarding"
         component={OnboardingIndex}
