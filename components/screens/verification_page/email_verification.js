@@ -15,6 +15,7 @@ const EmailVerification = () => {
       </Text>
       <Spacer bottom={24} />
       <PrimaryInput
+        onChange={() => {}}
         borderColor={theme.primaryBlue}
         height={50}
         placeholder="Email"
@@ -34,6 +35,7 @@ const EmailVerification = () => {
       />
       <Spacer bottom={24} />
       <PrimaryInput
+        onChange={() => {}}
         borderColor={theme.primaryBlue}
         height={50}
         placeholder="OTP"

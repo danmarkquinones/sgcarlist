@@ -31,7 +31,7 @@ const UploadVehicleNumber = ({onScreenChange}) => {
               Name <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Name" />
+            <PrimaryInput onChange={() => {}} placeholder="Name" />
           </View>
           <Spacer bottom={24} />
           <View>
@@ -39,7 +39,7 @@ const UploadVehicleNumber = ({onScreenChange}) => {
               Contact No. <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Contact No." />
+            <PrimaryInput onChange={() => {}} placeholder="Contact No." />
           </View>
           <Spacer bottom={24} />
 
@@ -61,7 +61,7 @@ const UploadVehicleNumber = ({onScreenChange}) => {
               Email Address <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Email Address" />
+            <PrimaryInput onChange={() => {}} placeholder="Email Address" />
           </View>
           <Spacer bottom={24} />
 
@@ -83,7 +83,10 @@ const UploadVehicleNumber = ({onScreenChange}) => {
               Preferred Viewing Area <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Preferred Viewing Area" />
+            <PrimaryInput
+              onChange={() => {}}
+              placeholder="Preferred Viewing Area"
+            />
           </View>
         </View>
       </View>

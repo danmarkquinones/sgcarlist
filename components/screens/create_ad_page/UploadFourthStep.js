@@ -33,7 +33,7 @@ const UploadFourthStep = ({onScreenChange}) => {
               Registration Date <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="MM/DD/YYYY" />
+            <PrimaryInput onChange={() => {}} placeholder="MM/DD/YYYY" />
           </View>
           <Spacer bottom={8} />
 
@@ -42,35 +42,35 @@ const UploadFourthStep = ({onScreenChange}) => {
               Engine Capacity <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Engine Capacity" />
+            <PrimaryInput onChange={() => {}} placeholder="Engine Capacity" />
           </View>
           <Spacer bottom={8} />
 
           <View>
             <Text style={styles.label}>OMV :</Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="OMV" />
+            <PrimaryInput onChange={() => {}} placeholder="OMV" />
           </View>
           <Spacer bottom={8} />
 
           <View>
             <Text style={styles.label}>ARF :</Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="ARF" />
+            <PrimaryInput onChange={() => {}} placeholder="ARF" />
           </View>
           <Spacer bottom={8} />
 
           <View>
             <Text style={styles.label}>COE :</Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="COE" />
+            <PrimaryInput onChange={() => {}} placeholder="COE" />
           </View>
           <Spacer bottom={8} />
 
           <View>
             <Text style={styles.label}>COE Expiry Date :</Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="MM/DD/YYYY" />
+            <PrimaryInput onChange={() => {}} placeholder="MM/DD/YYYY" />
           </View>
           <Spacer bottom={8} />
 
@@ -79,7 +79,7 @@ const UploadFourthStep = ({onScreenChange}) => {
               Number of Owners <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Number of Owners" />
+            <PrimaryInput onChange={() => {}} placeholder="Number of Owners" />
           </View>
           <Spacer bottom={8} />
 
@@ -88,7 +88,7 @@ const UploadFourthStep = ({onScreenChange}) => {
               Type of Vehicle <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Type of Vehicle" />
+            <PrimaryInput onChange={() => {}} placeholder="Type of Vehicle" />
           </View>
           <Spacer bottom={24} />
         </View>

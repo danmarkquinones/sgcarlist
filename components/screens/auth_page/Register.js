@@ -28,39 +28,47 @@ const Register = props => {
           <Spacer bottom={16} />
           <View style={{paddingHorizontal: 24}}>
             <PrimaryInput
+              onChange={() => {}}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="First Name"
             />
             <Spacer bottom={24} />
             <PrimaryInput
+              onChange={() => {}}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Last Name"
             />
             <Spacer bottom={24} />
             <PrimaryInput
+              onChange={() => {}}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Email"
             />
             <Spacer bottom={24} />
             <PrimaryInput
+              onChange={() => {}}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Contact number"
             />
             <Spacer bottom={24} />
             <PrimaryInput
+              onChange={() => {}}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Password"
+              isPassword
             />
             <Spacer bottom={24} />
             <PrimaryInput
+              onChange={() => {}}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Confirm password"
+              isPassword
             />
             <Spacer bottom={24} />
 

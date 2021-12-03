@@ -123,7 +123,7 @@ const UploadSecondStep = ({onScreenChange}) => {
               Date of insertion <Text style={{color: theme.red}}>*</Text>
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="MM/DD/YYYY" />
+            <PrimaryInput onChange={() => {}} placeholder="MM/DD/YYYY" />
           </View>
           <Spacer bottom={24} />
           <View>
@@ -132,7 +132,7 @@ const UploadSecondStep = ({onScreenChange}) => {
               Title : Eg. 2004 Toyota Vios 1.5A at $35K
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="Title" />
+            <PrimaryInput onChange={() => {}} placeholder="Title" />
             <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/52</Text>
           </View>
           <Spacer bottom={24} />
@@ -143,7 +143,12 @@ const UploadSecondStep = ({onScreenChange}) => {
               in the market, etc.
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput placeholder="" height={100} multiline={true} />
+            <PrimaryInput
+              onChange={() => {}}
+              placeholder=""
+              height={100}
+              multiline={true}
+            />
             <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/80</Text>
           </View>
         </View>
