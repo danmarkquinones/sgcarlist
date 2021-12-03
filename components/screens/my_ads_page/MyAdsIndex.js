@@ -61,7 +61,7 @@ const MyAdsIndex = () => {
                   color={theme.yellow}
                 />
               )}
-              sellerMode={true}
+              // sellerMode={true}
             />
           )}
         />

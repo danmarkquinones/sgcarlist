@@ -96,13 +96,14 @@ const styles = StyleSheet.create({
   onboardingBtn: {
     backgroundColor: '#254A7C',
     paddingHorizontal: 16,
-    paddingVertical: 4,
+    paddingVertical: 8,
     borderRadius: 50,
     marginTop: 48,
   },
   onboardingBtnText: {
     color: '#fff',
     textTransform: 'uppercase',
+    textAlign: 'center',
   },
   primaryBtnTxt: {
     color: theme.white,

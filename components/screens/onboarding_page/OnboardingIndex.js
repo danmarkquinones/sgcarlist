@@ -3,7 +3,7 @@
 // Simple Intro Slider
 
 // import React in our code
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 // import all the components we are going to use
 import {
@@ -19,21 +19,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //import AppIntroSlider to use it
 import AppIntroSlider from 'react-native-app-intro-slider';
+import {OnboardingButton} from '../../custom_components/customButtons';
 
 const {width, height} = Dimensions.get('window');
 
 const OnboardingIndex = ({navigation}) => {
-  const [showRealApp, setShowRealApp] = useState(false);
-
-  useEffect(() => {
-    AsyncStorage.setItem('isLaunched', '1');
-  }, []);
-
   const onDone = () => {
+    AsyncStorage.setItem('isLaunched', '1');
     navigation.navigate('TabNav');
-  };
-  const onSkip = () => {
-    setShowRealApp(true);
   };
 
   const RenderItem = ({item}) => {
@@ -42,12 +35,13 @@ const OnboardingIndex = ({navigation}) => {
         style={{
           flex: 1,
         }}>
-        <View>
-          <Text style={styles.introTitleStyle}>{item.title}</Text>
-          <Text style={styles.introTextStyle}>{item.text}</Text>
-        </View>
         {item.key === 's1' && (
           <View style={{flex: 1, position: 'absolute'}}>
+            <View style={{flex: 1, zIndex: 1000}}>
+              <Text style={styles.introTitleStyle}>{item.title}</Text>
+              <Text style={styles.introTextStyle}>{item.text}</Text>
+            </View>
+            <View style={{flex: 1, zIndex: 1000}}></View>
             <Image
               style={styles.introImageStyle}
               source={require('../../../assets/images/Ob1.png')}
@@ -55,16 +49,52 @@ const OnboardingIndex = ({navigation}) => {
           </View>
         )}
         {item.key === 's2' && (
-          <Image
-            style={styles.introImageStyle}
-            source={require('../../../assets/images/Ob2.png')}
-          />
+          <View style={{flex: 1}}>
+            <View style={{height: '50%'}} />
+            <View
+              style={{
+                height: '50%',
+                justifyContent: 'flex-start',
+                zIndex: 1000,
+                marginTop: 60,
+              }}>
+              <Text style={styles.introTitleStyle}>{item.title}</Text>
+              <Text style={styles.introTextStyle}>{item.text}</Text>
+            </View>
+            <Image
+              style={styles.introImageStyle}
+              source={require('../../../assets/images/Ob2.png')}
+            />
+          </View>
         )}
+
         {item.key === 's3' && (
-          <Image
-            style={styles.introImageStyle}
-            source={require('../../../assets/images/Ob3.png')}
-          />
+          <View style={{flex: 1, position: 'absolute'}}>
+            <View style={{flex: 1, zIndex: 1000}}>
+              <Text style={styles.introTitleStyle}>{item.title}</Text>
+              <Text style={styles.introTextStyle}>{item.text}</Text>
+              <View
+                style={{
+                  flex: 1,
+                  width,
+                  alignItems: 'flex-end',
+                }}>
+                <View
+                  style={{
+                    width: 200,
+                    paddingHorizontal: 24,
+                  }}>
+                  <OnboardingButton onPress={onDone} />
+                </View>
+              </View>
+            </View>
+            <View
+              style={{flex: 1, backgroundColor: 'red', zIndex: 1000}}></View>
+            <Image
+              style={styles.introImageStyle}
+              source={require('../../../assets/images/Ob1.png')}
+            />
+          </View>
         )}
       </View>
     );
@@ -78,6 +108,7 @@ const OnboardingIndex = ({navigation}) => {
         showSkipButton={true}
         showSkipButton={false}
         showNextButton={false}
+        showDoneButton={false}
       />
     </>
   );
@@ -110,17 +141,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   introTextStyle: {
-    fontSize: 18,
+    fontSize: 20,
     color: 'white',
-    textAlign: 'center',
+    textAlign: 'left',
     paddingVertical: 30,
+    marginLeft: 24,
   },
   introTitleStyle: {
-    fontSize: 25,
+    fontSize: 48,
     color: 'white',
-    textAlign: 'center',
-    marginTop: 160,
+    textAlign: 'left',
+    marginTop: 60,
     fontWeight: 'bold',
+    marginLeft: 24,
   },
 });
 
@@ -134,7 +167,7 @@ const slides = [
   {
     key: 's2',
     title: 'Safe & Secured',
-    text: 'Find sellers with our “Trusted” badge for secure and safe deals',
+    text: 'Find sellers with our “Trusted” badge for\nsecure and safe deals',
     backgroundColor: '#febe29',
   },
   {
