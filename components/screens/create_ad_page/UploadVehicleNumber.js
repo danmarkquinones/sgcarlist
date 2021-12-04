@@ -16,8 +16,7 @@ const UploadVehicleNumber = ({onScreenChange}) => {
   const [selectedValueContact, setSelectedValueContact] = useState('yes');
   const [selectedValueEmail, setSelectedValueEmail] = useState('yes');
   return (
-    <ScrollView
-      contentContainerStyle={{flex: 1, backgroundColor: theme.lightBlue}}>
+    <ScrollView style={{flex: 1, backgroundColor: theme.lightBlue}}>
       <View style={styles.container}>
         <View>
           <Spacer bottom={8} />

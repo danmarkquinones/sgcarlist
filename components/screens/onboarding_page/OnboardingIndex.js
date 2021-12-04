@@ -20,6 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //import AppIntroSlider to use it
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {OnboardingButton} from '../../custom_components/customButtons';
+import {scaleFont} from '../../../utils/scale';
 
 const {width, height} = Dimensions.get('window');
 
@@ -141,14 +142,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   introTextStyle: {
-    fontSize: 20,
+    fontSize: scaleFont(16),
     color: 'white',
     textAlign: 'left',
     paddingVertical: 30,
-    marginLeft: 24,
+    marginHorizontal: 24,
   },
   introTitleStyle: {
-    fontSize: 48,
+    fontSize: scaleFont(34),
     color: 'white',
     textAlign: 'left',
     marginTop: 60,
