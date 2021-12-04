@@ -142,14 +142,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   introTextStyle: {
-    fontSize: scaleFont(18),
+    fontSize: scaleFont(16),
     color: 'white',
     textAlign: 'left',
     paddingVertical: 30,
-    marginLeft: 24,
+    marginHorizontal: 24,
   },
   introTitleStyle: {
-    fontSize: scaleFont(36),
+    fontSize: scaleFont(34),
     color: 'white',
     textAlign: 'left',
     marginTop: 60,
