@@ -1,6 +1,6 @@
 import React , {useState} from 'react';
 import {Text, View, FlatList} from 'react-native';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/Octicons';
 import {useNavigation} from '@react-navigation/core';
 import {ListCard} from '../../custom_components/customCards';
 import {theme} from '../../contants/colors';
@@ -9,18 +9,16 @@ import Spacer from '../../custom_components/spacer';
 import CustomHeader from '../../custom_components/customHeader';
 import {scaleFont} from '../../../utils/scale';
 import SorterComponent from '../../reusable_components/sorterComponent';
-import { cars } from '../../contants/dummyCarData';
-
+import {cars} from '../../contants/dummyCarData';
 
 const MyAdsIndex = () => {
-
   const navigation = useNavigation();
 
-  const [config , setConfig] = useState({
-    sortBy:'ascending',
-    isGridView:true,
-    listCars:cars,
-  })
+  const [config, setConfig] = useState({
+    sortBy: 'ascending',
+    isGridView: true,
+    listCars: cars,
+  });
 
   return (
     <View style={{flex: 1}}>
@@ -53,15 +51,8 @@ const MyAdsIndex = () => {
             <ListCard
               onPress={() => navigation.navigate('ProductView', item)}
               car={item}
-              Icon={() => (
-                <FontAwesome5
-                  name="star"
-                  size={20}
-                  solid
-                  color={theme.yellow}
-                />
-              )}
-              // sellerMode={true}
+              Icon={() => <Icon name="kebab-horizontal" size={20} solid />}
+              sellerMode={true}
             />
           )}
         />

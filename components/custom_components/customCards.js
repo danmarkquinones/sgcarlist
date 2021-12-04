@@ -57,10 +57,7 @@ export const ListCard = props => {
   return (
     <View style={customCardStyles.listCardContainer}>
       <View style={customCardStyles.imageSquareContainer}>
-        <Image
-          style={customCardStyles.listCarImage}
-          source={car.url}
-        />
+        <Image style={customCardStyles.listCarImage} source={car.url} />
       </View>
       <View style={customCardStyles.textListBodyContainer}>
         <View style={customCardStyles.listCardHeader}>
@@ -68,31 +65,34 @@ export const ListCard = props => {
             <Text style={customCardStyles.carName}>{car.name}</Text>
             <Text>{car.location}</Text>
           </View>
-          {Icon&&
+          {Icon && (
             <View style={customCardStyles.iconSquareContainer}>
-              {inFavorites? 
+              {inFavorites ? (
                 <TouchableOpacity onPress={onPress}>
                   <Icon />
                 </TouchableOpacity>
-              :<Icon />}
+              ) : (
+                <Icon />
+              )}
             </View>
-          }
+          )}
         </View>
 
         <Divider style={customCardStyles.line} />
 
-        {!sellerMode ? (
-          <View style={customCardStyles.listTextContainer}>
-            <Text style={customCardStyles.listCarPrice}>{car.price}</Text>
-            <SmallButton title="Contact" options={{color:theme.primaryBlue , textColor:theme.white , height:30}}/>
-          </View>
-        ) : (
-          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-            <SmallButton title="Edit" options={{color:theme.tertiaryBlue , textColor:theme.white , height:30}}/>
-            <Spacer right={8} />
-            <SmallButton title="Contact" options={{color:theme.red , textColor:theme.white , height:30}}/>
-          </View>
-        )}
+        <View style={customCardStyles.listTextContainer}>
+          <Text style={customCardStyles.listCarPrice}>{car.price}</Text>
+          {!sellerMode && (
+            <SmallButton
+              title="Contact"
+              options={{
+                color: theme.primaryBlue,
+                textColor: theme.white,
+                height: 30,
+              }}
+            />
+          )}
+        </View>
       </View>
     </View>
   );
