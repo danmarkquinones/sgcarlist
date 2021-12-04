@@ -15,6 +15,7 @@ import { SquareCard } from '../../../custom_components/customCards';
 import { theme } from '../../../contants/colors';
 import ImageSliderView from './ImageSlider';
 import { PrimaryButton } from '../../../custom_components/customButtons';
+import { onCallUser } from '../../../store/helpers/globalFunctions';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -158,7 +159,7 @@ const ProductView = (props) => {
             </ScrollView>
 
             <View style={productStyles.contactButtonContainer}>
-                <PrimaryButton title="CONTACT DEALER" color={theme.primaryBlue} Icon={()=><MatIcon name="call" size={20} color={theme.white}/>}/>
+                <PrimaryButton onPress={()=>onCallUser('09123456789')} title="CONTACT DEALER" color={theme.primaryBlue} Icon={()=><MatIcon name="call" size={20} color={theme.white}/>}/>
             </View>
         </View>
     )

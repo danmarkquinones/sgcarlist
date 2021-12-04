@@ -1,5 +1,5 @@
 import React , {useEffect , useState} from 'react'
-import { FlatList , View , Text } from 'react-native'
+import { FlatList , View , Text, TouchableOpacity } from 'react-native'
 import { SquareCard, WhiteCard } from '../../../custom_components/customCards'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { theme } from '../../../contants/colors';
@@ -27,14 +27,14 @@ const TopLocations = (props) => {
             keyExtractor={(item) => item.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item , index})=>(
-                <View>
+                <TouchableOpacity onPress={()=>navigation.navigate('SearchResult' , 'toplocation')}>
                     <View style={landingStyles.locationItemContainer}>
                         <Text style={landingStyles.locationText}>
                             {index+1}. {item.name}
                         </Text>
                         <Divider/>
                     </View>
-                </View>
+                </TouchableOpacity>
             )}
         />
     )

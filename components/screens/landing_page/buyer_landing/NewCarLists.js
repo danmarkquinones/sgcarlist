@@ -51,7 +51,7 @@ const NewCarLists = (props) => {
                     car={item} 
                     // Icon={()=><Entypo name='new' size={20} solid color={theme.tertiaryBlue}/>}
                 />
-                :<WhiteCard onPress={()=>handleSeeMore('FilterIndex' , 'newcars')} options={{width:150}}/>
+                :<WhiteCard onPress={()=>handleSeeMore('SearchResult' , 'newcars')} options={{width:150}}/>
             )}
         />
     )

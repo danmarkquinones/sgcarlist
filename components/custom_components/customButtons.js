@@ -21,11 +21,12 @@ export const SmallButton = (props) => {
     <TouchableOpacity onPress={onPress}>
       <View
         style={{
+          // flex:1,
           height:options.height,
           backgroundColor:options.color,
           paddingVertical:5,
           paddingHorizontal:10,
-          borderRadius:5
+          borderRadius:2
         }}
       >
         <Text

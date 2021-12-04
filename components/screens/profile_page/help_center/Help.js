@@ -7,29 +7,9 @@ import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import { theme } from '../../../contants/colors';
 import { PrimaryButton } from '../../../custom_components/customButtons';
 import CustomHeader from '../../../custom_components/customHeader';
+import { onCallUser } from '../../../store/helpers/globalFunctions';
 
 const Help = () => {
-
-    const onCall = () => {
-
-        let phoneNumber = '65-67177933';
-
-        if (Platform.OS !== 'android') {
-            phoneNumber = `telprompt:65-67177933`;
-        }else {
-            phoneNumber = `tel:65-67177933`;
-        }
-
-        Linking.canOpenURL(phoneNumber)
-        .then(supported => {
-            if (!supported) {
-            Alert.alert('Phone number is not available');
-            } else {
-            return Linking.openURL(phoneNumber);
-            }
-        })
-        .catch(err => console.log(err));
-    }
 
     const onEmailLaunch = () => {
         const email = 'enquiries@sgcarlist.com'
@@ -63,7 +43,7 @@ const Help = () => {
                         <PrimaryButton
                             color={theme.primaryBlue}
                             title="Call Us : 65-67177933"
-                            onPress={onCall}
+                            onPress={()=>onCallUser('65-67177933')}
                             Icon={()=><MatIcon name="call" size={20} color={theme.white}/>}
                         />
                     </View>

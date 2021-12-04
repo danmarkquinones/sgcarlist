@@ -21,7 +21,7 @@ const TopDealersLists = (props) => {
                 />
                 :<WhiteCard 
                     options={{width:150}}
-                    onPress={()=>navigation.navigate('TopDealers')}
+                    onPress={()=>navigation.navigate('SearchResult')}
                 />
             )}
         />

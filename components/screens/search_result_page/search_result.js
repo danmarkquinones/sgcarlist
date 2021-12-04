@@ -43,7 +43,7 @@ const SearchResult = ({navigation}) => {
             paddingVertical: 24,
             fontSize: 16,
           }}>
-          Found 387 cars available
+          Found {cars.length} cars available
         </Text>
 
         {config.savedCars.length ? (

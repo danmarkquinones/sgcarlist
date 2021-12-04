@@ -25,7 +25,7 @@ export const cars = [
         name: 'ABB Critical V476',
         price: '1,499 USD',
         location: 'Jurong , Singapore',
-        url: '',
+        url: require('../../assets/images/main_ad.jpg'),
       },
 ]
 
@@ -72,7 +72,7 @@ export const dealers = [
     id: '2',
     url: require('../../assets/images/bm3.png'),
     name: 'Johnny Cage',
-    number:'09123456789',
+    number:'0912976553',
     location:'Tampines, Singapore',
     deals: 393,
   },
@@ -80,11 +80,11 @@ export const dealers = [
     id: '3',
     url: require('../../assets/images/car3.jpg'),
     name: 'Sky Maviricks',
-    number:'09123456789',
+    number:'0913453455',
     location:'Jurong, Singapore',
     deals: 295,
   },
-  {id: '4', url: '', name: 'Sky Maviricks', deals: 295},
+  {id: '4', url: '../../assets/images/main_ad.jpg', name: 'Sky Maviricks', deals: 295},
 ];
 
 export const locations=[
@@ -99,7 +99,4 @@ export const reviews = [
   {id:'1',commenterName :'John Daniels' ,comment:'Very nice seller LEGIT!!!!!' , rate:4},
   {id:'2',commenterName :'Jack Escanor' ,comment:'Ut occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' , rate:5},
   {id:'3',commenterName :'Elsa Brue' ,comment:'Very nice seller LEGIT!!!!! , Ut occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',rate:4},
-  {id:'4',commenterName :'Elsa Brue' ,comment:'Very nice seller LEGIT!!!!! , Ut occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',rate:3},
-  {id:'5',commenterName :'Elsa Brue' ,comment:'Very nice seller LEGIT!!!!! , Ut occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',rate:1},
-  {id:'6',commenterName :'Elsa Brue' ,comment:'Very nice seller LEGIT!!!!! , Ut occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',rate:1},
 ]
