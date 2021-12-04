@@ -14,6 +14,7 @@ const PrimaryInput = ({
   height,
   textAlignVertical,
   isPassword,
+  LeftIcon,
 }) => {
   return (
     <View
@@ -29,8 +30,10 @@ const PrimaryInput = ({
         paddingHorizontal: 10,
         overflow: 'hidden',
       }}>
+      {LeftIcon && <LeftIcon />}
       <TextInput
         style={{
+          flex: 1,
           height: height ?? 50,
           fontSize: 15,
         }}
