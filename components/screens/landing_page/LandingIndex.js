@@ -9,6 +9,9 @@ import AntIcon from 'react-native-vector-icons/AntDesign';
 import { theme } from '../../contants/colors';
 import { cars, dealers } from '../../contants/dummyCarData';
 
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+
 const LandingIndex = props => {
   const {navigation} = props;
   const [userConfig] = useContext(UserConfigContext);
@@ -34,7 +37,7 @@ const LandingIndex = props => {
                 <TouchableOpacity onPress={()=>toggleOverlay()} style={{position:'absolute' , right:-20,top:-20 , zIndex:2}} >
                   <AntIcon name='closecircle' size={30}  color={theme.secondaryBlue}/> 
                 </TouchableOpacity>
-                <Image style={{height: 350 , width:350 }} source={require('../../../assets/images/main_ad.jpg')}/>
+                <Image style={{height: 350 , width:width*0.8 }} source={require('../../../assets/images/main_ad.jpg')}/>
               </View>
             </Overlay>
             <BuyerLanding items={cars} navigation={navigation} dealers={dealers} />

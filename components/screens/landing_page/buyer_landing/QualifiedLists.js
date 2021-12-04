@@ -53,7 +53,7 @@ const QualifiedLists = (props) => {
                     car={item} 
                     Icon={()=><FontAwesome5 name='check-circle' size={20} solid color={theme.green}/>}
                 />
-                :<WhiteCard onPress={()=>handleSeeMore('FilterIndex' , 'qualified')} options={{width:150}}/>
+                :<WhiteCard onPress={()=>handleSeeMore('SearchResult' , 'qualified')} options={{width:150}}/>
             )}
         />
     )

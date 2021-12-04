@@ -53,7 +53,7 @@ const HotDealsLists = (props) => {
                     car={item} 
                     Icon={()=><FontAwesome5 name='hotjar' size={20} solid color={theme.red}/>}
                 />
-                :<WhiteCard onPress={()=>handleSeeMore('FilterIndex' , 'hotdeals')} options={{width:150}}/>
+                :<WhiteCard onPress={()=>handleSeeMore('SearchResult' , 'hotdeals')} options={{width:150}}/>
             )}
         />
     )

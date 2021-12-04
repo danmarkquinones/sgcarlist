@@ -175,9 +175,9 @@ export const customCardStyles = StyleSheet.create({
     },
     gridTextContainer:{
         display:"flex",
-        flexDirection:'row',
+        // flexDirection:'row',
         alignItems:"center",
-        justifyContent:"space-evenly"
+        justifyContent:"space-between"
     },
 
     // Pinn filter styles

@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import EntIcon from 'react-native-vector-icons/Entypo';
 import { PrimaryButton, SmallButton } from './customButtons';
+import { onCallUser } from '../store/helpers/globalFunctions';
 
 export const SquareCard = props => {
   const {car, Icon, onPress} = props;
@@ -119,14 +120,17 @@ export const GridCard = props => {
       </View>
       <View style={customCardStyles.textBodyContainer}>
         <Text style={customCardStyles.carName}>{car.name}</Text>
-        <Text>{car.location}</Text>
+        <Text style={customCardStyles.listCarPrice}>{car.price}</Text>
+        {/* <Text>{car.location}</Text> */}
 
         <Divider style={customCardStyles.line} />
 
-        <View style={customCardStyles.gridTextContainer}>
+        <SmallButton title="Contact Dealer" onPress={()=>onCallUser('09354734378')} options={{color:theme.primaryBlue , textColor:theme.white , height:30}}/>
+
+        {/* <View style={customCardStyles.gridTextContainer}>
           <Text style={customCardStyles.listCarPrice}>{car.price}</Text>
           <SmallButton title="Contact" options={{color:theme.primaryBlue , textColor:theme.white , height:30}}/>
-        </View>
+        </View> */}
       </View>
     </View>
   );
