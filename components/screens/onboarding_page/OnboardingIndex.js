@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     marginLeft: 24,
   },
   introTitleStyle: {
-    fontSize: 48,
+    fontSize: 36,
     color: 'white',
     textAlign: 'left',
     marginTop: 60,
