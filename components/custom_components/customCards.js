@@ -85,7 +85,7 @@ export const ListCard = props => {
         {!sellerMode ? (
           <View style={customCardStyles.listTextContainer}>
             <Text style={customCardStyles.listCarPrice}>{car.price}</Text>
-            <SmallButton title="Contact" options={{color:theme.primaryBlue , textColor:theme.white , height:30}}/>
+            <SmallButton onPress={()=>onCallUser('092347832643')} title="Contact" options={{color:theme.primaryBlue , textColor:theme.white , height:30}}/>
           </View>
         ) : (
           <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>

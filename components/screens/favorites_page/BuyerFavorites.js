@@ -69,7 +69,7 @@ const SavedCars = ({config , setConfig , navigation}) => {
 const PinnedFilters = ({config , setConfig , navigation}) => {
 
     const goToSearchResult = (data) => {
-        console.log(data)
+        // console.log(data)
         navigation.navigate('SearchResult')
     }
 

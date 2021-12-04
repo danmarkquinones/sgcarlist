@@ -25,7 +25,7 @@ export const cars = [
         name: 'ABB Critical V476',
         price: '1,499 USD',
         location: 'Jurong , Singapore',
-        url: '',
+        url: require('../../assets/images/main_ad.jpg'),
       },
 ]
 
@@ -84,7 +84,7 @@ export const dealers = [
     location:'Jurong, Singapore',
     deals: 295,
   },
-  {id: '4', url: '', name: 'Sky Maviricks', deals: 295},
+  {id: '4', url: '../../assets/images/main_ad.jpg', name: 'Sky Maviricks', deals: 295},
 ];
 
 export const locations=[
