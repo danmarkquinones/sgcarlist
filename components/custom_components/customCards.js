@@ -81,18 +81,20 @@ export const ListCard = props => {
 
         <Divider style={customCardStyles.line} />
 
-        {!sellerMode ? (
-          <View style={customCardStyles.listTextContainer}>
-            <Text style={customCardStyles.listCarPrice}>{car.price}</Text>
-            <SmallButton onPress={()=>onCallUser('092347832643')} title="Contact" options={{color:theme.primaryBlue , textColor:theme.white , height:30}}/>
-          </View>
-        ) : (
-          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-            <SmallButton title="Edit" options={{color:theme.tertiaryBlue , textColor:theme.white , height:30}}/>
-            <Spacer right={8} />
-            <SmallButton title="Contact" options={{color:theme.red , textColor:theme.white , height:30}}/>
-          </View>
-        )}
+        <View style={customCardStyles.listTextContainer}>
+          <Text style={customCardStyles.listCarPrice}>{car.price}</Text>
+          {!sellerMode && (
+            <SmallButton
+              onPress={() => onCallUser('092347832643')}
+              title="Contact"
+              options={{
+                color: theme.primaryBlue,
+                textColor: theme.white,
+                height: 30,
+              }}
+            />
+          )}
+        </View>
       </View>
     </View>
   );
