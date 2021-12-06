@@ -24,6 +24,7 @@
     "react-native-collapsible": "^1.6.0",
     "react-native-datepicker": "^1.7.2",
     "react-native-device-info": "^8.4.5",
+    "react-native-dotenv": "^3.3.0",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-head-tab-view": "^4.0.0-rc.13",

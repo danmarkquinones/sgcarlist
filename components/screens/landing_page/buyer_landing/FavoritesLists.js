@@ -17,10 +17,9 @@ const FavoritesLists = (props) => {
 
     const fetchData = () => {
         setIsLoading(true)
-        console.log('call api')
         const getCars = fetchCars()
         getCars.then((res)=>{
-            console.log('call success' , res)
+            console.log('call success' , res , res.data.length)
             if(res.data){
                 setData(cars)
                 setIsLoading(false)
