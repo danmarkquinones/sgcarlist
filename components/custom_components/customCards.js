@@ -24,8 +24,8 @@ export const SquareCard = props => {
           <Image style={customCardStyles.carSquareImage} source={car.url} />
         </View>
         <View style={customCardStyles.textBodyContainer}>
-          <Text style={customCardStyles.carName}>{car.name}</Text>
-          <Text style={customCardStyles.carPrice}>{car.price}</Text>
+          <Text style={customCardStyles.carName}>{car.product_name}</Text>
+          <Text style={customCardStyles.carPrice}>S$ {car.product_price}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -63,7 +63,7 @@ export const ListCard = props => {
       <View style={customCardStyles.textListBodyContainer}>
         <View style={customCardStyles.listCardHeader}>
           <View>
-            <Text style={customCardStyles.carName}>{car.name}</Text>
+            <Text style={customCardStyles.carName}>{car.product_name}</Text>
             <Text>{car.location}</Text>
           </View>
           {Icon && (
@@ -82,7 +82,7 @@ export const ListCard = props => {
         <Divider style={customCardStyles.line} />
 
         <View style={customCardStyles.listTextContainer}>
-          <Text style={customCardStyles.listCarPrice}>{car.price}</Text>
+          <Text style={customCardStyles.listCarPrice}>S$ {car.product_price}</Text>
           {!sellerMode && (
             <SmallButton
               onPress={() => onCallUser('092347832643')}
@@ -120,8 +120,8 @@ export const GridCard = props => {
         />
       </View>
       <View style={customCardStyles.textBodyContainer}>
-        <Text style={customCardStyles.carName}>{car.name}</Text>
-        <Text style={customCardStyles.listCarPrice}>{car.price}</Text>
+        <Text style={customCardStyles.carName}>{car.product_name}</Text>
+        <Text style={customCardStyles.listCarPrice}>S$ {car.product_price}</Text>
         {/* <Text>{car.location}</Text> */}
 
         <Divider style={customCardStyles.line} />
@@ -129,7 +129,7 @@ export const GridCard = props => {
         <SmallButton title="Contact Dealer" onPress={()=>onCallUser('09354734378')} options={{color:theme.primaryBlue , textColor:theme.white , height:30}}/>
 
         {/* <View style={customCardStyles.gridTextContainer}>
-          <Text style={customCardStyles.listCarPrice}>{car.price}</Text>
+          <Text style={customCardStyles.listCarPrice}>{car.product_price}</Text>
           <SmallButton title="Contact" options={{color:theme.primaryBlue , textColor:theme.white , height:30}}/>
         </View> */}
       </View>

@@ -92,7 +92,7 @@ const BuyerLanding = (props) => {
             </View>
 
             <View>
-                <QualifiedLists {...props} handleSeeMore={handleSeeMore}/>
+                <QualifiedLists refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/>
             </View>
             
 
@@ -105,7 +105,7 @@ const BuyerLanding = (props) => {
             </View>
 
             <View>
-                <HotDealsLists {...props} handleSeeMore={handleSeeMore}/>
+                <HotDealsLists refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/>
             </View>
 
             <View style={landingStyles.listHeaderContainer}>
@@ -117,7 +117,7 @@ const BuyerLanding = (props) => {
             </View>
             
             <View>
-                <NewCarLists {...props} handleSeeMore={handleSeeMore}/> 
+                <NewCarLists refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/> 
             </View>
 
             <View style={landingStyles.adContainer}>
@@ -132,7 +132,7 @@ const BuyerLanding = (props) => {
             </View>
             
             <View>
-                <TopDealersLists {...props} handleSeeMore={handleSeeMore}/>
+                <TopDealersLists refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/>
             </View>
             
             <View style={landingStyles.locationListContainer}>
@@ -141,7 +141,7 @@ const BuyerLanding = (props) => {
                     <Text style={landingStyles.listDealerText}>Top 5 Location</Text>
                 </View>
 
-                <TopLocations {...props} handleSeeMore={handleSeeMore}/>
+                <TopLocations refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/>
             </View>
             
             
