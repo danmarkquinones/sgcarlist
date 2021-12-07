@@ -24,7 +24,7 @@ const QualifiedLists = (props) => {
                 setIsLoading(false)
             }
         }).catch((e)=>{
-            console.log('call failed' , e)
+            // console.log('call failed' , e)
             setIsLoading(false)
         })
     }

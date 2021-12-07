@@ -33,6 +33,8 @@ const ProductView = (props) => {
         sellerDetails:{name:'Lorem Ipsum' , location:'Jurong , Singapore'}
     })
 
+    console.log('product',item)
+
     return (
         <View style={{flex:1}}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -182,12 +184,11 @@ const ProductView = (props) => {
 
             <View style={productStyles.contactButtonContainer}>
                 <PrimaryButton 
-                    onPress={()=>onCallUser(item.advertisement_contact_details[0].user_contact_details.contact_numbers)} 
+                    onPress={()=>onCallUser(item.advertisement_contact_details.user_contact_details.contact_numbers)} 
                     title="CONTACT DEALER" 
                     color={theme.primaryBlue} 
                     Icon={()=><MatIcon name="call" size={20} color={theme.white}/>}
                 />
-                <Text>{item.verified_by}</Text>
             </View>
         </View>
     )

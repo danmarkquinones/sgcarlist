@@ -16,16 +16,16 @@ const HotDealsLists = (props) => {
 
     const fetchData = () => {
         setIsLoading(true)
-        const getCars = fetchCars()
-        fetchFilteredCars()
+        const getCars = fetchFilteredCars()
         getCars.then((res)=>{
             if(res.data){
+                console.log(res.data)
                 const displayCars = res.data.data.slice(0,6)
                 setData(displayCars)
                 setIsLoading(false)
             }
         }).catch((e)=>{
-            console.log('call failed' , e)
+            console.log('call failed in hotdeals' , e)
             setIsLoading(false)
         })
     }
