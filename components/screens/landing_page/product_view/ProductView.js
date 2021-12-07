@@ -62,7 +62,7 @@ const ProductView = (props) => {
                 <View style={productStyles.primaryDetailsContainer}>
                     <View style={productStyles.nameLocPriceCont}>
                         <View>
-                            <Text style={productStyles.productName}>{item.name}</Text>
+                            <Text style={productStyles.productName}>{item.product_name}</Text>
                             <Text style={productStyles.productLoc}>{item.location}</Text>
                         </View>
                         <View>
@@ -71,8 +71,8 @@ const ProductView = (props) => {
                     </View>
                     <Divider/>
                     <View style={productStyles.nameLocPriceCont}>
-                        <Text style={productStyles.productPrice}>S$ {item.price}</Text>
-                        <Text style={productStyles.productPerMonth}>S$ 500 / month</Text>
+                        <Text style={productStyles.productPrice}>S$ {item.product_price}</Text>
+                        <Text style={productStyles.productPerMonth}>S$ {item.product_price / 12} / month</Text>
                     </View>
                 </View>
 
@@ -80,11 +80,11 @@ const ProductView = (props) => {
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
                             <MatComIcon name="calendar" size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>2017</Text>
+                            <Text style={productStyles.singleSecDetailsText}>Manufactured : {item.product_edition}</Text>
                         </View>
                         <View style={productStyles.singleSecDetailsCont}>
                             <MatComIcon name="speedometer" size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>60-60K KM</Text>
+                            <Text style={productStyles.singleSecDetailsText}>Mileage : {item.product_mileage} KM</Text>
                         </View>
                     </View>
 
@@ -93,11 +93,11 @@ const ProductView = (props) => {
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
                             <FAIcon name="gear" size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>Automatic</Text>
+                            <Text style={productStyles.singleSecDetailsText}>Transmission : {item.product_transmission}</Text>
                         </View>
                         <View style={productStyles.singleSecDetailsCont}>
                             <MatComIcon name="engine-outline" size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>1368 cc</Text>
+                            <Text style={productStyles.singleSecDetailsText}>Engine Cap : {item.product_cc} cc</Text>
                         </View>
                     </View>
 
@@ -106,11 +106,11 @@ const ProductView = (props) => {
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
                             <FAIcon name="circle" size={20} color="gray"/>
-                            <Text style={productStyles.singleSecDetailsText}>Gray</Text>
+                            <Text style={productStyles.singleSecDetailsText}>Type : {item.vehicle_type}</Text>
                         </View>
                         <View style={productStyles.singleSecDetailsCont}>
                             <FA5Icon name="car" size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>Used Car</Text>
+                            <Text style={productStyles.singleSecDetailsText}>Condition : {item.product_condition}</Text>
                         </View>
                     </View>
 
@@ -119,7 +119,29 @@ const ProductView = (props) => {
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
                             <EntIcon name="location" size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>2017</Text>
+                            <Text style={productStyles.singleSecDetailsText}>Location : Jurong</Text>
+                        </View>
+                        <View style={productStyles.singleSecDetailsCont}>
+                            <FA5Icon name="users" size={20}/>
+                            <Text style={productStyles.singleSecDetailsText}>No. of owners : {item.number_of_owners}</Text>
+                        </View>
+                    </View>
+
+                    <View style={productStyles.rowSecDetailsCont}>
+                        <View style={productStyles.singleSecDetailsCont}>
+                            <FAIcon name="dollar" size={20}/>
+                            <Text style={productStyles.singleSecDetailsText}>COE : S$ {item.coe}</Text>
+                        </View>
+                        <View style={productStyles.singleSecDetailsCont}>
+                            <FAIcon name="dollar" size={20}/>
+                            <Text style={productStyles.singleSecDetailsText}>ARF : S$ {item.arf}</Text>
+                        </View>
+                    </View>
+
+                    <View style={productStyles.rowSecDetailsCont}>
+                        <View style={productStyles.singleSecDetailsCont}>
+                            <FAIcon name="dollar" size={20}/>
+                            <Text style={productStyles.singleSecDetailsText}>OMV : S$ {item.omv}</Text>
                         </View>
                     </View>
                     
@@ -159,7 +181,13 @@ const ProductView = (props) => {
             </ScrollView>
 
             <View style={productStyles.contactButtonContainer}>
-                <PrimaryButton onPress={()=>onCallUser('09123456789')} title="CONTACT DEALER" color={theme.primaryBlue} Icon={()=><MatIcon name="call" size={20} color={theme.white}/>}/>
+                <PrimaryButton 
+                    onPress={()=>onCallUser(item.advertisement_contact_details[0].user_contact_details.contact_numbers)} 
+                    title="CONTACT DEALER" 
+                    color={theme.primaryBlue} 
+                    Icon={()=><MatIcon name="call" size={20} color={theme.white}/>}
+                />
+                <Text>{item.verified_by}</Text>
             </View>
         </View>
     )

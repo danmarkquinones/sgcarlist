@@ -8,23 +8,35 @@ import { FetchFailed } from '../../../custom_components/customFallbacks';
 
 const NewCarLists = (props) => {
 
-    const {navigation , handleSeeMore} = props
+    const {navigation , handleSeeMore , refreshing} = props
 
     const [data , setData] = useState([])
     const [isLoading , setIsLoading] = useState(false)
 
-    useEffect(() => {
+    const fetchData = () => {
         setIsLoading(true)
         const getCars = fetchCars()
         getCars.then((res)=>{
             if(res.data){
-                setData(cars)
+                const displayCars = res.data.data.slice(0,6)
+                setData(displayCars)
                 setIsLoading(false)
             }
         }).catch((e)=>{
+            console.log('call failed' , e)
             setIsLoading(false)
         })
+    }
+
+    useEffect(() => {
+        fetchData()
     }, [])
+
+    useEffect(() => {
+        if(refreshing){
+            fetchData()
+        }
+    }, [refreshing])
 
     return (
         isLoading?
@@ -45,7 +57,7 @@ const NewCarLists = (props) => {
             keyExtractor={(item) => item.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item , index})=>(
-                index!==3 ?
+                index!==5 ?
                 <SquareCard 
                     onPress={()=>navigation.navigate('ProductView', item)}
                     car={item} 

@@ -3,7 +3,6 @@ import { FlatList , Text , View} from 'react-native'
 import { SquareCard, WhiteCard } from '../../../custom_components/customCards'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { theme } from '../../../contants/colors';
-import { cars } from '../../../contants/dummyCarData';
 import { fetchCars } from '../../../store/api_calls/cars_api';
 import { SkeletonSquareCard } from '../../../custom_components/customCardLoaders';
 import { FetchFailed } from '../../../custom_components/customFallbacks';
@@ -17,12 +16,11 @@ const FavoritesLists = (props) => {
 
     const fetchData = () => {
         setIsLoading(true)
-        console.log('call api')
         const getCars = fetchCars()
         getCars.then((res)=>{
-            console.log('call success' , res)
             if(res.data){
-                setData(cars)
+                const displayCars = res.data.data.slice(0,6)
+                setData(displayCars)
                 setIsLoading(false)
             }
         }).catch((e)=>{
@@ -60,7 +58,7 @@ const FavoritesLists = (props) => {
             keyExtractor={(item) => item.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item , index})=>(
-                index!==3 ?
+                index!==5 ?
                 <SquareCard
                     onPress={()=>navigation.navigate('ProductView', item)}
                     car={item} 
