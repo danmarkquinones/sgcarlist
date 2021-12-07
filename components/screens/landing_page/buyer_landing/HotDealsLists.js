@@ -3,7 +3,7 @@ import { FlatList , Text } from 'react-native'
 import { SquareCard, WhiteCard } from '../../../custom_components/customCards'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { theme } from '../../../contants/colors';
-import { fetchCars } from '../../../store/api_calls/cars_api';
+import { fetchCars, fetchFilteredCars } from '../../../store/api_calls/cars_api';
 import { SkeletonSquareCard } from '../../../custom_components/customCardLoaders';
 import { FetchFailed } from '../../../custom_components/customFallbacks';
 
@@ -17,6 +17,7 @@ const HotDealsLists = (props) => {
     const fetchData = () => {
         setIsLoading(true)
         const getCars = fetchCars()
+        fetchFilteredCars()
         getCars.then((res)=>{
             if(res.data){
                 const displayCars = res.data.data.slice(0,6)
