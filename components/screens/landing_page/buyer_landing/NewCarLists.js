@@ -2,7 +2,7 @@ import React , {useEffect , useState} from 'react'
 import { FlatList , Text } from 'react-native'
 import { SquareCard, WhiteCard } from '../../../custom_components/customCards'
 import { cars } from '../../../contants/dummyCarData';
-import { fetchCars } from '../../../store/api_calls/cars_api';
+import { fetchCars, fetchFilteredCars } from '../../../store/api_calls/cars_api';
 import { SkeletonSquareCard } from '../../../custom_components/customCardLoaders';
 import { FetchFailed } from '../../../custom_components/customFallbacks';
 
@@ -15,7 +15,7 @@ const NewCarLists = (props) => {
 
     const fetchData = () => {
         setIsLoading(true)
-        const getCars = fetchCars()
+        const getCars = fetchFilteredCars()
         getCars.then((res)=>{
             if(res.data){
                 const displayCars = res.data.data.slice(0,6)

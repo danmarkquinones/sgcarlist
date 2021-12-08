@@ -19,7 +19,6 @@ const HotDealsLists = (props) => {
         const getCars = fetchFilteredCars()
         getCars.then((res)=>{
             if(res.data){
-                console.log(res.data)
                 const displayCars = res.data.data.slice(0,6)
                 setData(displayCars)
                 setIsLoading(false)

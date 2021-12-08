@@ -10,12 +10,11 @@ let axiosConfig = {
 };
 
 export const fetchCars = async () => {
-    //create token
-    // console.log('base' , API_BASE_URL)
     return await axios.get(`${API_BASE_URL}/product-catalog`)
 }
 
 export const fetchFilteredCars = async (data) => {
+    //change the data to be pass
     const obj = {
         keyword: "sample",
         search_only:false,
@@ -47,8 +46,6 @@ export const fetchFilteredCars = async (data) => {
     }
 
     const encodedData = Kjur.encode(obj)
-    // const decoded = Kjur.decode(token)
-    // console.log("TOKEN",token , decoded)
 
     return await axios.post(`${API_BASE_URL}/user-filters` , 
         {

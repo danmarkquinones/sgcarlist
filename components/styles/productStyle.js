@@ -106,6 +106,13 @@ export const productStyles = StyleSheet.create({
     contactButtonContainer:{
         backgroundColor:theme.white,
         padding:10,
+    },
+    textWithBg:{
+        backgroundColor:theme.black,
+        paddingHorizontal:5,
+        borderRadius:2,
+        color:theme.white,
+        fontWeight:'bold'
     }
 })
 

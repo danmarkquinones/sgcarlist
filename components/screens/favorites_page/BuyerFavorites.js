@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React , {useState , useEffect} from 'react';
 import { View, StyleSheet, Dimensions, FlatList, Text, TouchableOpacity } from 'react-native';
 import { TabView, TabBar } from 'react-native-tab-view';
 import CustomHeader from '../../custom_components/customHeader';
@@ -8,14 +8,34 @@ import { cars, pinnedFilters } from '../../contants/dummyCarData';
 import { GridCard , ListCard, PinnedFilterCard } from '../../custom_components/customCards';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { SimpleFallback } from '../../custom_components/customFallbacks';
+import { useIsFocused } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { removeToSavedCars } from '../../store/helpers/globalFunctions';
 
 const SavedCars = ({config , setConfig , navigation}) => {
 
+    const [favoriteCars , setFavoriteCars] = useState()
+    const isFocused = useIsFocused()
+
+    useEffect(() => {
+        if(isFocused){
+            getSavedCars()
+        }
+    }, [isFocused])
+
+    const getSavedCars = async () => {
+        try {
+          const data = await AsyncStorage.getItem('savedCars')
+          setFavoriteCars(JSON.parse(data))
+        } catch(e) {
+          console.log(e)
+        }
+    }
+
     const removeToFavorite=(item)=>{
-        setConfig({
-            ...config,
-            savedCars:config.savedCars.filter((el)=>el.id!==item.id)
-        })
+        const filteredData = favoriteCars.filter(el=>el._id!==item._id)
+        setFavoriteCars(filteredData)
+        removeToSavedCars(item)
     }
 
     const goToProduct=(item)=>{
@@ -30,7 +50,7 @@ const SavedCars = ({config , setConfig , navigation}) => {
                 <View style={styles.sceneList}>
                     {config.savedCars.length?
                         <FlatList
-                            data={config.savedCars}
+                            data={favoriteCars}
                             key={config.isGridView}
                             contentContainerStyle={{ 
                                 alignItems: config.isGridView ?'flex-start':'center' , 
