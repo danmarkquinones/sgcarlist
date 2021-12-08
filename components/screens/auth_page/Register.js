@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react';
 import {Button, Text, View, Image, Dimensions, ScrollView} from 'react-native';
 import register_img from '../../../assets/images/register.png';
 import {theme} from '../../contants/colors';
@@ -6,10 +6,72 @@ import logo from '../../../assets/images/carlistsg_white.png';
 import PrimaryInput from '../../custom_components/customInput';
 import Spacer from '../../custom_components/spacer';
 import {PrimaryButton} from '../../custom_components/customButtons';
+import {post} from '../../store/api_calls/authentication';
 
 const Register = props => {
   const {width, height} = Dimensions.get('screen');
   const {navigation} = props;
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [contact, setContact] = useState('');
+
+  const [disabled, setDisabled] = useState(true);
+
+  const onSignUp = async () => {
+    const params = {
+      user_first_name: firstName,
+      user_last_name: lastName,
+      user_email: email,
+      role_name: 'Advertiser',
+      contact_number: contact,
+      password: password,
+      password_confirmation: confirmPassword,
+      sms: false,
+    };
+
+    let res = await post(params, '/users/registration');
+    if (res.status === 200) {
+      navigation.navigate('LandingStacks');
+    } else {
+      alert('Oops! Something went wrong.');
+    }
+  };
+
+  useEffect(() => {
+    validateFields();
+  }),
+    [email, lastName, firstName, password, contact, confirmPassword];
+
+  const validateFields = () => {
+    const regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+    let isValidEmail = false;
+
+    if (regexEmail.test(email)) {
+      isValidEmail = true;
+    } else {
+      isValidEmail = false;
+    }
+
+    if (
+      lastName &&
+      firstName &&
+      email &&
+      password &&
+      confirmPassword &&
+      contact &&
+      password === confirmPassword &&
+      isValidEmail
+    ) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  };
+
   return (
     <ScrollView style={{flex: 1, backgroundColor: theme.white}}>
       <View style={{flex: 1}}>
@@ -28,35 +90,35 @@ const Register = props => {
           <Spacer bottom={16} />
           <View style={{paddingHorizontal: 24}}>
             <PrimaryInput
-              onChange={() => {}}
+              onChange={setFirstName}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="First Name"
             />
             <Spacer bottom={24} />
             <PrimaryInput
-              onChange={() => {}}
+              onChange={setLastName}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Last Name"
             />
             <Spacer bottom={24} />
             <PrimaryInput
-              onChange={() => {}}
+              onChange={setEmail}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Email"
             />
             <Spacer bottom={24} />
             <PrimaryInput
-              onChange={() => {}}
+              onChange={setContact}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Contact number"
             />
             <Spacer bottom={24} />
             <PrimaryInput
-              onChange={() => {}}
+              onChange={setPassword}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Password"
@@ -64,7 +126,7 @@ const Register = props => {
             />
             <Spacer bottom={24} />
             <PrimaryInput
-              onChange={() => {}}
+              onChange={setConfirmPassword}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Confirm password"
@@ -73,8 +135,9 @@ const Register = props => {
             <Spacer bottom={24} />
 
             <PrimaryButton
+              disabled={disabled}
               color={'#254A7C'}
-              onPress={() => navigation.navigate('LandingStacks')}
+              onPress={onSignUp}
               title="Sign Up"
               txtStyle={{color: theme.white}}
             />
@@ -101,4 +164,4 @@ const Register = props => {
   );
 };
 
-export default Register
+export default Register;

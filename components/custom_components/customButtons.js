@@ -41,10 +41,10 @@ export const SmallButton = (props) => {
 }
 
 export const PrimaryButton = props => {
-  const {color, title, onPress, Icon, txtStyle} = props;
+  const {color, title, onPress, Icon, txtStyle, disabled} = props;
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity disabled={disabled} onPress={onPress}>
       <View
         style={{
           backgroundColor: color,
@@ -54,6 +54,7 @@ export const PrimaryButton = props => {
           justifyContent: 'center',
           paddingVertical: 15,
           borderRadius: 5,
+          opacity: disabled ? 0.5 : 1,
         }}>
         {Icon && (
           <View style={{marginHorizontal: 10}}>

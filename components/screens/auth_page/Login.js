@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useContext, useEffect} from 'react';
 import {Button, Text, View, Image, Dimensions, ScrollView} from 'react-native';
 import onboarding from '../../../assets/images/login.png';
 import logo from '../../../assets/images/carlistsg_white.png';
@@ -6,11 +6,52 @@ import {theme} from '../../contants/colors';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import PrimaryInput from '../../custom_components/customInput';
 import Spacer from '../../custom_components/spacer';
-
+import Kjur from '../../store/helpers/jwt';
+import {post} from '../../store/api_calls/authentication';
+import {fetchCars} from '../../store/api_calls/cars_api';
+import {UserConfigContext} from '../../store/context_api/userContext';
 const Login = props => {
   const {width, height} = Dimensions.get('screen');
   const {navigation} = props;
 
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isFetching, setIsFetching] = useState(false);
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  const onLogin = async () => {
+    setIsFetching(true);
+    const params = {username, password};
+    let res = await post(params, '/users/login');
+    if (res.status === 200) {
+      const data = Kjur.decode(res.data.token);
+
+      setUserConfig({
+        ...userConfig,
+        isLoggedIn: 1,
+        userDetails: {...userConfig.userDetails, ...data},
+      });
+
+      navigation.navigate('LandingStacks');
+    } else {
+      alert('Invalid Username or Password!');
+    }
+
+    setIsFetching(false);
+  };
+
+  useEffect(() => {
+    validateFields();
+  }, [username, password]);
+
+  const validateFields = () => {
+    if (username && password) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  };
 
   return (
     <View style={{flex: 1, backgroundColor: theme.white}}>
@@ -29,14 +70,16 @@ const Login = props => {
 
           <View style={{paddingHorizontal: 24}}>
             <PrimaryInput
-              onChange={() => {}}
+              value={username}
+              onChange={setUsername}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Username"
             />
             <Spacer bottom={16} />
             <PrimaryInput
-              onChange={() => {}}
+              value={password}
+              onChange={setPassword}
               borderColor={theme.primaryBlue}
               height={50}
               placeholder="Password"
@@ -55,8 +98,9 @@ const Login = props => {
             <Spacer bottom={48} />
 
             <PrimaryButton
+              disabled={isDisabled}
               color={'#254A7C'}
-              onPress={() => navigation.navigate('LandingStacks')}
+              onPress={onLogin}
               title="Login"
               txtStyle={{color: theme.white, fontWeight: 'bold'}}
             />
@@ -88,4 +132,4 @@ const Login = props => {
   );
 };
 
-export default Login
+export default Login;
