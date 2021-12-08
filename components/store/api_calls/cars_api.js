@@ -56,6 +56,49 @@ export const fetchFilteredCars = async (data) => {
     )
 }
 
+export const fetchFilterResults = async (data) => {
+    const obj = {
+        keyword: data.keyword,
+        search_only:false,
+        car_details: {
+            car_brand_id: data.brand,
+            car_condition: data.condition,
+            body_type: data.body_type,
+            color: [data.color],
+            driven_wheel: data.driven_wheel,
+            transmission: data.transmission,
+            fuel_type: data.fuel_type
+        },
+        location: {
+            state: "AZ",
+            country: "SG"
+        },
+        year_range: {
+            minimum_year: data.from_year,
+            maximum_year: data.to_year
+        },
+        price_range: {
+            minimum_price: data.min_price,
+            maximum_price: data.max_price
+        },
+        mileage_range: {
+            minimum_mileage: data.min_mileage,
+            maximum_mileage: data.max_mileage
+        }
+    }
+
+    const encodedData = Kjur.encode(obj)
+
+    console.log(encodedData)
+
+    return await axios.post(`${API_BASE_URL}/user-filters` , 
+        {
+            token:encodedData
+        },
+        axiosConfig
+    )
+}
+
 export const fetchBrands = async () => {
     return await axios.get(`${API_BASE_URL}/brands`)
 }
