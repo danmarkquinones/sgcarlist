@@ -84,7 +84,8 @@ const ProductView = (props) => {
                     <View style={productStyles.nameLocPriceCont}>
                         <View>
                             <Text style={productStyles.productName}>{item.product_name}</Text>
-                            <Text style={productStyles.productLoc}>{item.location}</Text>
+                            {/* <Text style={productStyles.productLoc}>{item.location}</Text> */}
+                            <Text style={productStyles.productPrice}>S$ {item.product_price}</Text>
                         </View>
                         <View>
                             <TouchableOpacity onPress={()=>toggleSave()}>
@@ -97,10 +98,10 @@ const ProductView = (props) => {
                         </View>
                     </View>
                     <Divider/>
-                    <View style={productStyles.nameLocPriceCont}>
+                    {/* <View style={productStyles.nameLocPriceCont}>
                         <Text style={productStyles.productPrice}>S$ {item.product_price}</Text>
                         <Text style={productStyles.productPerMonth}>S$ {item.product_price / 12} / month</Text>
-                    </View>
+                    </View> */}
                 </View>
 
                 <View style={productStyles.secondaryDetailsContainer}>

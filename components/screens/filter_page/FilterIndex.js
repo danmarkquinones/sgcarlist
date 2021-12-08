@@ -9,6 +9,7 @@ import CustomPicker from '../../custom_components/customPicker';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import Spacer from '../../custom_components/spacer';
 import { addPinnedFilter } from '../../store/helpers/globalFunctions';
+import { useToast } from "react-native-toast-notifications";
 
 const FilterIndex = ({navigation}) => {
 
@@ -29,6 +30,7 @@ const FilterIndex = ({navigation}) => {
     body_type:'',
     driven_wheel:'',
   })
+  const toast = useToast();
 
   const carBrands = ['Volvo', 'Toyota', 'Mitsubishi', 'Ford'];
   const carConditions = ['Brand new', 'Used', 'Repossesed'];
@@ -75,7 +77,8 @@ const FilterIndex = ({navigation}) => {
       }
     }
 
-    addPinnedFilter(filter)
+    // addPinnedFilter(filter)
+    toast.show('Filter Saved!' , {type: "success"})
   }
 
   const onApplyFilter = () => {
