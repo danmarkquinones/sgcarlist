@@ -94,7 +94,7 @@ const FilterIndex = ({navigation}) => {
             onChange={(value)=>handleFilterChange('keyword',value)}
             value={filters.keyword}
             editable
-            Icon={() => <AntIcon name="search1" size={25} />}
+            Icon={() => <AntIcon name="search1" size={25} style={{marginRight:10}}/>}
           />
         </View>
         <Spacer bottom={16} />
@@ -136,6 +136,7 @@ const FilterIndex = ({navigation}) => {
                 placeholder="Min price"
                 onChange={(value)=>handleFilterChange('min_price',value)}
                 value={filters.min_price}
+                Unit={()=><Text style={{marginRight:10}}>S$</Text>}
                 editable
               />
             </View>
@@ -145,6 +146,7 @@ const FilterIndex = ({navigation}) => {
                 placeholder="Max price"
                 onChange={(value)=>handleFilterChange('max_price',value)}
                 value={filters.max_price}
+                Unit={()=><Text style={{marginRight:10}}>S$</Text>}
                 editable
               />
             </View>
@@ -157,7 +159,7 @@ const FilterIndex = ({navigation}) => {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View style={{flex: 1}}>
               <PrimaryInput
-                placeholder="Min"
+                placeholder="Min : YYYY"
                 onChange={(value)=>handleFilterChange('from_year',value)}
                 value={filters.from_year}
                 editable
@@ -166,7 +168,7 @@ const FilterIndex = ({navigation}) => {
             <Spacer right={16} />
             <View style={{flex: 1}}>
               <PrimaryInput
-                placeholder="Max"
+                placeholder="Max : YYYY"
                 onChange={(value)=>handleFilterChange('to_year',value)}
                 value={filters.to_year}
                 editable
@@ -185,6 +187,7 @@ const FilterIndex = ({navigation}) => {
                 onChange={(value)=>handleFilterChange('min_mileage',value)}
                 value={filters.min_mileage}
                 editable
+                Unit={()=><Text style={{marginRight:10}}>mpg</Text>}
               />
             </View>
             <Spacer right={16} />
@@ -194,6 +197,7 @@ const FilterIndex = ({navigation}) => {
                 onChange={(value)=>handleFilterChange('max_mileage',value)}
                 value={filters.max_mileage}
                 editable
+                Unit={()=><Text style={{marginRight:10}}>mpg</Text>}
               />
             </View>
           </View>
