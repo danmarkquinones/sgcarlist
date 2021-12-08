@@ -16,3 +16,17 @@ export const SkeletonSquareCard = (props) => {
     )
 }
 
+export const SkeletonListCard = (props) => {
+    const {height,width,borderRadius , margin} = props
+    return (
+        <SkeletonPlaceholder>
+            <SkeletonPlaceholder.Item 
+                width={width}
+                height={height}
+                borderRadius={borderRadius}
+                margin={margin}
+            />
+        </SkeletonPlaceholder>
+    )
+}
+

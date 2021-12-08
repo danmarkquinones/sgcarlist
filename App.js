@@ -20,6 +20,7 @@ const App = () => {
     <SafeAreaProvider>
       <UserConfigContextProvider>
         <ToastProvider
+          duration={1000}
           successIcon={<FeatherIcon name='check-circle' size={20} color={theme.white}/>}
           dangerIcon={<MatIcon name='error-outline' size={20} color={theme.white}/>}
           textStyle={{ fontSize: 16 }}

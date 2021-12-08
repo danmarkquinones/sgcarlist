@@ -11,6 +11,7 @@ import { SimpleFallback } from '../../custom_components/customFallbacks';
 import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { removePinnedFilter, removeToSavedCars } from '../../store/helpers/globalFunctions';
+import { SkeletonListCard } from '../../custom_components/customCardLoaders';
 
 const SavedCars = ({config , setConfig , navigation}) => {
 
@@ -57,7 +58,14 @@ const SavedCars = ({config , setConfig , navigation}) => {
                 <SorterComponent config={config} setConfig={setConfig}/>
 
                 <View style={styles.sceneList}>
-                    {isLoading? <Text>LOADING</Text>
+                    {isLoading? 
+                        <FlatList
+                            data={[...Array(3)]}
+                            keyExtractor={(item,index)=>index}
+                            renderItem={({item})=>
+                                <SkeletonListCard width={500} height={100} borderRadius={5} margin={5}/>
+                            }
+                        />
                     :!isLoading&&favoriteCars?.length===0?
                         <SimpleFallback message='No saved car.'/>
                     :<FlatList
@@ -137,7 +145,13 @@ const PinnedFilters = ({config , setConfig , navigation}) => {
         <View style={[{...styles.scene},{backgroundColor:theme.white}]} >
             <View style={styles.sceneList}>
                 {isLoading?
-                    <Text>LOADING</Text>
+                    <FlatList
+                        data={[...Array(3)]}
+                        keyExtractor={(item,index)=>index}
+                        renderItem={({item})=>
+                            <SkeletonListCard width={500} height={100} borderRadius={5} margin={5}/>
+                        }
+                    />
                 :!isLoading&&pinnedFilters.length===0?
                     <SimpleFallback message='No Pinned Filter'/>
                 :<FlatList

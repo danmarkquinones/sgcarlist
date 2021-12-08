@@ -4,8 +4,9 @@ import Kjur from '../helpers/jwt'
 
 let axiosConfig = {
     headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
+        "Content-Type": 'application/json;charset=UTF-8',
         "Access-Control-Allow-Origin": "*",
+        "Strict-Transport-Security": 'max-age=86400'
     }
 };
 
@@ -53,4 +54,8 @@ export const fetchFilteredCars = async (data) => {
         },
         axiosConfig
     )
+}
+
+export const fetchBrands = async () => {
+    return await axios.get(`${API_BASE_URL}/brands`)
 }
