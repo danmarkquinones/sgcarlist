@@ -9,6 +9,7 @@ const PrimaryInput = ({
   value,
   borderColor,
   Icon,
+  Unit,
   editable,
   multiline,
   height,
@@ -46,6 +47,7 @@ const PrimaryInput = ({
         secureTextEntry={isPassword ? isPassword : false}
       />
       {Icon && <Icon />}
+      {Unit && <Unit/>}
     </View>
   );
 };

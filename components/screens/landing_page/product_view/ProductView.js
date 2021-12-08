@@ -1,5 +1,5 @@
-import React , {useState} from 'react';
-import { View , Text , Image , Dimensions, ScrollView} from 'react-native';
+import React , {useState , useEffect} from 'react';
+import { View , Text , Image , Dimensions, ScrollView, TouchableOpacity} from 'react-native';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import MatComIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EntIcon from 'react-native-vector-icons/Entypo';
@@ -15,7 +15,8 @@ import { SquareCard } from '../../../custom_components/customCards';
 import { theme } from '../../../contants/colors';
 import ImageSliderView from './ImageSlider';
 import { PrimaryButton } from '../../../custom_components/customButtons';
-import { onCallUser } from '../../../store/helpers/globalFunctions';
+import { addToSavedCars, isInFavorites, onCallUser, removeToSavedCars } from '../../../store/helpers/globalFunctions';
+import { useIsFocused } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -24,14 +25,34 @@ const ProductView = (props) => {
 
     const {navigation , route} = props
     const item = route.params
+    const isFocused = useIsFocused()
 
     const [config , setConfig] = useState({
         sortBy:'ascending',
         isGridView:true,
         reviews:reviews,
         cars:cars,
-        sellerDetails:{name:'Lorem Ipsum' , location:'Jurong , Singapore'}
+        sellerDetails:{name:'Lorem Ipsum' , location:'Jurong , Singapore'},
+        inFavorites:false
     })
+
+    useEffect(() => {
+        if(isFocused){
+            const value = isInFavorites(item._id)
+            value.then((res)=>
+                setConfig({...config , inFavorites:res})
+            )
+        }
+    }, [isFocused])
+
+    const toggleSave = () => {
+        setConfig({...config,inFavorites:!config.inFavorites})
+        if(config.inFavorites){
+            removeToSavedCars(item)
+        }else{
+            addToSavedCars(item)
+        }
+    }
 
     return (
         <View style={{flex:1}}>
@@ -63,27 +84,34 @@ const ProductView = (props) => {
                     <View style={productStyles.nameLocPriceCont}>
                         <View>
                             <Text style={productStyles.productName}>{item.product_name}</Text>
-                            <Text style={productStyles.productLoc}>{item.location}</Text>
+                            {/* <Text style={productStyles.productLoc}>{item.location}</Text> */}
+                            <Text style={productStyles.productPrice}>S$ {item.product_price}</Text>
                         </View>
                         <View>
-                            <FA5Icon onPress={() => null} name="star"size={20}/>
+                            <TouchableOpacity onPress={()=>toggleSave()}>
+                                {config.inFavorites?
+                                    <FA5Icon  name='star' solid color={theme.yellow} size={20}/>    
+                                    :<FA5Icon  name='star' size={20}/>
+                                }
+                                
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <Divider/>
-                    <View style={productStyles.nameLocPriceCont}>
+                    {/* <View style={productStyles.nameLocPriceCont}>
                         <Text style={productStyles.productPrice}>S$ {item.product_price}</Text>
                         <Text style={productStyles.productPerMonth}>S$ {item.product_price / 12} / month</Text>
-                    </View>
+                    </View> */}
                 </View>
 
                 <View style={productStyles.secondaryDetailsContainer}>
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
-                            <MatComIcon name="calendar" size={20}/>
+                            <MatComIcon name="calendar" color={theme.black} size={20}/>
                             <Text style={productStyles.singleSecDetailsText}>Manufactured : {item.product_edition}</Text>
                         </View>
                         <View style={productStyles.singleSecDetailsCont}>
-                            <MatComIcon name="speedometer" size={20}/>
+                            <MatComIcon name="speedometer" color={theme.black} size={20}/>
                             <Text style={productStyles.singleSecDetailsText}>Mileage : {item.product_mileage} KM</Text>
                         </View>
                     </View>
@@ -92,11 +120,11 @@ const ProductView = (props) => {
 
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
-                            <FAIcon name="gear" size={20}/>
+                            <FAIcon name="gear" color={theme.black} size={20}/>
                             <Text style={productStyles.singleSecDetailsText}>Transmission : {item.product_transmission}</Text>
                         </View>
                         <View style={productStyles.singleSecDetailsCont}>
-                            <MatComIcon name="engine-outline" size={20}/>
+                            <MatComIcon name="engine-outline" color={theme.black} size={20}/>
                             <Text style={productStyles.singleSecDetailsText}>Engine Cap : {item.product_cc} cc</Text>
                         </View>
                     </View>
@@ -105,11 +133,11 @@ const ProductView = (props) => {
 
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
-                            <FAIcon name="circle" size={20} color="gray"/>
+                            <FAIcon name="circle" color={theme.black} size={20} color="gray"/>
                             <Text style={productStyles.singleSecDetailsText}>Type : {item.vehicle_type}</Text>
                         </View>
                         <View style={productStyles.singleSecDetailsCont}>
-                            <FA5Icon name="car" size={20}/>
+                            <FA5Icon name="car" color={theme.black} size={20}/>
                             <Text style={productStyles.singleSecDetailsText}>Condition : {item.product_condition}</Text>
                         </View>
                     </View>
@@ -118,30 +146,30 @@ const ProductView = (props) => {
 
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
-                            <EntIcon name="location" size={20}/>
+                            <EntIcon name="location" color={theme.black} size={20}/>
                             <Text style={productStyles.singleSecDetailsText}>Location : Jurong</Text>
                         </View>
                         <View style={productStyles.singleSecDetailsCont}>
-                            <FA5Icon name="users" size={20}/>
+                            <FA5Icon name="users" color={theme.black} size={20}/>
                             <Text style={productStyles.singleSecDetailsText}>No. of owners : {item.number_of_owners}</Text>
                         </View>
                     </View>
 
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
-                            <FAIcon name="dollar" size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>COE : S$ {item.coe}</Text>
+                            <Text style={productStyles.textWithBg}>COE</Text>
+                            <Text style={productStyles.singleSecDetailsText}>{item.coe?`S$ ${item.coe}`:'Not available'}</Text>
                         </View>
                         <View style={productStyles.singleSecDetailsCont}>
-                            <FAIcon name="dollar" size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>ARF : S$ {item.arf}</Text>
+                            <Text style={productStyles.textWithBg}>ARF</Text>
+                            <Text style={productStyles.singleSecDetailsText}>{item.arf?`S$ ${item.arf}`:'Not available'}</Text>
                         </View>
                     </View>
 
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
-                            <FAIcon name="dollar" size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>OMV : S$ {item.omv}</Text>
+                            <Text style={productStyles.textWithBg}>OMV</Text>
+                            <Text style={productStyles.singleSecDetailsText}>{item.omv?`S$ ${item.omv}`:'Not available'}</Text>
                         </View>
                     </View>
                     
@@ -182,12 +210,11 @@ const ProductView = (props) => {
 
             <View style={productStyles.contactButtonContainer}>
                 <PrimaryButton 
-                    onPress={()=>onCallUser(item.advertisement_contact_details[0].user_contact_details.contact_numbers)} 
+                    onPress={()=>onCallUser(item.advertisement_contact_details.user_contact_details.contact_numbers)} 
                     title="CONTACT DEALER" 
                     color={theme.primaryBlue} 
                     Icon={()=><MatIcon name="call" size={20} color={theme.white}/>}
                 />
-                <Text>{item.verified_by}</Text>
             </View>
         </View>
     )

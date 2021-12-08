@@ -3,9 +3,10 @@ import { FlatList , Text , View} from 'react-native'
 import { SquareCard, WhiteCard } from '../../../custom_components/customCards'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { theme } from '../../../contants/colors';
-import { fetchCars } from '../../../store/api_calls/cars_api';
 import { SkeletonSquareCard } from '../../../custom_components/customCardLoaders';
 import { FetchFailed } from '../../../custom_components/customFallbacks';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 
 const FavoritesLists = (props) => {
 
@@ -13,25 +14,29 @@ const FavoritesLists = (props) => {
 
     const [data , setData] = useState([])
     const [isLoading , setIsLoading] = useState(false)
+    const isFocused = useIsFocused()
 
-    const fetchData = () => {
+    const fetchData = async () => {
         setIsLoading(true)
-        const getCars = fetchCars()
-        getCars.then((res)=>{
-            if(res.data){
-                const displayCars = res.data.data.slice(0,6)
-                setData(displayCars)
-                setIsLoading(false)
+        try {
+            const data = await AsyncStorage.getItem('savedCars')
+            const parsedData = JSON.parse(data)
+            if(parsedData.length>5){
+                setData(parsedData.slice(0,5))
+            }else{
+                setData(parsedData)
             }
-        }).catch((e)=>{
-            console.log('call failed' , e)
             setIsLoading(false)
-        })
+        } catch(e) {
+            setIsLoading(false)
+        }
     }
 
     useEffect(() => {
-        fetchData()
-    }, [])
+        if(isFocused){
+            fetchData()
+        }
+    }, [isFocused])
 
     useEffect(() => {
         if(refreshing){
@@ -51,11 +56,11 @@ const FavoritesLists = (props) => {
                 }
             />
         :!isLoading&&data.length===0?
-            <FetchFailed message="There seems to be a problem getting your request, please try again later"/>
+            <FetchFailed message="You do not have saved cars in your list. You can add some by clicking the star in each car preview"/>
         :<FlatList
             horizontal
             data={data}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item._id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item , index})=>(
                 index!==5 ?

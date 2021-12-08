@@ -1,52 +1,88 @@
-import React, {useState} from 'react';
+import React, {useState , useEffect , useContext} from 'react';
 import {Text, View, ScrollView} from 'react-native';
 import {theme} from '../../contants/colors';
 
 import CustomHeader from '../../custom_components/customHeader';
 import PrimaryInput from '../../custom_components/customInput';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import CustomPicker from '../../custom_components/customPicker';
+import {CustomPicker , CustomPickerAsync} from '../../custom_components/customPicker';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import Spacer from '../../custom_components/spacer';
+import { addPinnedFilter } from '../../store/helpers/globalFunctions';
+import { useToast } from "react-native-toast-notifications";
+import { fetchBrands } from '../../store/api_calls/cars_api';
+import { FilterConfigContext } from '../../store/context_api/filterContext';
 
 const FilterIndex = ({navigation}) => {
-  const [selectedCarBrand, setSelectedCarBrand] = useState(null);
-  const [selectedCarCondition, setSelectedCarCondition] = useState(null);
-  const [selectedLocation, setSelectedLocation] = useState(null);
-  const [selectedBodyType, setSelectedBodyType] = useState(null);
-  const [selectedColor, setSelectedColor] = useState(null);
-  const [selectedFuelType, setSelectedFuelType] = useState(null);
 
-  const carBrands = ['Volvo', 'Toyota', 'Mitsubishi', 'Ford'];
+  const [filters,setFilters] = useContext(FilterConfigContext)
+
+  const toast = useToast();
+
+  const [carBrands , setCarBrands] = useState([]);
   const carConditions = ['Brand new', 'Used', 'Repossesed'];
   const locations = ['Singapore', 'Philippines', 'China'];
   const bodyTypes = ['Sedan', 'Hatchback', 'Crossover', 'SUV'];
   const carColors = ['Black', 'White', 'Blue', 'Red'];
   const fuelTypes = ['Diesel', 'Petrol'];
+  const drivenWheel = ['FWD(Front Wheel Drive)' , 'RWD(Rear Wheel Drive)']
+  const transmissions = ['Manual' , 'Automatic'];
 
-  const handleOnChangeCarBrand = value => {
-    setSelectedCarBrand(value);
-  };
+  useEffect(() => {
+    const getBrands = fetchBrands()
+    getBrands.then((res)=>{
+      if(res.data){
+          const displayBrands = res.data.data
+          setCarBrands(displayBrands)
+      }
+    }).catch((e)=>{
+        console.log('call failed' , e)
+    })
+  }, [])
 
-  const handleOnChangeCarCondition = value => {
-    setSelectedCarCondition(value);
-  };
+  const handleFilterChange = (name,value) => {
+    setFilters({...filters,[name]:value})
+    console.log(filters)
+  }
 
-  const handleOnChangeLocation = value => {
-    setSelectedLocation(value);
-  };
+  const onSaveFilter = () => {
+    let filter = {
+      keyword: filters.keyword,
+      search_only:false,
+      car_details: {
+          car_brand_id: filters.brand,
+          car_condition: filters.condition,
+          body_type: filters.body_type,
+          color: [filters.color],
+          driven_wheel: filters.driven_wheel,
+          transmission: filters.transmission,
+          fuel_type: filters.fuel_type
+      },
+      location: {
+          state: "",
+          country: ""
+      },
+      year_range: {
+          minimum_year: filters.from_year,
+          maximum_year: filters.to_year
+      },
+      price_range: {
+          minimum_price: filters.min_price,
+          maximum_price: filters.max_price
+      },
+      mileage_range: {
+          minimum_mileage: filters.min_mileage,
+          maximum_mileage: filters.max_mileage
+      }
+    }
 
-  const handleOnChangeBodyType = value => {
-    setSelectedBodyType(value);
-  };
+    addPinnedFilter(filter)
+    toast.show('Filter Saved!' , {type: "success"})
+  }
 
-  const handleOnChangeColor = value => {
-    setSelectedColor(value);
-  };
-
-  const handleOnChangeFuelType = value => {
-    setSelectedFuelType(value);
-  };
+  const onApplyFilter = () => {
+    navigation.navigate('SearchResult')
+  }
 
   return (
     <View style={{backgroundColor: theme.lightBlue, flex: 1}}>
@@ -55,19 +91,19 @@ const FilterIndex = ({navigation}) => {
         <View>
           <PrimaryInput
             placeholder="Keyword"
-            onChange={() => {}}
-            value={() => {}}
+            onChange={(value)=>handleFilterChange('keyword',value)}
+            value={filters.keyword}
             editable
-            Icon={() => <AntIcon name="search1" size={25} />}
+            Icon={() => <AntIcon name="search1" size={25} style={{marginRight:10}}/>}
           />
         </View>
         <Spacer bottom={16} />
         <View>
-          <CustomPicker
+          <CustomPickerAsync
             placeholder="Select car brand"
             items={carBrands}
-            value={selectedCarBrand}
-            onChange={handleOnChangeCarBrand}
+            value={filters.brand}
+            onChange={(value)=>handleFilterChange('brand',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -75,8 +111,8 @@ const FilterIndex = ({navigation}) => {
           <CustomPicker
             placeholder="Select car condition"
             items={carConditions}
-            value={selectedCarCondition}
-            onChange={handleOnChangeCarCondition}
+            value={filters.condition}
+            onChange={(value)=>handleFilterChange('condition',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -84,8 +120,8 @@ const FilterIndex = ({navigation}) => {
           <CustomPicker
             placeholder="Select location"
             items={locations}
-            value={selectedLocation}
-            onChange={handleOnChangeLocation}
+            value={filters.location}
+            onChange={(value)=>handleFilterChange('location',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -98,8 +134,9 @@ const FilterIndex = ({navigation}) => {
             <View style={{flex: 1}}>
               <PrimaryInput
                 placeholder="Min price"
-                onChange={() => {}}
-                value={() => {}}
+                onChange={(value)=>handleFilterChange('min_price',value)}
+                value={filters.min_price}
+                Unit={()=><Text style={{marginRight:10}}>S$</Text>}
                 editable
               />
             </View>
@@ -107,8 +144,9 @@ const FilterIndex = ({navigation}) => {
             <View style={{flex: 1}}>
               <PrimaryInput
                 placeholder="Max price"
-                onChange={() => {}}
-                value={() => {}}
+                onChange={(value)=>handleFilterChange('max_price',value)}
+                value={filters.max_price}
+                Unit={()=><Text style={{marginRight:10}}>S$</Text>}
                 editable
               />
             </View>
@@ -121,18 +159,18 @@ const FilterIndex = ({navigation}) => {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View style={{flex: 1}}>
               <PrimaryInput
-                placeholder="Min"
-                onChange={() => {}}
-                value={() => {}}
+                placeholder="Min : YYYY"
+                onChange={(value)=>handleFilterChange('from_year',value)}
+                value={filters.from_year}
                 editable
               />
             </View>
             <Spacer right={16} />
             <View style={{flex: 1}}>
               <PrimaryInput
-                placeholder="Max"
-                onChange={() => {}}
-                value={() => {}}
+                placeholder="Max : YYYY"
+                onChange={(value)=>handleFilterChange('to_year',value)}
+                value={filters.to_year}
                 editable
               />
             </View>
@@ -141,11 +179,47 @@ const FilterIndex = ({navigation}) => {
         <Spacer bottom={16} />
 
         <View>
+          <Text style={{fontWeight: 'bold', marginBottom: 8}}>Mileage range:</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{flex: 1}}>
+              <PrimaryInput
+                placeholder="Min"
+                onChange={(value)=>handleFilterChange('min_mileage',value)}
+                value={filters.min_mileage}
+                editable
+                Unit={()=><Text style={{marginRight:10}}>mpg</Text>}
+              />
+            </View>
+            <Spacer right={16} />
+            <View style={{flex: 1}}>
+              <PrimaryInput
+                placeholder="Max"
+                onChange={(value)=>handleFilterChange('max_mileage',value)}
+                value={filters.max_mileage}
+                editable
+                Unit={()=><Text style={{marginRight:10}}>mpg</Text>}
+              />
+            </View>
+          </View>
+        </View>
+        <Spacer bottom={16} />
+
+        <View>
+          <CustomPicker
+            placeholder="Select transmission"
+            items={transmissions}
+            value={filters.transmission}
+            onChange={(value)=>handleFilterChange('transmission',value)}
+          />
+        </View>
+        <Spacer bottom={16} />
+
+        <View>
           <CustomPicker
             placeholder="Select body type"
             items={bodyTypes}
-            value={selectedBodyType}
-            onChange={handleOnChangeBodyType}
+            value={filters.body_type}
+            onChange={(value)=>handleFilterChange('body_type',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -154,8 +228,8 @@ const FilterIndex = ({navigation}) => {
           <CustomPicker
             placeholder="Select color"
             items={carColors}
-            value={selectedColor}
-            onChange={handleOnChangeColor}
+            value={filters.color}
+            onChange={(value)=>handleFilterChange('color',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -164,8 +238,8 @@ const FilterIndex = ({navigation}) => {
           <CustomPicker
             placeholder="Select fuel type"
             items={fuelTypes}
-            value={selectedFuelType}
-            onChange={handleOnChangeFuelType}
+            value={filters.fuel_type}
+            onChange={(value)=>handleFilterChange('fuel_type',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -173,9 +247,9 @@ const FilterIndex = ({navigation}) => {
         <View>
           <CustomPicker
             placeholder="Select driven wheel"
-            items={fuelTypes}
-            value={selectedFuelType}
-            onChange={handleOnChangeFuelType}
+            items={drivenWheel}
+            value={filters.driven_wheel}
+            onChange={(value)=>handleFilterChange('driven_wheel',value)}
           />
         </View>
         <Spacer bottom={50} />
@@ -195,13 +269,13 @@ const FilterIndex = ({navigation}) => {
         <PrimaryButton
           color={'#20A8F4'}
           title={'Save filter'}
-          onPress={() => {}}
+          onPress={onSaveFilter}
         />
         <Spacer bottom={8} />
         <PrimaryButton
           color={'#254A7C'}
           title={'Apply filter'}
-          onPress={() => navigation.navigate('SearchResult')}
+          onPress={onApplyFilter}
         />
       </View>
     </View>

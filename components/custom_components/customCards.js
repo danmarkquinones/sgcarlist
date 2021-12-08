@@ -167,13 +167,13 @@ export const PinnedFilterCard = props => {
         </TouchableOpacity>
 
         <View style={customCardStyles.filterNameContainer}>
-          <Text style={customCardStyles.filterBrand}>{filter.name}</Text>
-          <Text style={customCardStyles.filterLocation}>{filter.location}</Text>
+          <Text style={customCardStyles.filterBrand}>{filter.keyword}</Text>
+          {/* <Text style={customCardStyles.filterLocation}>{filter.location}</Text> */}
         </View>
 
         <View style={customCardStyles.filterPriceContainer}>
-          <Text style={customCardStyles.filterMinPrice}>min : $ {filter.min}</Text>
-          <Text style={customCardStyles.filterMaxPrice}>max : $ {filter.max}</Text>
+          <Text style={customCardStyles.filterMinPrice}>min : $ {filter.price_range.minimum_price}</Text>
+          <Text style={customCardStyles.filterMaxPrice}>max : $ {filter.price_range.maximum_price}</Text>
         </View>
 
         <MatIcon name="keyboard-arrow-right" size={25} color={theme.black}/>
