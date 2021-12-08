@@ -1,4 +1,4 @@
-import React, {useState , useEffect} from 'react';
+import React, {useState , useEffect , useContext} from 'react';
 import {Text, View, ScrollView} from 'react-native';
 import {theme} from '../../contants/colors';
 
@@ -11,26 +11,12 @@ import Spacer from '../../custom_components/spacer';
 import { addPinnedFilter } from '../../store/helpers/globalFunctions';
 import { useToast } from "react-native-toast-notifications";
 import { fetchBrands } from '../../store/api_calls/cars_api';
+import { FilterConfigContext } from '../../store/context_api/filterContext';
 
 const FilterIndex = ({navigation}) => {
 
-  const [form,setForm] = useState({
-    keyword:'',
-    min_price:'',
-    max_price:'',
-    max_mileage:'',
-    min_mileage:'',
-    from_year:'',
-    to_year:'',
-    location:'',
-    color:'',
-    brand:'',
-    condition:'',
-    transmission:'',
-    fuel_type:'',
-    body_type:'',
-    driven_wheel:'',
-  })
+  const [filters,setFilters] = useContext(FilterConfigContext)
+
   const toast = useToast();
 
   const [carBrands , setCarBrands] = useState([]);
@@ -54,39 +40,39 @@ const FilterIndex = ({navigation}) => {
     })
   }, [])
 
-  const handleOnChangeFormFields = (name,value) => {
-    setForm({...form,[name]:value})
-    console.log(form.brand)
+  const handleFilterChange = (name,value) => {
+    setFilters({...filters,[name]:value})
+    console.log(filters)
   }
 
   const onSaveFilter = () => {
     let filter = {
-      keyword: form.keyword,
+      keyword: filters.keyword,
       search_only:false,
       car_details: {
-          car_brand_id: form.brand,
-          car_condition: form.condition,
-          body_type: form.body_type,
-          color: [form.color],
-          driven_wheel: form.driven_wheel,
-          transmission: form.transmission,
-          fuel_type: form.fuel_type
+          car_brand_id: filters.brand,
+          car_condition: filters.condition,
+          body_type: filters.body_type,
+          color: [filters.color],
+          driven_wheel: filters.driven_wheel,
+          transmission: filters.transmission,
+          fuel_type: filters.fuel_type
       },
       location: {
           state: "",
           country: ""
       },
       year_range: {
-          minimum_year: form.from_year,
-          maximum_year: form.to_year
+          minimum_year: filters.from_year,
+          maximum_year: filters.to_year
       },
       price_range: {
-          minimum_price: form.min_price,
-          maximum_price: form.max_price
+          minimum_price: filters.min_price,
+          maximum_price: filters.max_price
       },
       mileage_range: {
-          minimum_mileage: form.min_mileage,
-          maximum_mileage: form.max_mileage
+          minimum_mileage: filters.min_mileage,
+          maximum_mileage: filters.max_mileage
       }
     }
 
@@ -105,8 +91,8 @@ const FilterIndex = ({navigation}) => {
         <View>
           <PrimaryInput
             placeholder="Keyword"
-            onChange={(value)=>handleOnChangeFormFields('keyword',value)}
-            value={form.keyword}
+            onChange={(value)=>handleFilterChange('keyword',value)}
+            value={filters.keyword}
             editable
             Icon={() => <AntIcon name="search1" size={25} />}
           />
@@ -116,8 +102,8 @@ const FilterIndex = ({navigation}) => {
           <CustomPickerAsync
             placeholder="Select car brand"
             items={carBrands}
-            value={form.brand}
-            onChange={(value)=>handleOnChangeFormFields('brand',value)}
+            value={filters.brand}
+            onChange={(value)=>handleFilterChange('brand',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -125,8 +111,8 @@ const FilterIndex = ({navigation}) => {
           <CustomPicker
             placeholder="Select car condition"
             items={carConditions}
-            value={form.condition}
-            onChange={(value)=>handleOnChangeFormFields('condition',value)}
+            value={filters.condition}
+            onChange={(value)=>handleFilterChange('condition',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -134,8 +120,8 @@ const FilterIndex = ({navigation}) => {
           <CustomPicker
             placeholder="Select location"
             items={locations}
-            value={form.location}
-            onChange={(value)=>handleOnChangeFormFields('location',value)}
+            value={filters.location}
+            onChange={(value)=>handleFilterChange('location',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -148,8 +134,8 @@ const FilterIndex = ({navigation}) => {
             <View style={{flex: 1}}>
               <PrimaryInput
                 placeholder="Min price"
-                onChange={(value)=>handleOnChangeFormFields('min_price',value)}
-                value={form.min_price}
+                onChange={(value)=>handleFilterChange('min_price',value)}
+                value={filters.min_price}
                 editable
               />
             </View>
@@ -157,8 +143,8 @@ const FilterIndex = ({navigation}) => {
             <View style={{flex: 1}}>
               <PrimaryInput
                 placeholder="Max price"
-                onChange={(value)=>handleOnChangeFormFields('max_price',value)}
-                value={form.max_price}
+                onChange={(value)=>handleFilterChange('max_price',value)}
+                value={filters.max_price}
                 editable
               />
             </View>
@@ -172,8 +158,8 @@ const FilterIndex = ({navigation}) => {
             <View style={{flex: 1}}>
               <PrimaryInput
                 placeholder="Min"
-                onChange={(value)=>handleOnChangeFormFields('from_year',value)}
-                value={form.from_year}
+                onChange={(value)=>handleFilterChange('from_year',value)}
+                value={filters.from_year}
                 editable
               />
             </View>
@@ -181,8 +167,8 @@ const FilterIndex = ({navigation}) => {
             <View style={{flex: 1}}>
               <PrimaryInput
                 placeholder="Max"
-                onChange={(value)=>handleOnChangeFormFields('to_year',value)}
-                value={form.to_year}
+                onChange={(value)=>handleFilterChange('to_year',value)}
+                value={filters.to_year}
                 editable
               />
             </View>
@@ -196,8 +182,8 @@ const FilterIndex = ({navigation}) => {
             <View style={{flex: 1}}>
               <PrimaryInput
                 placeholder="Min"
-                onChange={(value)=>handleOnChangeFormFields('min_mileage',value)}
-                value={form.min_mileage}
+                onChange={(value)=>handleFilterChange('min_mileage',value)}
+                value={filters.min_mileage}
                 editable
               />
             </View>
@@ -205,8 +191,8 @@ const FilterIndex = ({navigation}) => {
             <View style={{flex: 1}}>
               <PrimaryInput
                 placeholder="Max"
-                onChange={(value)=>handleOnChangeFormFields('max_mileage',value)}
-                value={form.max_mileage}
+                onChange={(value)=>handleFilterChange('max_mileage',value)}
+                value={filters.max_mileage}
                 editable
               />
             </View>
@@ -218,8 +204,8 @@ const FilterIndex = ({navigation}) => {
           <CustomPicker
             placeholder="Select transmission"
             items={transmissions}
-            value={form.transmission}
-            onChange={(value)=>handleOnChangeFormFields('transmission',value)}
+            value={filters.transmission}
+            onChange={(value)=>handleFilterChange('transmission',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -228,8 +214,8 @@ const FilterIndex = ({navigation}) => {
           <CustomPicker
             placeholder="Select body type"
             items={bodyTypes}
-            value={form.body_type}
-            onChange={(value)=>handleOnChangeFormFields('body_type',value)}
+            value={filters.body_type}
+            onChange={(value)=>handleFilterChange('body_type',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -238,8 +224,8 @@ const FilterIndex = ({navigation}) => {
           <CustomPicker
             placeholder="Select color"
             items={carColors}
-            value={form.color}
-            onChange={(value)=>handleOnChangeFormFields('color',value)}
+            value={filters.color}
+            onChange={(value)=>handleFilterChange('color',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -248,8 +234,8 @@ const FilterIndex = ({navigation}) => {
           <CustomPicker
             placeholder="Select fuel type"
             items={fuelTypes}
-            value={form.fuel_type}
-            onChange={(value)=>handleOnChangeFormFields('fuel_type',value)}
+            value={filters.fuel_type}
+            onChange={(value)=>handleFilterChange('fuel_type',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -258,8 +244,8 @@ const FilterIndex = ({navigation}) => {
           <CustomPicker
             placeholder="Select driven wheel"
             items={drivenWheel}
-            value={form.driven_wheel}
-            onChange={(value)=>handleOnChangeFormFields('driven_wheel',value)}
+            value={filters.driven_wheel}
+            onChange={(value)=>handleFilterChange('driven_wheel',value)}
           />
         </View>
         <Spacer bottom={50} />
