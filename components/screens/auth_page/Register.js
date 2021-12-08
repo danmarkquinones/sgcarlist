@@ -35,7 +35,7 @@ const Register = props => {
 
     let res = await post(params, '/users/registration');
     if (res.status === 200) {
-      navigation.navigate('LandingStacks');
+      navigation.navigate('Login');
     } else {
       alert('Oops! Something went wrong.');
     }
