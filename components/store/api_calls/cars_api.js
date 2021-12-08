@@ -6,7 +6,7 @@ let axiosConfig = {
     headers: {
         "Content-Type": 'application/json;charset=UTF-8',
         "Access-Control-Allow-Origin": "*",
-        "Strict-Transport-Security": 'max-age=86400'
+        "Strict-Transport-Security": 'max-age=90'
     }
 };
 

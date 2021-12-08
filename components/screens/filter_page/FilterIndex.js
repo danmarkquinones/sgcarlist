@@ -1,15 +1,16 @@
-import React, {useState} from 'react';
+import React, {useState , useEffect} from 'react';
 import {Text, View, ScrollView} from 'react-native';
 import {theme} from '../../contants/colors';
 
 import CustomHeader from '../../custom_components/customHeader';
 import PrimaryInput from '../../custom_components/customInput';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import CustomPicker from '../../custom_components/customPicker';
+import {CustomPicker , CustomPickerAsync} from '../../custom_components/customPicker';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import Spacer from '../../custom_components/spacer';
 import { addPinnedFilter } from '../../store/helpers/globalFunctions';
 import { useToast } from "react-native-toast-notifications";
+import { fetchBrands } from '../../store/api_calls/cars_api';
 
 const FilterIndex = ({navigation}) => {
 
@@ -32,7 +33,7 @@ const FilterIndex = ({navigation}) => {
   })
   const toast = useToast();
 
-  const carBrands = ['Volvo', 'Toyota', 'Mitsubishi', 'Ford'];
+  const [carBrands , setCarBrands] = useState([]);
   const carConditions = ['Brand new', 'Used', 'Repossesed'];
   const locations = ['Singapore', 'Philippines', 'China'];
   const bodyTypes = ['Sedan', 'Hatchback', 'Crossover', 'SUV'];
@@ -41,9 +42,21 @@ const FilterIndex = ({navigation}) => {
   const drivenWheel = ['FWD(Front Wheel Drive)' , 'RWD(Rear Wheel Drive)']
   const transmissions = ['Manual' , 'Automatic'];
 
+  useEffect(() => {
+    const getBrands = fetchBrands()
+    getBrands.then((res)=>{
+      if(res.data){
+          const displayBrands = res.data.data
+          setCarBrands(displayBrands)
+      }
+    }).catch((e)=>{
+        console.log('call failed' , e)
+    })
+  }, [])
+
   const handleOnChangeFormFields = (name,value) => {
     setForm({...form,[name]:value})
-    // console.log(form)
+    console.log(form.brand)
   }
 
   const onSaveFilter = () => {
@@ -77,7 +90,7 @@ const FilterIndex = ({navigation}) => {
       }
     }
 
-    // addPinnedFilter(filter)
+    addPinnedFilter(filter)
     toast.show('Filter Saved!' , {type: "success"})
   }
 
@@ -100,7 +113,7 @@ const FilterIndex = ({navigation}) => {
         </View>
         <Spacer bottom={16} />
         <View>
-          <CustomPicker
+          <CustomPickerAsync
             placeholder="Select car brand"
             items={carBrands}
             value={form.brand}
