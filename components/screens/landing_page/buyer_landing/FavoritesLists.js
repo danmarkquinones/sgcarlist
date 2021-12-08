@@ -60,7 +60,7 @@ const FavoritesLists = (props) => {
         :<FlatList
             horizontal
             data={data}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item._id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item , index})=>(
                 index!==5 ?

@@ -11,10 +11,8 @@ export const UserConfigContextProvider = (props) => {
         isLoggedIn : 0,
         isSellMode : 0,
         isNotificationOn : 0,
-        language:'English',
+        language:'en',
         userDetails : {},
-        savedCars : [],
-        pinnedFilters :[]
     });
 
     const getData = async (type , value) => {

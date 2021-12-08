@@ -53,3 +53,30 @@ export const removeToSavedCars = async (item) => {
         console.log(e)
     }
 }
+
+export const addPinnedFilter = async (filter) => {
+    // AsyncStorage.setItem('pinnedFilters' , '[]')
+    try {
+        const data = await AsyncStorage.getItem('pinnedFilters')
+        let filters = JSON.parse(data)
+        filter.id = `filter_0${filters.length+1}_${filter.keyword}`
+
+        filters.push(filter)
+
+        console.log(filters,filters.length)
+        AsyncStorage.setItem('pinnedFilters' , JSON.stringify(filters))
+    } catch(e) {
+        console.log(e)
+    }
+}
+
+export const removePinnedFilter = async (filter) => {
+    try {
+        const data = await AsyncStorage.getItem('pinnedFilters')
+        let filters = JSON.parse(data)
+        let filteredData = filters.filter(item=>item.id!==filter.id)
+        AsyncStorage.setItem('pinnedFilters' , JSON.stringify(filteredData))
+    } catch(e) {
+        console.log(e)
+    }
+}

@@ -10,12 +10,17 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { SimpleFallback } from '../../custom_components/customFallbacks';
 import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { removeToSavedCars } from '../../store/helpers/globalFunctions';
+import { removePinnedFilter, removeToSavedCars } from '../../store/helpers/globalFunctions';
 
 const SavedCars = ({config , setConfig , navigation}) => {
 
     const [favoriteCars , setFavoriteCars] = useState()
+    const [isLoading , setIsLoading] = useState(false)
     const isFocused = useIsFocused()
+
+    useEffect(() => {
+        getSavedCars()
+    }, [])
 
     useEffect(() => {
         if(isFocused){
@@ -24,9 +29,13 @@ const SavedCars = ({config , setConfig , navigation}) => {
     }, [isFocused])
 
     const getSavedCars = async () => {
+        setIsLoading(true)
         try {
           const data = await AsyncStorage.getItem('savedCars')
-          setFavoriteCars(JSON.parse(data))
+          if(data){
+            setFavoriteCars(JSON.parse(data))
+            setIsLoading(false)
+          }
         } catch(e) {
           console.log(e)
         }
@@ -48,38 +57,40 @@ const SavedCars = ({config , setConfig , navigation}) => {
                 <SorterComponent config={config} setConfig={setConfig}/>
 
                 <View style={styles.sceneList}>
-                    {config.savedCars.length?
-                        <FlatList
-                            data={favoriteCars}
-                            key={config.isGridView}
-                            contentContainerStyle={{ 
-                                alignItems: config.isGridView ?'flex-start':'center' , 
-                                justifyContent: 'space-between', 
-                                paddingBottom:100
-                            }}
-                            numColumns={config.isGridView ? 2 : 1}                  // set number of columns 
-                            keyExtractor={item=>item.id}
-                            showsVerticalScrollIndicator={false}
-                            renderItem={({item , index})=>(
-                                <TouchableOpacity onPress={()=>goToProduct(item)}>
-                                {config.isGridView?
-                                    <GridCard 
-                                        car={item} 
-                                        Icon={()=><FontAwesome5 name='star' size={20} solid color={theme.yellow}/>}
-                                        inFavorites={true}
-                                        onPress={()=>removeToFavorite(item)}
-                                    />
-                                    :<ListCard 
-                                        car={item} 
-                                        Icon={()=><FontAwesome5 name='star' size={20} solid color={theme.yellow}/>}
-                                        inFavorites={true}
-                                        onPress={()=>removeToFavorite(item)} 
-                                    />
-                                }
-                                </TouchableOpacity>
-                            )}
-                        />
-                    :<SimpleFallback message='No saved car.'/>}
+                    {isLoading? <Text>LOADING</Text>
+                    :!isLoading&&favoriteCars?.length===0?
+                        <SimpleFallback message='No saved car.'/>
+                    :<FlatList
+                        data={favoriteCars}
+                        key={config.isGridView}
+                        contentContainerStyle={{ 
+                            alignItems: config.isGridView ?'flex-start':'center' , 
+                            justifyContent: 'space-between', 
+                            paddingBottom:100
+                        }}
+                        numColumns={config.isGridView ? 2 : 1}                  // set number of columns 
+                        keyExtractor={item=>item._id}
+                        showsVerticalScrollIndicator={false}
+                        renderItem={({item , index})=>(
+                            <TouchableOpacity onPress={()=>goToProduct(item)}>
+                            {config.isGridView?
+                                <GridCard 
+                                    car={item} 
+                                    Icon={()=><FontAwesome5 name='star' size={20} solid color={theme.yellow}/>}
+                                    inFavorites={true}
+                                    onPress={()=>removeToFavorite(item)}
+                                />
+                                :<ListCard 
+                                    car={item} 
+                                    Icon={()=><FontAwesome5 name='star' size={20} solid color={theme.yellow}/>}
+                                    inFavorites={true}
+                                    onPress={()=>removeToFavorite(item)} 
+                                />
+                            }
+                            </TouchableOpacity>
+                        )}
+                    />
+                    }
                     
                 </View>
         </View>
@@ -88,24 +99,49 @@ const SavedCars = ({config , setConfig , navigation}) => {
 
 const PinnedFilters = ({config , setConfig , navigation}) => {
 
+    const [pinnedFilters , setPinnedFilters] = useState([])
+    const [isLoading , setIsLoading] = useState([])
+    const isFocused = useIsFocused()
+
+    useEffect(() => {
+        if(isFocused){
+            getPinnedFilters()
+        }
+        console.log('filters',pinnedFilters) 
+    }, [isFocused])
+
     const goToSearchResult = (data) => {
         // console.log(data)
         navigation.navigate('SearchResult')
     }
 
+    const getPinnedFilters = async () => {
+        setIsLoading(true)
+        try {
+          const data = await AsyncStorage.getItem('pinnedFilters')
+          if(data){
+            setPinnedFilters(JSON.parse(data))
+            setIsLoading(false)
+          }
+        } catch(e) {
+          console.log(e)
+        }
+    }
+
     const unPin = (data) => {
-        setConfig({
-            ...config,
-            pinnedFilters:config.pinnedFilters.filter((filter)=>filter.id!==data.id)
-        })
+        setPinnedFilters(pinnedFilters.filter(el=>el.id!==data.id))
+        removePinnedFilter(data)
     }
 
     return(
         <View style={[{...styles.scene},{backgroundColor:theme.white}]} >
             <View style={styles.sceneList}>
-                {config.pinnedFilters.length?
-                    <FlatList
-                        data={config.pinnedFilters}
+                {isLoading?
+                    <Text>LOADING</Text>
+                :!isLoading&&pinnedFilters.length===0?
+                    <SimpleFallback message='No Pinned Filter'/>
+                :<FlatList
+                        data={pinnedFilters}
                         keyExtractor={item=>item.id}
                         renderItem={({item , index})=>(
                             <PinnedFilterCard
@@ -115,7 +151,7 @@ const PinnedFilters = ({config , setConfig , navigation}) => {
                             />
                         )}
                     />
-                :<SimpleFallback message='No Pinned Filter'/>}
+                }
             </View>
         </View>
     )
