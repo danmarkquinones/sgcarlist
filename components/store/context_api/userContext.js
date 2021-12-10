@@ -35,21 +35,21 @@ export const UserConfigContextProvider = (props) => {
         getData('savedCars','[]')
         getData('pinnedFilters','[]')
 
-        setUserConfig({
-            ...userConfig,
-            isLaunched:1,
-            isLoggedIn:1,
-            isSellMode:0,
-            isNotificationOn:1,
-            language:'en',
-            userDetails:{
-                username:"LoremIpsum123",
-                email:'Loremipusm@gmail.com',
-                fname:'Lorem',
-                lname:'Ipsum',
-                contact:'0912 345 6789'
-            }
-        })
+        // setUserConfig({
+        //     ...userConfig,
+        //     isLaunched:1,
+        //     isLoggedIn:0,
+        //     isSellMode:0,
+        //     isNotificationOn:0,
+        //     language:'en',
+        //     userDetails:{
+        //         // username:"LoremIpsum123",
+        //         // email:'Loremipusm@gmail.com',
+        //         // fname:'Lorem',
+        //         // lname:'Ipsum',
+        //         // contact:'0912 345 6789'
+        //     }
+        // })
         
         LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     },[])

@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useContext} from 'react'
 import { Text, View , ScrollView , Image, TouchableOpacity , RefreshControl } from 'react-native'
 import { theme } from '../../../contants/colors'
 import { landingStyles } from '../../../styles/landingStyles'
@@ -12,6 +12,7 @@ import NewCarLists from './NewCarLists'
 import TopDealersLists from './TopDealersLists'
 import TopLocations from './TopLocations'
 import { SkeletonSquareCard } from '../../../custom_components/customCardLoaders';
+import { UserConfigContext } from '../../../store/context_api/userContext';
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -20,6 +21,7 @@ const wait = (timeout) => {
 const BuyerLanding = (props) => {
 
     const {navigation} = props
+    const [userConfig , setUserConfig] = useContext(UserConfigContext)
 
     const [refreshing, setRefreshing] = React.useState(false);
 
@@ -40,7 +42,7 @@ const BuyerLanding = (props) => {
     return (
         <ScrollView 
             showsVerticalScrollIndicator={false}
-            stickyHeaderIndices={[1]}
+            stickyHeaderIndices={userConfig.isLoggedIn?[1]:[0]}
             refreshControl={
                 <RefreshControl
                   refreshing={refreshing}
@@ -48,13 +50,15 @@ const BuyerLanding = (props) => {
                 />
             }
         >
-            <View style={landingStyles.headerContainer}>
-                <CustomAvatar initial='L' color={theme.secondaryBlue} size={50}/>
-                <View style={landingStyles.headerNameView}>
-                    <Text style={landingStyles.greetName}>HELLO , LOREM IPSUM - 2ndbuild</Text>
-                    <Text style={landingStyles.listedCar}>We have 123,342 cars listed</Text>
+            {userConfig.isLoggedIn?
+                <View style={landingStyles.headerContainer}>
+                    <CustomAvatar initial='L' color={theme.secondaryBlue} size={50}/>
+                    <View style={landingStyles.headerNameView}>
+                        <Text style={landingStyles.greetName}>{userConfig.isLoggedIn?'Hello':'Hi There!'}</Text>
+                        <Text style={landingStyles.listedCar}>We have 123,342 cars listed</Text>
+                    </View>
                 </View>
-            </View>
+            :null}
 
             <View style={landingStyles.searchContainer}>
                 <TouchableOpacity onPress={()=>navigation.navigate('FilterIndex')}>

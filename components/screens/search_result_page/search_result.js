@@ -32,7 +32,7 @@ const SearchResult = ({navigation}) => {
 
   const [filters , setFilters] = useContext(FilterConfigContext)
   const [results , setResults] = useState([])
-  const [isLoading , setIsLoading] = useState(false)
+  const [isLoading , setIsLoading] = useState(true)
 
   const fetchData = () => {
     setIsLoading(true)
@@ -62,7 +62,7 @@ const SearchResult = ({navigation}) => {
     <View>
       <CustomHeader title="Search Results" />
       <SorterComponent config={config} setConfig={setConfig} />
-      <ScrollView style={{backgroundColor: theme.lightBlue}}>
+      <ScrollView style={{backgroundColor: theme.lightBlue}} showsVerticalScrollIndicator={false}>
         {/* <Text>BANNER HERE</Text> */}
         <Text
           style={{

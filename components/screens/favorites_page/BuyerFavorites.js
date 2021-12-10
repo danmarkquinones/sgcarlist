@@ -159,6 +159,7 @@ const PinnedFilters = ({config , setConfig , navigation}) => {
                         keyExtractor={item=>item.id}
                         renderItem={({item , index})=>(
                             <PinnedFilterCard
+                                index={index}
                                 filter={item}
                                 onPress={()=>goToSearchResult(item)}
                                 onUnpin={()=>unPin(item)}

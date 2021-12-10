@@ -21,6 +21,8 @@ const ProfileIndex = (props) => {
     const [userConfig , setUserConfig] = useContext(UserConfigContext)
     const isFocused = useIsFocused()
 
+    console.log('user profile',userConfig)
+
     useEffect(()=>{
         if(isFocused){
             console.log('userContext' , userConfig)
@@ -109,152 +111,165 @@ const ProfileIndex = (props) => {
     }
 
     return (
-        <ScrollView
-            showsVerticalScrollIndicator={false}
-        >
-            <View
-                style={globalStyles.container}
-            >
-                <View
-                    style={profileStyles.headerContainer}
-                >
-                    <CustomAvatar initial="L" size={40} color={theme.gray}/>
-                    <Text style={profileStyles.headerName}>Lorem Ipsum {userConfig.isSellMode}</Text>
+        <>
+        {!userConfig.isLoggedIn?
+            <View style={{display:'flex' , flex:1, alignItems:'center' , justifyContent:'center' , paddingHorizontal:30}}>
+                <Text style={{fontSize:20 , textAlign:'center'}}>You dont have access to this page , please login to continue</Text>
+                <View style={{width:200 , marginTop:50}}>
+                    <PrimaryButton onPress={()=>navigation.navigate('Login')} title="Go to Login Page" color={theme.primaryBlue}/>
                 </View>
-
+            </View>
+            :<ScrollView
+                showsVerticalScrollIndicator={false}
+            >
+                
+                    
                 <View
-                    style={profileStyles.infoContainer}
+                    style={globalStyles.container}
                 >
-                    <View style={profileStyles.infoHead}>
-                        <Text style={profileStyles.infoHeadTitle}>Profile Informations</Text>
-                        <TouchableOpacity onPress={()=>navigation.navigate('EditProfile', {data:userConfig.userDetails,callback:setUserConfig})}>
-                            <View style={profileStyles.editContainer}>
-                                <Icon name='edit' size={15} />
-                                <Text style={{fontSize:15 , marginLeft:5}}>Edit</Text>
+                    <View
+                        style={profileStyles.headerContainer}
+                    >
+                        <CustomAvatar initial="L" size={40} color={theme.gray}/>
+                        <Text style={profileStyles.headerName}>Lorem Ipsum {userConfig.isSellMode}</Text>
+                    </View>
+
+                    <View
+                        style={profileStyles.infoContainer}
+                    >
+                        <View style={profileStyles.infoHead}>
+                            <Text style={profileStyles.infoHeadTitle}>Profile Informations</Text>
+                            <TouchableOpacity onPress={()=>navigation.navigate('EditProfile', {data:userConfig.userDetails,callback:setUserConfig})}>
+                                <View style={profileStyles.editContainer}>
+                                    <Icon name='edit' size={15} />
+                                    <Text style={{fontSize:15 , marginLeft:5}}>Edit</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+
+                        {information.map((info , i)=>
+                            <View key={i} style={profileStyles.infoDetailsContainer}>
+                                <Text style={profileStyles.infoDetailsType}>{info.type}</Text>
+                                <Text style={profileStyles.infoDetailsText}>{info.text}</Text>
+                                
+                                <Divider style={profileStyles.line}/> 
+                            </View>
+                        )}
+                    </View>
+
+                    <View
+                        style={profileStyles.othersContainer}
+                    >
+                        <View style={profileStyles.otherDetailsContainer}>
+                            <Text style={profileStyles.othersDetailsText}>Switch to selling</Text>
+                            <SwitchSelector
+                                style={{width:120}}
+                                options={options}
+                                initial={+userConfig.isSellMode}
+                                value={+userConfig.isSellMode}
+                                onPress={(value) => handleSellModeChange(value)}
+                                textColor={theme.primaryBlue}
+                                selectedColor={theme.white}
+                                buttonColor={theme.primaryBlue}
+                                borderColor={theme.primaryBlue}
+                                hasPadding
+                                valuePadding={3}
+                                height={35}
+                            />
+                        </View>
+
+                        <Divider style={profileStyles.line}/>
+
+                        <View style={profileStyles.otherDetailsContainer}>
+                            <Text style={profileStyles.othersDetailsText}>Notification</Text>
+                            <Switch 
+                                trackColor={{ false: theme.gray, true: theme.secondaryBlue }}
+                                thumbColor={+userConfig.isNotificationOn===1 ? theme.primaryBlue : theme.white}
+                                ios_backgroundColor={theme.gray}
+                                onValueChange={toggleSwitchNotif}
+                                value={+userConfig.isNotificationOn===1?true:false}
+                            />
+                        </View>
+
+                        <Divider style={profileStyles.line}/>
+
+                        <TouchableOpacity
+                            onPress={toggleLanguageOverlay}
+                        >
+                            <View style={profileStyles.otherDetailsContainer}>
+                                <Text style={profileStyles.othersDetailsText}>Language</Text>
+                                <Text>{userConfig.language==="en"?"English" : "Chinese"}</Text>
                             </View>
                         </TouchableOpacity>
+
+                        <Divider style={profileStyles.line}/>
+
+                        <TouchableOpacity
+                            onPress={()=>navigation.navigate('TOS')}
+                        >
+                            <View style={profileStyles.otherDetailsContainer}>
+                                <Text style={profileStyles.othersDetailsText}>Privacy Policy & Terms of use</Text>
+                                <Icon name="keyboard-arrow-right" size={25}  color={theme.gray}/>
+                            </View>
+                        </TouchableOpacity>
+
+                        <Divider style={profileStyles.line}/>
+
+                        <TouchableOpacity
+                            onPress={()=>navigation.navigate('Help')}
+                        >
+                            <View style={profileStyles.otherDetailsContainer}>
+                                <Text style={profileStyles.othersDetailsText}>Help & Feedback</Text>
+                                <Icon name="keyboard-arrow-right" size={25}  color={theme.gray}/>
+                            </View>
+                        </TouchableOpacity>
+
+                        <Divider style={profileStyles.line}/>
+                        
+                        <TouchableOpacity onPress={onShare}>
+                            <View style={profileStyles.otherDetailsContainer}>
+                                <Text style={profileStyles.othersDetailsText}>Share this App</Text>
+                            </View>
+                        </TouchableOpacity>
+
+                        <Divider style={profileStyles.line}/>
+
+
                     </View>
 
-                    {information.map((info , i)=>
-                        <View key={i} style={profileStyles.infoDetailsContainer}>
-                            <Text style={profileStyles.infoDetailsType}>{info.type}</Text>
-                            <Text style={profileStyles.infoDetailsText}>{info.text}</Text>
-                            
-                            <Divider style={profileStyles.line}/> 
-                        </View>
-                    )}
-                </View>
-
-                <View
-                    style={profileStyles.othersContainer}
-                >
-                    <View style={profileStyles.otherDetailsContainer}>
-                        <Text style={profileStyles.othersDetailsText}>Switch to selling</Text>
-                        <SwitchSelector
-                            style={{width:120}}
-                            options={options}
-                            initial={+userConfig.isSellMode}
-                            value={+userConfig.isSellMode}
-                            onPress={(value) => handleSellModeChange(value)}
-                            textColor={theme.primaryBlue}
-                            selectedColor={theme.white}
-                            buttonColor={theme.primaryBlue}
-                            borderColor={theme.primaryBlue}
-                            hasPadding
-                            valuePadding={3}
-                            height={35}
+                    <View
+                        style={profileStyles.logoutBtn}
+                    >
+                        <PrimaryButton
+                            title="Log out" 
+                            onPress={onClick}
+                            color={theme.primaryBlue}
                         />
+                        <Text style={profileStyles.versionText}>version 1.0.0</Text>
                     </View>
-
-                    <Divider style={profileStyles.line}/>
-
-                    <View style={profileStyles.otherDetailsContainer}>
-                        <Text style={profileStyles.othersDetailsText}>Notification</Text>
-                        <Switch 
-                            trackColor={{ false: theme.gray, true: theme.secondaryBlue }}
-                            thumbColor={+userConfig.isNotificationOn===1 ? theme.primaryBlue : theme.white}
-                            ios_backgroundColor={theme.gray}
-                            onValueChange={toggleSwitchNotif}
-                            value={+userConfig.isNotificationOn===1?true:false}
-                        />
-                    </View>
-
-                    <Divider style={profileStyles.line}/>
-
-                    <TouchableOpacity
-                        onPress={toggleLanguageOverlay}
-                    >
-                        <View style={profileStyles.otherDetailsContainer}>
-                            <Text style={profileStyles.othersDetailsText}>Language</Text>
-                            <Text>{userConfig.language==="en"?"English" : "Chinese"}</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <Divider style={profileStyles.line}/>
-
-                    <TouchableOpacity
-                        onPress={()=>navigation.navigate('TOS')}
-                    >
-                        <View style={profileStyles.otherDetailsContainer}>
-                            <Text style={profileStyles.othersDetailsText}>Privacy Policy & Terms of use</Text>
-                            <Icon name="keyboard-arrow-right" size={25}  color={theme.gray}/>
-                        </View>
-                    </TouchableOpacity>
-
-                    <Divider style={profileStyles.line}/>
-
-                    <TouchableOpacity
-                        onPress={()=>navigation.navigate('Help')}
-                    >
-                        <View style={profileStyles.otherDetailsContainer}>
-                            <Text style={profileStyles.othersDetailsText}>Help & Feedback</Text>
-                            <Icon name="keyboard-arrow-right" size={25}  color={theme.gray}/>
-                        </View>
-                    </TouchableOpacity>
-
-                    <Divider style={profileStyles.line}/>
                     
-                    <TouchableOpacity onPress={onShare}>
-                        <View style={profileStyles.otherDetailsContainer}>
-                            <Text style={profileStyles.othersDetailsText}>Share this App</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <Divider style={profileStyles.line}/>
-
-
-                </View>
-
-                <View
-                    style={profileStyles.logoutBtn}
-                >
-                    <PrimaryButton
-                        title="Log out" 
-                        onPress={onClick}
-                        color={theme.primaryBlue}
-                    />
-                    <Text style={profileStyles.versionText}>version 1.0.0</Text>
                 </View>
                 
-            </View>
 
-            <Overlay isVisible={NotifOverlayVisible} onBackdropPress={toggleNotifOverlay}>
-                <NotificationModal onConfirm={onConfirmNotif} onCancel={onCancelNotif}/>
-            </Overlay>
+                <Overlay isVisible={NotifOverlayVisible} onBackdropPress={toggleNotifOverlay}>
+                    <NotificationModal onConfirm={onConfirmNotif} onCancel={onCancelNotif}/>
+                </Overlay>
 
-            <Overlay isVisible={languageOverlayVisible} onBackdropPress={toggleLanguageOverlay}>
-                <View style={profileStyles.languageOverlay}>
-                    <TouchableOpacity onPress={()=>handleLanguageChange('en')}>
-                        <Text>English</Text>
-                    </TouchableOpacity>
+                <Overlay isVisible={languageOverlayVisible} onBackdropPress={toggleLanguageOverlay}>
+                    <View style={profileStyles.languageOverlay}>
+                        <TouchableOpacity onPress={()=>handleLanguageChange('en')}>
+                            <Text>English</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity onPress={()=>handleLanguageChange('zh')}>
-                        <Text>Chinese</Text>
-                    </TouchableOpacity>
-                </View>
-            </Overlay>
+                        <TouchableOpacity onPress={()=>handleLanguageChange('zh')}>
+                            <Text>Chinese</Text>
+                        </TouchableOpacity>
+                    </View>
+                </Overlay>
 
-        </ScrollView>
+            </ScrollView>
+        }
+        </>
     )
 }
 

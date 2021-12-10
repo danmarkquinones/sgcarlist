@@ -156,7 +156,7 @@ export const DealerCard = props => {
 };
 
 export const PinnedFilterCard = props => {
-  const {filter , onPress , onUnpin} = props
+  const {filter , onPress , onUnpin , index} = props
 
   return (
     <TouchableOpacity onPress={onPress}>
@@ -167,7 +167,7 @@ export const PinnedFilterCard = props => {
         </TouchableOpacity>
 
         <View style={customCardStyles.filterNameContainer}>
-          <Text style={customCardStyles.filterBrand}>{filter.keyword}</Text>
+          <Text style={customCardStyles.filterBrand}>{filter.keyword?filter.keyword:`Filter #${index+1}`}</Text>
           {/* <Text style={customCardStyles.filterLocation}>{filter.location}</Text> */}
         </View>
 
