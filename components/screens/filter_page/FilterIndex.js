@@ -21,8 +21,21 @@ const FilterIndex = ({navigation}) => {
 
   const [carBrands , setCarBrands] = useState([]);
   const carConditions = ['Brand new', 'Used', 'Repossesed'];
-  const locations = ['Singapore', 'Philippines', 'China'];
-  const bodyTypes = ['Sedan', 'Hatchback', 'Crossover', 'SUV'];
+  // const locations = ['Singapore', 'Philippines', 'China'];
+  const vehicleTypes = [
+    'Hybrid',
+    'Electric',
+    'Hatchback',
+    'Luxury Sedan',
+    'MPV',
+    'Mid-sized Sedan',
+    'Sports Car',
+    'Stationwagon',
+    'SUV',
+    'Commercial Vehicle',
+    'Passenger Cars',
+    'Any'
+  ];
   const carColors = ['Black', 'White', 'Blue', 'Red'];
   const fuelTypes = ['Diesel', 'Petrol'];
   const drivenWheel = ['FWD(Front Wheel Drive)' , 'RWD(Rear Wheel Drive)']
@@ -52,7 +65,7 @@ const FilterIndex = ({navigation}) => {
       car_details: {
           car_brand_id: filters.brand,
           car_condition: filters.condition,
-          body_type: filters.body_type,
+          vehicle_type: filters.vehicle_type,
           color: [filters.color],
           driven_wheel: filters.driven_wheel,
           transmission: filters.transmission,
@@ -62,9 +75,13 @@ const FilterIndex = ({navigation}) => {
           state: "",
           country: ""
       },
-      year_range: {
-          minimum_year: filters.from_year,
-          maximum_year: filters.to_year
+      model_year_range: {
+          minimum_year: filters.model_from_year,
+          maximum_year: filters.model_to_year
+      },
+      reg_year_range: {
+        minimum_year: filters.reg_from_year,
+        maximum_year: filters.reg_to_year
       },
       price_range: {
           minimum_price: filters.min_price,
@@ -73,6 +90,10 @@ const FilterIndex = ({navigation}) => {
       mileage_range: {
           minimum_mileage: filters.min_mileage,
           maximum_mileage: filters.max_mileage
+      },
+      cc_range: {
+        minimum_mileage: filters.min_cc,
+        maximum_mileage: filters.max_cc
       }
     }
 
@@ -116,7 +137,8 @@ const FilterIndex = ({navigation}) => {
           />
         </View>
         <Spacer bottom={16} />
-        <View>
+
+        {/* <View>
           <CustomPicker
             placeholder="Select location"
             items={locations}
@@ -124,7 +146,7 @@ const FilterIndex = ({navigation}) => {
             onChange={(value)=>handleFilterChange('location',value)}
           />
         </View>
-        <Spacer bottom={16} />
+        <Spacer bottom={16} /> */}
 
         <View>
           <Text style={{fontWeight: 'bold', marginBottom: 8}}>
@@ -155,13 +177,13 @@ const FilterIndex = ({navigation}) => {
         <Spacer bottom={16} />
 
         <View>
-          <Text style={{fontWeight: 'bold', marginBottom: 8}}>Year range:</Text>
+          <Text style={{fontWeight: 'bold', marginBottom: 8}}>Model Year range:</Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View style={{flex: 1}}>
               <PrimaryInput
                 placeholder="Min : YYYY"
-                onChange={(value)=>handleFilterChange('from_year',value)}
-                value={filters.from_year}
+                onChange={(value)=>handleFilterChange('model_from_year',value)}
+                value={filters.model_from_year}
                 editable
               />
             </View>
@@ -169,8 +191,32 @@ const FilterIndex = ({navigation}) => {
             <View style={{flex: 1}}>
               <PrimaryInput
                 placeholder="Max : YYYY"
-                onChange={(value)=>handleFilterChange('to_year',value)}
-                value={filters.to_year}
+                onChange={(value)=>handleFilterChange('model_to_year',value)}
+                value={filters.model_to_year}
+                editable
+              />
+            </View>
+          </View>
+        </View>
+        <Spacer bottom={16} />
+
+        <View>
+          <Text style={{fontWeight: 'bold', marginBottom: 8}}>Registration Year range:</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{flex: 1}}>
+              <PrimaryInput
+                placeholder="Min : YYYY"
+                onChange={(value)=>handleFilterChange('reg_from_year',value)}
+                value={filters.reg_from_year}
+                editable
+              />
+            </View>
+            <Spacer right={16} />
+            <View style={{flex: 1}}>
+              <PrimaryInput
+                placeholder="Max : YYYY"
+                onChange={(value)=>handleFilterChange('reg_to_year',value)}
+                value={filters.reg_to_year}
                 editable
               />
             </View>
@@ -205,6 +251,32 @@ const FilterIndex = ({navigation}) => {
         <Spacer bottom={16} />
 
         <View>
+          <Text style={{fontWeight: 'bold', marginBottom: 8}}>Engine Cap range:</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{flex: 1}}>
+              <PrimaryInput
+                placeholder="Min"
+                onChange={(value)=>handleFilterChange('min_cc',value)}
+                value={filters.min_cc}
+                editable
+                Unit={()=><Text style={{marginRight:10}}>cc</Text>}
+              />
+            </View>
+            <Spacer right={16} />
+            <View style={{flex: 1}}>
+              <PrimaryInput
+                placeholder="Max"
+                onChange={(value)=>handleFilterChange('max_cc',value)}
+                value={filters.max_cc}
+                editable
+                Unit={()=><Text style={{marginRight:10}}>cc</Text>}
+              />
+            </View>
+          </View>
+        </View>
+        <Spacer bottom={16} />
+
+        <View>
           <CustomPicker
             placeholder="Select transmission"
             items={transmissions}
@@ -217,9 +289,9 @@ const FilterIndex = ({navigation}) => {
         <View>
           <CustomPicker
             placeholder="Select body type"
-            items={bodyTypes}
-            value={filters.body_type}
-            onChange={(value)=>handleFilterChange('body_type',value)}
+            items={vehicleTypes}
+            value={filters.vehicle_type}
+            onChange={(value)=>handleFilterChange('vehicle_type',value)}
           />
         </View>
         <Spacer bottom={16} />
@@ -244,7 +316,7 @@ const FilterIndex = ({navigation}) => {
         </View>
         <Spacer bottom={16} />
 
-        <View>
+        {/* <View>
           <CustomPicker
             placeholder="Select driven wheel"
             items={drivenWheel}
@@ -252,32 +324,34 @@ const FilterIndex = ({navigation}) => {
             onChange={(value)=>handleFilterChange('driven_wheel',value)}
           />
         </View>
-        <Spacer bottom={50} />
+        <Spacer bottom={50} /> */}
+        <View
+          style={{
+            // padding: 24,
+            paddingBottom:50,
+            marginHorizontal: -5,
+            // shadowRadius: 1,
+            // shadowOffset: {
+            //   width: 0,
+            //   height: -1,
+            // },
+            // shadowColor: '#000000',
+            // elevation: 4,
+          }}>
+          <PrimaryButton
+            color={'#20A8F4'}
+            title={'Save filter'}
+            onPress={onSaveFilter}
+          />
+          <Spacer bottom={8} />
+          <PrimaryButton
+            color={'#254A7C'}
+            title={'Apply filter'}
+            onPress={onApplyFilter}
+          />
+        </View>
       </ScrollView>
-      <View
-        style={{
-          padding: 24,
-          marginHorizontal: -5,
-          shadowRadius: 1,
-          shadowOffset: {
-            width: 0,
-            height: -1,
-          },
-          shadowColor: '#000000',
-          elevation: 4,
-        }}>
-        <PrimaryButton
-          color={'#20A8F4'}
-          title={'Save filter'}
-          onPress={onSaveFilter}
-        />
-        <Spacer bottom={8} />
-        <PrimaryButton
-          color={'#254A7C'}
-          title={'Apply filter'}
-          onPress={onApplyFilter}
-        />
-      </View>
+      
     </View>
   );
 };

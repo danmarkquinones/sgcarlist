@@ -40,7 +40,7 @@ const SearchResult = ({navigation}) => {
     getCars.then((res)=>{
         if(res.data){
             const displayCars = res.data.data
-            console.log(res.data.data)
+            console.log('response' , res.data)
             setResults(displayCars)
             setIsLoading(false)
         }
@@ -78,41 +78,42 @@ const SearchResult = ({navigation}) => {
             :`Great! we found ${results.length} cars from your preference.`
           }
         </Text>
-
-        {isLoading? 
-          <FlatList
-              data={[...Array(8)]}
-              keyExtractor={(item,index)=>index}
-              renderItem={({item})=>
-                  <SkeletonListCard width={500} height={100} borderRadius={5} margin={5}/>
-              }
-          />
-          :!isLoading&&results.length===0?
-              <View style={{paddingHorizontal:50}}>
-                <SimpleFallback message='No cars found on that query, Kindy change your filter.'/>
-              </View>
-          :<FlatList
-            data={results}
-            key={config.isGridView}
-            contentContainerStyle={{
-              alignItems: config.isGridView ? 'flex-start' : 'center',
-              justifyContent: 'space-between',
-              paddingBottom: 150,
-            }}
-            numColumns={config.isGridView ? 2 : 1} // set number of columns
-            keyExtractor={item => item.id}
-            showsVerticalScrollIndicator={false}
-            renderItem={({item, index}) => (
-              <TouchableOpacity onPress={() => goToProduct(item)}>
-                {config.isGridView ? (
-                  <GridCard car={item}/>
-                ) : (
-                  <ListCard car={item}/>
-                )}
-              </TouchableOpacity>
-            )}
-          />
+        <View>
+          {isLoading? 
+            <FlatList
+                data={[...Array(8)]}
+                keyExtractor={(item,index)=>index}
+                renderItem={({item})=>
+                    <SkeletonListCard width={500} height={100} borderRadius={5} margin={5}/>
+                }
+            />
+            :!isLoading&&results.length===0?
+                <View style={{paddingHorizontal:50}}>
+                  <SimpleFallback message='No cars found on that query, Kindy change your filter.'/>
+                </View>
+            :<FlatList
+              data={results}
+              key={config.isGridView}
+              contentContainerStyle={{
+                alignItems: config.isGridView ? 'flex-start' : 'center',
+                justifyContent: 'space-between',
+                paddingBottom: 150,
+              }}
+              numColumns={config.isGridView ? 2 : 1} // set number of columns
+              keyExtractor={item => item.id}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item, index}) => (
+                <TouchableOpacity onPress={() => goToProduct(item)}>
+                  {config.isGridView ? (
+                    <GridCard car={item}/>
+                  ) : (
+                    <ListCard car={item}/>
+                  )}
+                </TouchableOpacity>
+              )}
+            />
           }
+        </View>
       </ScrollView>
     </View>
   );

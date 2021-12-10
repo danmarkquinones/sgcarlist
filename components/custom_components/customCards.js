@@ -24,7 +24,7 @@ export const SquareCard = props => {
           <Image style={customCardStyles.carSquareImage} source={car.url} />
         </View>
         <View style={customCardStyles.textBodyContainer}>
-          <Text style={customCardStyles.carName}>{car.product_name}</Text>
+          <Text numberOfLines={2} style={customCardStyles.carName}>{car.product_name}</Text>
           <Text style={customCardStyles.carPrice}>S$ {car.product_price}</Text>
         </View>
       </View>
@@ -57,7 +57,7 @@ export const ListCard = props => {
   const {car, Icon, sellerMode , inFavorites , onPress} = props;
   return (
     <View style={customCardStyles.listCardContainer}>
-      <View style={customCardStyles.imageSquareContainer}>
+      <View style={customCardStyles.imageListContainer}>
         <Image style={customCardStyles.listCarImage} source={car.url} />
       </View>
       <View style={customCardStyles.textListBodyContainer}>
@@ -120,7 +120,7 @@ export const GridCard = props => {
         />
       </View>
       <View style={customCardStyles.textBodyContainer}>
-        <Text style={customCardStyles.carName}>{car.product_name}</Text>
+        <Text numberOfLines={2} style={customCardStyles.carName}>{car.product_name}</Text>
         <Text style={customCardStyles.listCarPrice}>S$ {car.product_price}</Text>
         {/* <Text>{car.location}</Text> */}
 

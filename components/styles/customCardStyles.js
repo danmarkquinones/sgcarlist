@@ -18,7 +18,8 @@ export const customCardStyles = StyleSheet.create({
     carName:{
         color:theme.black,
         fontSize:15,
-        fontWeight:"bold"
+        fontWeight:"bold",
+        height:40
     },
     carPrice:{
        color:theme.primaryBlue ,
@@ -101,7 +102,7 @@ export const customCardStyles = StyleSheet.create({
     },
     imageSquareContainer:{
         height:100,
-        backgroundColor:theme.yellow
+        backgroundColor:theme.gray
     },
     carSquareImage:{
         height:100,
@@ -129,8 +130,8 @@ export const customCardStyles = StyleSheet.create({
         display:"flex",
         flex:1,
         flexDirection:"row",
-        alignItems:"center",
-        justifyContent:"space-between"
+        // alignItems:"center",
+        // justifyContent:"space-between"
     },
     listIconContainer:{
         // flex:1,
@@ -148,8 +149,12 @@ export const customCardStyles = StyleSheet.create({
         fontSize:18,
         marginRight:20
     },
+    imageListContainer:{
+        height:120,
+        backgroundColor:theme.gray
+    },
     listCarImage:{
-        height:110,
+        height:120,
         width:150
     },
 

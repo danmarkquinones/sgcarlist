@@ -17,38 +17,47 @@ export const fetchCars = async () => {
 export const fetchFilteredCars = async (data) => {
     //change the data to be pass
     const obj = {
-        keyword: "sample",
+        keyword: '',
         search_only:false,
         car_details: {
-            car_brand_id: "619651af85a8de34621c9e63",
-            car_condition: "Used",
-            body_type: "Sedan",
-            color: ["Red","White"],
-            driven_wheel: "sample",
-            transmission: "automatic",
-            fuel_type: "Diesel"
+            car_brand_id: '',
+            car_condition: '',
+            vehicle_type: '',
+            color: [],
+            transmission: '',
+            fuel_type: ''
         },
         location: {
             state: "AZ",
-            country: "US"
+            country: "SG"
         },
-        year_range: {
-            minimum_year: 2010,
-            maximum_year: 2020
+        car_year_model_range: {
+            minimum_year: '',
+            maximum_year: ''
+        },
+        reg_year_range: {
+            minimum_year: '',
+            maximum_year: ''
         },
         price_range: {
-            minimum_price: 156.5,
-            maximum_price: 166.5
+            minimum_price: '',
+            maximum_price: ''
         },
         mileage_range: {
-            minimum_mileage: 1000,
-            maximum_mileage: 1500
+            minimum_mileage: '',
+            maximum_mileage: ''
+        },
+        cc_range:{
+            minimum_cc:'',
+            maximum_cc:''
         }
     }
 
     const encodedData = Kjur.encode(obj)
 
-    return await axios.post(`${API_BASE_URL}/user-filters` , 
+    console.log(encodedData)
+
+    return await axios.post(`${API_BASE_URL}/product-catalog/search` , 
         {
             token:encodedData
         },
@@ -63,7 +72,7 @@ export const fetchFilterResults = async (data) => {
         car_details: {
             car_brand_id: data.brand,
             car_condition: data.condition,
-            body_type: data.body_type,
+            vehicle_type: data.vehicle_type,
             color: [data.color],
             driven_wheel: data.driven_wheel,
             transmission: data.transmission,
@@ -73,9 +82,13 @@ export const fetchFilterResults = async (data) => {
             state: "AZ",
             country: "SG"
         },
-        year_range: {
-            minimum_year: data.from_year,
-            maximum_year: data.to_year
+        car_year_model_range: {
+            minimum_year: data.model_from_year,
+            maximum_year: data.model_to_year
+        },
+        reg_year_range: {
+            minimum_year: data.reg_from_year,
+            maximum_year: data.reg_to_year
         },
         price_range: {
             minimum_price: data.min_price,
@@ -84,14 +97,18 @@ export const fetchFilterResults = async (data) => {
         mileage_range: {
             minimum_mileage: data.min_mileage,
             maximum_mileage: data.max_mileage
+        },
+        cc_range:{
+            minimum_cc:data.min_cc,
+            maximum_cc:data.max_cc
         }
     }
 
     const encodedData = Kjur.encode(obj)
 
-    console.log(encodedData)
+    console.log('token for search' , encodedData)
 
-    return await axios.post(`${API_BASE_URL}/user-filters` , 
+    return await axios.post(`${API_BASE_URL}/product-catalog/search` , 
         {
             token:encodedData
         },
