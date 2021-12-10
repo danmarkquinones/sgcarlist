@@ -13,6 +13,7 @@ import NotificationModal from '../../reusable_components/notificationModal';
 import CustomAvatar from '../../custom_components/customAvatar';
 import { UserConfigContext } from '../../store/context_api/userContext';
 import { useIsFocused } from '@react-navigation/core';
+import { logout } from '../../store/api_calls/authentication';
 
 
 const ProfileIndex = (props) => {
@@ -21,24 +22,25 @@ const ProfileIndex = (props) => {
     const [userConfig , setUserConfig] = useContext(UserConfigContext)
     const isFocused = useIsFocused()
 
-    console.log('user profile',userConfig)
-
-    useEffect(()=>{
-        if(isFocused){
-            console.log('userContext' , userConfig)
-        }
-    },[isFocused])
-
     //overlays
     const [NotifOverlayVisible, setNotifOverlayVisible] = useState(false);
     const [languageOverlayVisible,setLanguageOverlayVisible] = useState(false);
 
-    const [information , setInformation] = useState([
-        {type:'Username' , text:'LoremIpsum123'},
-        {type:'Email' , text:'Loremipusm@gmail.com'},
-        {type:'Full Name' , text:'Lorem Ipsum'},
-        {type:'Mobile Number' , text:'0912 345 6789'}
-    ])
+    const [information , setInformation] = useState([])
+
+    useEffect(()=>{
+        if(isFocused){
+            console.log(userConfig.userDetails)
+            if(userConfig.isLoggedIn){
+                const infoArray = [
+                    // {type:'Email' , text:userConfig.userDetails.user_email},
+                    {type:'Full Name' , text:`${userConfig.userDetails.user_first_name} ${userConfig.userDetails.user_last_name}`},
+                    {type:'Mobile Number' , text:userConfig.userDetails.user_contact_details.contact_numbers[0]}
+                ]
+                setInformation(infoArray)
+            }
+        }
+    },[isFocused])
 
     const options = [
         { label: "Buy", value: "0" },
@@ -46,7 +48,13 @@ const ProfileIndex = (props) => {
     ];
 
     const onClick = () => {
-        navigation.navigate('Login') 
+        logout()
+        setUserConfig({
+            ...userConfig,
+            isLoggedIn:0,
+            userDetails:{}
+        })
+        navigation.navigate('TabNav') 
     };
 
     const toggleNotifOverlay = () => {
@@ -121,17 +129,15 @@ const ProfileIndex = (props) => {
             </View>
             :<ScrollView
                 showsVerticalScrollIndicator={false}
-            >
-                
-                    
+            >    
                 <View
                     style={globalStyles.container}
                 >
                     <View
                         style={profileStyles.headerContainer}
                     >
-                        <CustomAvatar initial="L" size={40} color={theme.gray}/>
-                        <Text style={profileStyles.headerName}>Lorem Ipsum {userConfig.isSellMode}</Text>
+                        <CustomAvatar initial={userConfig.userDetails.user_email.substring(0,1).toUpperCase()} size={40} color={theme.gray}/>
+                        <Text style={profileStyles.headerName}>{userConfig.userDetails.user_email}</Text>
                     </View>
 
                     <View
@@ -139,7 +145,7 @@ const ProfileIndex = (props) => {
                     >
                         <View style={profileStyles.infoHead}>
                             <Text style={profileStyles.infoHeadTitle}>Profile Informations</Text>
-                            <TouchableOpacity onPress={()=>navigation.navigate('EditProfile', {data:userConfig.userDetails,callback:setUserConfig})}>
+                            <TouchableOpacity onPress={()=>navigation.navigate('EditProfile', {data:userConfig.userDetails,callback:setInformation})}>
                                 <View style={profileStyles.editContainer}>
                                     <Icon name='edit' size={15} />
                                     <Text style={{fontSize:15 , marginLeft:5}}>Edit</Text>

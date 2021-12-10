@@ -1,4 +1,4 @@
-import React , {useContext} from 'react'
+import React , {useContext , useState , useEffect} from 'react'
 import { Text, View , ScrollView , Image, TouchableOpacity , RefreshControl } from 'react-native'
 import { theme } from '../../../contants/colors'
 import { landingStyles } from '../../../styles/landingStyles'
@@ -13,6 +13,7 @@ import TopDealersLists from './TopDealersLists'
 import TopLocations from './TopLocations'
 import { SkeletonSquareCard } from '../../../custom_components/customCardLoaders';
 import { UserConfigContext } from '../../../store/context_api/userContext';
+import { fetchTotalVerifiedCars } from '../../../store/api_calls/cars_api';
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -23,10 +24,22 @@ const BuyerLanding = (props) => {
     const {navigation} = props
     const [userConfig , setUserConfig] = useContext(UserConfigContext)
 
-    const [refreshing, setRefreshing] = React.useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+    const [totalVerifiedCars , setTotalVerifiedCars] = useState(0)
+
+    const getTotal = () => {
+        const total = fetchTotalVerifiedCars()
+        total.then((res)=>{
+            if(res.status===200){
+                // console.log(res.data.data.total_verified)
+                setTotalVerifiedCars(res.data.data.total_verified)
+            }
+        }).catch(e=>console.log(e))
+    }
 
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
+        getTotal()
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
@@ -38,6 +51,9 @@ const BuyerLanding = (props) => {
         navigation.navigate(route , filter)
     }
 
+    useEffect(() => {
+        getTotal()
+    }, [])
 
     return (
         <ScrollView 
@@ -52,10 +68,12 @@ const BuyerLanding = (props) => {
         >
             {userConfig.isLoggedIn?
                 <View style={landingStyles.headerContainer}>
-                    <CustomAvatar initial='L' color={theme.secondaryBlue} size={50}/>
+                    <CustomAvatar initial={userConfig.userDetails.user_email.substring(0,1).toUpperCase()} color={theme.secondaryBlue} size={50}/>
                     <View style={landingStyles.headerNameView}>
-                        <Text style={landingStyles.greetName}>{userConfig.isLoggedIn?'Hello':'Hi There!'}</Text>
-                        <Text style={landingStyles.listedCar}>We have 123,342 cars listed</Text>
+                        <Text style={landingStyles.greetName}>
+                            {userConfig.isLoggedIn?`Hello , ${userConfig.userDetails.user_first_name} ${userConfig.userDetails.user_last_name}`:'Hi There!'}
+                        </Text>
+                        <Text style={landingStyles.listedCar}>We have {totalVerifiedCars} cars listed</Text>
                     </View>
                 </View>
             :null}

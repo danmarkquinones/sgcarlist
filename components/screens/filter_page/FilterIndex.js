@@ -55,7 +55,7 @@ const FilterIndex = ({navigation}) => {
 
   const handleFilterChange = (name,value) => {
     setFilters({...filters,[name]:value})
-    console.log(filters)
+    // console.log(filters)
   }
 
   const onSaveFilter = () => {
@@ -94,7 +94,8 @@ const FilterIndex = ({navigation}) => {
       cc_range: {
         minimum_mileage: filters.min_cc,
         maximum_mileage: filters.max_cc
-      }
+      },
+      sort:'desc-price'
     }
 
     addPinnedFilter(filter)

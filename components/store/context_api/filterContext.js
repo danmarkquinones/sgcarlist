@@ -24,6 +24,7 @@ export const FilterConfigContextProvider = (props) => {
         fuel_type:'',
         vehicle_type:'',
         driven_wheel:'',
+        sort:'desc-price'
     })
 
     return (

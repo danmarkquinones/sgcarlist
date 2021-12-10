@@ -1,6 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
 import {Button, Text, View, Image, Dimensions, ScrollView} from 'react-native';
-import onboarding from '../../../assets/images/login.png';
 import logo from '../../../assets/images/carlistsg_white.png';
 import {theme} from '../../contants/colors';
 import {PrimaryButton} from '../../custom_components/customButtons';
@@ -8,8 +7,9 @@ import PrimaryInput from '../../custom_components/customInput';
 import Spacer from '../../custom_components/spacer';
 import Kjur from '../../store/helpers/jwt';
 import {post} from '../../store/api_calls/authentication';
-import {fetchCars} from '../../store/api_calls/cars_api';
 import {UserConfigContext} from '../../store/context_api/userContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Login = props => {
   const {width, height} = Dimensions.get('screen');
   const {navigation} = props;
@@ -32,6 +32,9 @@ const Login = props => {
         isLoggedIn: 1,
         userDetails: {...userConfig.userDetails, ...data},
       });
+
+      AsyncStorage.setItem('userDetails',JSON.stringify(data))
+      AsyncStorage.setItem('bearerToken' , res.data.token)
 
       navigation.navigate('LandingStacks');
     } else {

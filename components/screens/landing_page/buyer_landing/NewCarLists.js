@@ -1,8 +1,7 @@
 import React , {useEffect , useState} from 'react'
 import { FlatList , Text } from 'react-native'
 import { SquareCard, WhiteCard } from '../../../custom_components/customCards'
-import { cars } from '../../../contants/dummyCarData';
-import { fetchCars, fetchFilteredCars } from '../../../store/api_calls/cars_api';
+import {  fetchFilteredCars } from '../../../store/api_calls/cars_api';
 import { SkeletonSquareCard } from '../../../custom_components/customCardLoaders';
 import { FetchFailed } from '../../../custom_components/customFallbacks';
 

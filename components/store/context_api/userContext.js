@@ -1,6 +1,7 @@
 import React , {useState , useEffect} from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LogBox } from 'react-native';
+import { getAsyncStorageData } from '../api_calls/user_api';
 
 export const UserConfigContext = React.createContext();
 
@@ -14,42 +15,16 @@ export const UserConfigContextProvider = (props) => {
         language:'en',
         userDetails : {},
     });
-
-    const getData = async (type , value) => {
-        try {
-          const data = await AsyncStorage.getItem(type)
-          if(data === null) {
-            AsyncStorage.setItem(type , value.toString()) 
-          }
-          return data
-        } catch(e) {
-          console.log(e)
-        }
-    }
     
     useEffect(()=>{
-        getData('isLaunched' , 1)
-        getData('isNotificationOn' , 1)
-        getData('isSellMode' , 0)
-        getData('isLoggedIn' , 0)
-        getData('savedCars','[]')
-        getData('pinnedFilters','[]')
-
-        // setUserConfig({
-        //     ...userConfig,
-        //     isLaunched:1,
-        //     isLoggedIn:0,
-        //     isSellMode:0,
-        //     isNotificationOn:0,
-        //     language:'en',
-        //     userDetails:{
-        //         // username:"LoremIpsum123",
-        //         // email:'Loremipusm@gmail.com',
-        //         // fname:'Lorem',
-        //         // lname:'Ipsum',
-        //         // contact:'0912 345 6789'
-        //     }
-        // })
+        const userInfo = getAsyncStorageData('userDetails' , '{}')
+        userInfo.then((data)=>{
+            if(data){
+                setUserConfig({...userConfig ,isLoggedIn:1,  userDetails:JSON.parse(data)})
+            }else{
+                setUserConfig({...userConfig ,isLoggedIn:0,  userDetails:{}})
+            }
+        })
         
         LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     },[])

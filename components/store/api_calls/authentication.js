@@ -1,6 +1,7 @@
 import axios from "axios";
 import {API_BASE_URL} from '@env';
 import Kjur from '../helpers/jwt';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const post = (params, route) => {
   const token = Kjur.encode(params);
@@ -20,3 +21,9 @@ export const post = (params, route) => {
     .then(res => res)
     .catch(error => ({error: error.message}));
 };
+
+export const logout = () => {
+  AsyncStorage.setItem('isLoggedIn' , '0')
+  AsyncStorage.setItem('userDetails' , '{}')
+  AsyncStorage.setItem('bearerToken' , '{}')
+}
