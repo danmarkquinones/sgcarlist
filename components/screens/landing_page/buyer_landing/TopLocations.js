@@ -19,7 +19,7 @@ const TopLocations = (props) => {
         const getLocations = fetchLandingPageLists('top-search-location')
         getLocations.then((res)=>{
             if(res.data){
-                console.log('locations' , res.data)
+                // console.log('locations' , res.data.data)
                 const displayLocations = res.data.data
                 setLocations(displayLocations)
                 setIsLoading(false)
@@ -52,10 +52,15 @@ const TopLocations = (props) => {
                 showsHorizontalScrollIndicator={false}
                 renderItem={({item , index})=>(
                     <TouchableOpacity onPress={()=>navigation.navigate('SearchResult' , 'toplocation')}>
-                        <View style={landingStyles.locationItemContainer}>
-                            <Text style={landingStyles.locationText}>
-                                {index+1}. {item.name}
-                            </Text>
+                        <View>
+                            <View style={landingStyles.locationItemContainer}>
+                                <Text style={landingStyles.locationText}>
+                                    {index+1}. {item._id}
+                                </Text>
+                                <Text style={landingStyles.locationCount}>
+                                    {item.count}
+                                </Text>
+                            </View>
                             <Divider/>
                         </View>
                     </TouchableOpacity>

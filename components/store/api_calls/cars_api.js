@@ -16,7 +16,6 @@ export const fetchTotalVerifiedCars = async () => {
 
 export const fetchLandingPageLists = async (url) => {
 
-
     return await axios.get(`${API_BASE_URL}/product-catalog/${url}` , 
         {},
         axiosConfig
