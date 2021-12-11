@@ -16,7 +16,7 @@ export const FilterConfigContextProvider = (props) => {
         model_to_year:'',
         reg_from_year:'',
         reg_to_year:'',
-        location:'',
+        location:{id:"",city:"",region:"",country:"SG"},
         color:'',
         brand:'',
         condition:'',

@@ -157,6 +157,11 @@ export const customCardStyles = StyleSheet.create({
         height:120,
         width:150
     },
+    listCarName:{
+        color:theme.black,
+        fontSize:15,
+        fontWeight:"bold",
+    },
 
 
     // grid card

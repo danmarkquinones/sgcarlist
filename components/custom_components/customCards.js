@@ -55,6 +55,9 @@ export const WhiteCard = ({options, onPress}) => {
 
 export const ListCard = props => {
   const {car, Icon, sellerMode , inFavorites , onPress} = props;
+
+  console.log(car)
+
   return (
     <View style={customCardStyles.listCardContainer}>
       <View style={customCardStyles.imageListContainer}>
@@ -63,8 +66,11 @@ export const ListCard = props => {
       <View style={customCardStyles.textListBodyContainer}>
         <View style={customCardStyles.listCardHeader}>
           <View>
-            <Text style={customCardStyles.carName}>{car.product_name}</Text>
-            <Text>{car.location}</Text>
+            <Text 
+              style={customCardStyles.listCarName}
+            >{car.product_name}</Text>
+            {/* <Text>{car.location}</Text> */}
+            {/* <Text>{car.date_verified.$date.$numberLong}</Text> */}
           </View>
           {Icon && (
             <View style={customCardStyles.iconSquareContainer}>
@@ -120,9 +126,11 @@ export const GridCard = props => {
         />
       </View>
       <View style={customCardStyles.textBodyContainer}>
-        <Text numberOfLines={2} style={customCardStyles.carName}>{car.product_name}</Text>
+        <Text numberOfLines={1} style={customCardStyles.listCarName}>{car.product_name}</Text>
+        {/* <Text>{car.date_verified.$date.$numberLong}</Text> */}
         <Text style={customCardStyles.listCarPrice}>S$ {car.product_price}</Text>
         {/* <Text>{car.location}</Text> */}
+        
 
         <Divider style={customCardStyles.line} />
 
@@ -172,8 +180,8 @@ export const PinnedFilterCard = props => {
         </View>
 
         <View style={customCardStyles.filterPriceContainer}>
-          <Text style={customCardStyles.filterMinPrice}>min : $ {filter.price_range.minimum_price}</Text>
-          <Text style={customCardStyles.filterMaxPrice}>max : $ {filter.price_range.maximum_price}</Text>
+          <Text style={customCardStyles.filterMinPrice}>min : $ {filter.min_price}</Text>
+          <Text style={customCardStyles.filterMaxPrice}>max : $ {filter.max_price}</Text>
         </View>
 
         <MatIcon name="keyboard-arrow-right" size={25} color={theme.black}/>

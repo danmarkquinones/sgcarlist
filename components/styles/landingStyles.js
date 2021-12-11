@@ -85,4 +85,15 @@ export const landingStyles = StyleSheet.create({
     fontSize: 18,
     color: theme.secondaryBlue,
   },
+  locationItemContainer:{
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between'
+  },
+  locationCount:{
+    fontSize:18,
+    fontWeight:'bold',
+    color:theme.primaryBlue
+  }
 });

@@ -66,9 +66,9 @@ const BuyerLanding = (props) => {
                 />
             }
         >
-            {userConfig.isLoggedIn?
+            {userConfig.isLoggedIn && userConfig.userDetails?
                 <View style={landingStyles.headerContainer}>
-                    <CustomAvatar initial={userConfig.userDetails.user_email.substring(0,1).toUpperCase()} color={theme.secondaryBlue} size={50}/>
+                    <CustomAvatar initial={userConfig.userDetails?.user_email.substring(0,1).toUpperCase()} color={theme.secondaryBlue} size={50}/>
                     <View style={landingStyles.headerNameView}>
                         <Text style={landingStyles.greetName}>
                             {userConfig.isLoggedIn?`Hello , ${userConfig.userDetails.user_first_name} ${userConfig.userDetails.user_last_name}`:'Hi There!'}
@@ -160,7 +160,7 @@ const BuyerLanding = (props) => {
             <View style={landingStyles.locationListContainer}>
 
                 <View style={landingStyles.listHeaders}>
-                    <Text style={landingStyles.listDealerText}>Top 5 Location</Text>
+                    <Text refreshing={refreshing} style={landingStyles.listDealerText}>Top 10 Search Locations</Text>
                 </View>
 
                 <TopLocations refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/>

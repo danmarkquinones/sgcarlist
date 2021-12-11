@@ -19,9 +19,11 @@ export const UserConfigContextProvider = (props) => {
     useEffect(()=>{
         const userInfo = getAsyncStorageData('userDetails' , '{}')
         userInfo.then((data)=>{
-            if(data){
+            if(Object.keys(data)>0){
+                // console.log('login',data)
                 setUserConfig({...userConfig ,isLoggedIn:1,  userDetails:JSON.parse(data)})
             }else{
+                // console.log('logout')
                 setUserConfig({...userConfig ,isLoggedIn:0,  userDetails:{}})
             }
         })
