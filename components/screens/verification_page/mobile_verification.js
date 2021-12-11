@@ -6,36 +6,18 @@ import {PrimaryButton} from '../../custom_components/customButtons';
 import PrimaryInput from '../../custom_components/customInput';
 import Spacer from '../../custom_components/spacer';
 
-const MobileVerification = () => {
+const MobileVerification = ({otp, setOtp}) => {
   return (
-    <View>
+    <View style={{flex: 1, padding: 24}}>
       <Spacer bottom={48} />
       <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 20}}>
         We will send you a One Time Password on this mobile number
       </Text>
       <Spacer bottom={24} />
+
       <PrimaryInput
-        onChange={() => {}}
-        borderColor={theme.primaryBlue}
-        height={50}
-        placeholder="Mobile Number"
-        Icon={() => (
-          <View
-            style={{
-              backgroundColor: theme.primaryBlue,
-              height: '100%',
-              width: 60,
-              marginRight: -10,
-              paddingTop: 15,
-              alignItems: 'center',
-            }}>
-            <Text style={{color: theme.white}}>Send</Text>
-          </View>
-        )}
-      />
-      <Spacer bottom={24} />
-      <PrimaryInput
-        onChange={() => {}}
+        value={otp}
+        onChange={setOtp}
         borderColor={theme.primaryBlue}
         height={50}
         placeholder="OTP"

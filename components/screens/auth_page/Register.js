@@ -30,12 +30,12 @@ const Register = props => {
       contact_number: contact,
       password: password,
       password_confirmation: confirmPassword,
-      sms: false,
+      sms: true,
     };
 
     let res = await post(params, '/users/registration');
-    if (res.status === 200) {
-      navigation.navigate('Login');
+    if (res?.data?.success) {
+      navigation.navigate('Verification', {params});
     } else {
       alert('Oops! Something went wrong.');
     }

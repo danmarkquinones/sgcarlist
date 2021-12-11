@@ -24,7 +24,7 @@ const Login = props => {
     setIsFetching(true);
     const params = {username, password};
     let res = await post(params, '/users/login');
-    if (res.status === 200) {
+    if (res?.data?.success) {
       const data = Kjur.decode(res.data.token);
 
       setUserConfig({
@@ -33,8 +33,8 @@ const Login = props => {
         userDetails: {...userConfig.userDetails, ...data},
       });
 
-      AsyncStorage.setItem('userDetails',JSON.stringify(data))
-      AsyncStorage.setItem('bearerToken' , res.data.token)
+      AsyncStorage.setItem('userDetails', JSON.stringify(data));
+      AsyncStorage.setItem('bearerToken', res.data.token);
 
       navigation.navigate('LandingStacks');
     } else {
