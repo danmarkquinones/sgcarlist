@@ -9,6 +9,7 @@ import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import EntIcon from 'react-native-vector-icons/Entypo';
 import { PrimaryButton, SmallButton } from './customButtons';
 import { onCallUser } from '../store/helpers/globalFunctions';
+import CustomAvatar from './customAvatar';
 
 export const SquareCard = props => {
   const {car, Icon, onPress} = props;
@@ -24,7 +25,9 @@ export const SquareCard = props => {
           <Image style={customCardStyles.carSquareImage} source={car.url} />
         </View>
         <View style={customCardStyles.textBodyContainer}>
-          <Text numberOfLines={2} style={customCardStyles.carName}>{car.product_name}</Text>
+          <Text numberOfLines={2} style={customCardStyles.carName}>
+            {car.product_name}
+          </Text>
           <Text style={customCardStyles.carPrice}>S$ {car.product_price}</Text>
         </View>
       </View>
@@ -54,9 +57,9 @@ export const WhiteCard = ({options, onPress}) => {
 };
 
 export const ListCard = props => {
-  const {car, Icon, sellerMode , inFavorites , onPress} = props;
+  const {car, Icon, sellerMode, inFavorites, onPress} = props;
 
-  console.log(car)
+  console.log(car);
 
   return (
     <View style={customCardStyles.listCardContainer}>
@@ -66,9 +69,7 @@ export const ListCard = props => {
       <View style={customCardStyles.textListBodyContainer}>
         <View style={customCardStyles.listCardHeader}>
           <View>
-            <Text 
-              style={customCardStyles.listCarName}
-            >{car.product_name}</Text>
+            <Text style={customCardStyles.listCarName}>{car.product_name}</Text>
             {/* <Text>{car.location}</Text> */}
             {/* <Text>{car.date_verified.$date.$numberLong}</Text> */}
           </View>
@@ -88,7 +89,9 @@ export const ListCard = props => {
         <Divider style={customCardStyles.line} />
 
         <View style={customCardStyles.listTextContainer}>
-          <Text style={customCardStyles.listCarPrice}>S$ {car.product_price}</Text>
+          <Text style={customCardStyles.listCarPrice}>
+            S$ {car.product_price}
+          </Text>
           {!sellerMode && (
             <SmallButton
               onPress={() => onCallUser('092347832643')}
@@ -107,34 +110,44 @@ export const ListCard = props => {
 };
 
 export const GridCard = props => {
-  const {car, Icon , inFavorites , onPress} = props;
+  const {car, Icon, inFavorites, onPress} = props;
   return (
     <View style={customCardStyles.gridCardContainer}>
-      {Icon&&
+      {Icon && (
         <View style={customCardStyles.iconSquareContainer}>
-          {inFavorites? 
+          {inFavorites ? (
             <TouchableOpacity onPress={onPress}>
               <Icon />
             </TouchableOpacity>
-          :<Icon />}
+          ) : (
+            <Icon />
+          )}
         </View>
-      }
+      )}
       <View style={customCardStyles.imageSquareContainer}>
-        <Image
-          style={customCardStyles.gridCarImage}
-          source={car.url}
-        />
+        <Image style={customCardStyles.gridCarImage} source={car.url} />
       </View>
       <View style={customCardStyles.textBodyContainer}>
-        <Text numberOfLines={1} style={customCardStyles.listCarName}>{car.product_name}</Text>
+        <Text numberOfLines={1} style={customCardStyles.listCarName}>
+          {car.product_name}
+        </Text>
         {/* <Text>{car.date_verified.$date.$numberLong}</Text> */}
-        <Text style={customCardStyles.listCarPrice}>S$ {car.product_price}</Text>
+        <Text style={customCardStyles.listCarPrice}>
+          S$ {car.product_price}
+        </Text>
         {/* <Text>{car.location}</Text> */}
-        
 
         <Divider style={customCardStyles.line} />
 
-        <SmallButton title="Contact Dealer" onPress={()=>onCallUser('09354734378')} options={{color:theme.primaryBlue , textColor:theme.white , height:30}}/>
+        <SmallButton
+          title="Contact Dealer"
+          onPress={() => onCallUser('09354734378')}
+          options={{
+            color: theme.primaryBlue,
+            textColor: theme.white,
+            height: 30,
+          }}
+        />
 
         {/* <View style={customCardStyles.gridTextContainer}>
           <Text style={customCardStyles.listCarPrice}>{car.product_price}</Text>
@@ -152,11 +165,32 @@ export const DealerCard = props => {
     <TouchableOpacity onPress={onPress}>
       <View style={customCardStyles.squareCardContainer}>
         <View style={customCardStyles.dealerContainer}>
-          <View style={customCardStyles.dealerImageContainer}>
-            <Image style={customCardStyles.dealerImage} source={dealer.url} />
-          </View>
-          <Text style={customCardStyles.dealerName}>{dealer.name}</Text>
-          <Text style={customCardStyles.dealerDeals}>{dealer.deals} deals</Text>
+          {dealer.advertisement_contact_details.user_profile_url ? (
+            <View style={customCardStyles.dealerImageContainer}>
+              <Image style={customCardStyles.dealerImage} source={dealer.url} />
+            </View>
+          ) : (
+            <CustomAvatar
+              initial={dealer.advertisement_contact_details.user_first_name.substr(
+                0,
+                1,
+              )}
+              color={theme.tertiaryBlue}
+              size={80}
+            />
+          )}
+
+          <Spacer bottom={10} />
+          <Text style={customCardStyles.dealerName}>
+            {dealer.advertisement_contact_details.user_first_name}{' '}
+            {dealer.advertisement_contact_details.user_last_name}
+          </Text>
+          <Text style={customCardStyles.dealerDeals}>
+            {dealer.advertisement_contact_details.number_of_product_sold}{' '}
+            {dealer.advertisement_contact_details.number_of_product_sold > 1
+              ? 'deals'
+              : 'deal'}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

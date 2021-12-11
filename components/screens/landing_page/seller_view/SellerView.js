@@ -43,53 +43,67 @@ const SellerView = (props) => {
     };
 
     return (
-        <ScrollView contentContainerStyle={{flexGrow:1}}>
-            <View style={sellersStyles.sellerHeaderContainer}>
-                <MatIcon
-                    onPress={() => navigation.goBack(null)}
-                    name="arrow-left"
-                    size={25}
-                    color={theme.gray}
-                    style={sellersStyles.back}
-                />
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <View style={sellersStyles.sellerHeaderContainer}>
+          <MatIcon
+            onPress={() => navigation.goBack(null)}
+            name="arrow-left"
+            size={25}
+            color={theme.gray}
+            style={sellersStyles.back}
+          />
 
-                <CustomAvatar initial={data.name.substr(0,1)} color={theme.gray} size={50}/>
-                
-                <View style={sellersStyles.nameContainer}>
-                    <Text style={sellersStyles.headerName}>{data.name}</Text>
-                    <Text>{data.number} - {data.location}</Text>
-                </View>
-            </View>
+          <CustomAvatar
+            initial={data.advertisement_contact_details.user_first_name.substr(
+              0,
+              1,
+            )}
+            color={theme.gray}
+            size={50}
+          />
 
-            <TabView
-                navigationState={{ index, routes }}
-                renderScene={renderScene}
-                renderTabBar={(props) => (
-                    <TabBar 
-                        {...props} 
-                        style={{backgroundColor: theme.white}}
-                        renderLabel={({ focused, route }) => {
-                            return (
-                                <Text
-                                    style={{
-                                        fontWeight:'500',
-                                        color:focused?theme.primaryBlue:theme.black
-                                    }}
-                                >
-                                    {route.title}
-                                </Text>
-                            );
-                        }}
-                        indicatorStyle={{backgroundColor:theme.primaryBlue}}
-                    />
-                )}
-                
-                onIndexChange={setIndex}
-                initialLayout={initialLayout}
-                style={sellersStyles.tabContainer}
+          <View style={sellersStyles.nameContainer}>
+            <Text style={sellersStyles.headerName}>
+              {data.advertisement_contact_details.user_first_name}{' '}
+              {data.advertisement_contact_details.user_last_name}
+            </Text>
+            <Text>
+              {
+                data.advertisement_contact_details.contact_details
+                  .contact_numbers[0]
+              }{' '}
+              - {data.location ? data.location : 'Jurong, Singapore'}
+            </Text>
+          </View>
+        </View>
+
+        <TabView
+          navigationState={{index, routes}}
+          renderScene={renderScene}
+          renderTabBar={props => (
+            <TabBar
+              {...props}
+              style={{backgroundColor: theme.white}}
+              renderLabel={({focused, route}) => {
+                return (
+                  <Text
+                    style={{
+                      fontWeight: '500',
+                      color: focused ? theme.primaryBlue : theme.black,
+                    }}>
+                    {route.title}
+                  </Text>
+                );
+              }}
+              indicatorStyle={{backgroundColor: theme.primaryBlue}}
             />
-        </ScrollView>
-    )
+          )}
+          onIndexChange={setIndex}
+          initialLayout={initialLayout}
+          style={sellersStyles.tabContainer}
+        />
+      </ScrollView>
+    );
 }
 
 export default SellerView
