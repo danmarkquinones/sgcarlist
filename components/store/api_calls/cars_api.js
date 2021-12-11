@@ -14,54 +14,11 @@ export const fetchTotalVerifiedCars = async () => {
     return await axios.get(`${API_BASE_URL}/product-catalog/total_verified`)
 }
 
-export const fetchFilteredCars = async (data) => {
-    //change the data to be pass
-    const obj = {
-        keyword: '',
-        search_only:false,
-        car_details: {
-            car_brand_id: '',
-            car_condition: '',
-            vehicle_type: '',
-            color: [],
-            transmission: '',
-            fuel_type: ''
-        },
-        location: {
-            state: "AZ",
-            country: "SG"
-        },
-        car_year_model_range: {
-            minimum_year: '',
-            maximum_year: ''
-        },
-        reg_year_range: {
-            minimum_year: '',
-            maximum_year: ''
-        },
-        price_range: {
-            minimum_price: '',
-            maximum_price: ''
-        },
-        mileage_range: {
-            minimum_mileage: '',
-            maximum_mileage: ''
-        },
-        cc_range:{
-            minimum_cc:'',
-            maximum_cc:''
-        },
-        sort:'desc-price'
-    }
+export const fetchLandingPageLists = async (url) => {
 
-    const encodedData = Kjur.encode(obj)
 
-    // console.log(encodedData)
-
-    return await axios.post(`${API_BASE_URL}/product-catalog/search` , 
-        {
-            token:encodedData
-        },
+    return await axios.get(`${API_BASE_URL}/product-catalog/${url}` , 
+        {},
         axiosConfig
     )
 }
