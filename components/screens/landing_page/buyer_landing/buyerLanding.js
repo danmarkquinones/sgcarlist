@@ -148,7 +148,7 @@ const BuyerLanding = (props) => {
 
             <View style={landingStyles.listHeaderContainer}>
                 <View style={landingStyles.listHeaders}>
-                    <Text style={landingStyles.listDealerText}>Dealer - Car Sold</Text>
+                    <Text style={landingStyles.listDealerText}>Top Sellers</Text>
                 </View>
                 {/* <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text> */}
             </View>
@@ -160,7 +160,7 @@ const BuyerLanding = (props) => {
             <View style={landingStyles.locationListContainer}>
 
                 <View style={landingStyles.listHeaders}>
-                    <Text refreshing={refreshing} style={landingStyles.listDealerText}>Top 10 Search Locations</Text>
+                    <Text refreshing={refreshing} style={landingStyles.listDealerText}>Top Search Locations</Text>
                 </View>
 
                 <TopLocations refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/>
