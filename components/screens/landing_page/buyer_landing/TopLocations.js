@@ -19,7 +19,7 @@ const TopLocations = (props) => {
         const getLocations = fetchLandingPageLists('top-search-location')
         getLocations.then((res)=>{
             if(res.data){
-                // console.log('locations' , res.data.data)
+                console.log('locations' , res.data.data)
                 const displayLocations = res.data.data
                 setLocations(displayLocations)
                 setIsLoading(false)
@@ -55,7 +55,7 @@ const TopLocations = (props) => {
                         <View>
                             <View style={landingStyles.locationItemContainer}>
                                 <Text style={landingStyles.locationText}>
-                                    {index+1}. {item._id}
+                                    {index+1}. {item.city}
                                 </Text>
                                 <Text style={landingStyles.locationCount}>
                                     {item.count}

@@ -1,4 +1,4 @@
-import React , {useState , useEffect} from 'react';
+import React , {useState , useEffect, useContext} from 'react';
 import { View, StyleSheet, Dimensions, FlatList, Text, TouchableOpacity } from 'react-native';
 import { TabView, TabBar } from 'react-native-tab-view';
 import CustomHeader from '../../custom_components/customHeader';
@@ -12,6 +12,7 @@ import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { removePinnedFilter, removeToSavedCars } from '../../store/helpers/globalFunctions';
 import { SkeletonListCard } from '../../custom_components/customCardLoaders';
+import { FilterConfigContext } from '../../store/context_api/filterContext';
 
 const SavedCars = ({config , setConfig , navigation}) => {
 
@@ -109,6 +110,7 @@ const PinnedFilters = ({config , setConfig , navigation}) => {
 
     const [pinnedFilters , setPinnedFilters] = useState([])
     const [isLoading , setIsLoading] = useState([])
+    const [filters , setFilters] = useContext(FilterConfigContext)
     const isFocused = useIsFocused()
 
     useEffect(() => {
@@ -119,7 +121,7 @@ const PinnedFilters = ({config , setConfig , navigation}) => {
     }, [isFocused])
 
     const goToSearchResult = (data) => {
-        // console.log(data)
+        setFilters(data)
         navigation.navigate('SearchResult')
     }
 

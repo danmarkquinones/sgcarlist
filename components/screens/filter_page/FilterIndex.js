@@ -5,12 +5,12 @@ import {theme} from '../../contants/colors';
 import CustomHeader from '../../custom_components/customHeader';
 import PrimaryInput from '../../custom_components/customInput';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import {CustomPicker , CustomPickerAsync} from '../../custom_components/customPicker';
+import {CustomPicker , CustomPickerAsync, CustomPickerLocation} from '../../custom_components/customPicker';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import Spacer from '../../custom_components/spacer';
 import { addPinnedFilter } from '../../store/helpers/globalFunctions';
 import { useToast } from "react-native-toast-notifications";
-import { fetchBrands } from '../../store/api_calls/cars_api';
+import { fetchBrands, fetchLocations } from '../../store/api_calls/cars_api';
 import { FilterConfigContext } from '../../store/context_api/filterContext';
 
 const FilterIndex = ({navigation}) => {
@@ -20,8 +20,10 @@ const FilterIndex = ({navigation}) => {
   const toast = useToast();
 
   const [carBrands , setCarBrands] = useState([]);
+  const [locations , setLocations] = useState([]);
+
   const carConditions = ['Brand new', 'Used', 'Repossesed'];
-  // const locations = ['Singapore', 'Philippines', 'China'];
+
   const vehicleTypes = [
     'Hybrid',
     'Electric',
@@ -43,62 +45,52 @@ const FilterIndex = ({navigation}) => {
 
   useEffect(() => {
     const getBrands = fetchBrands()
+    const getLocations = fetchLocations()
+
     getBrands.then((res)=>{
       if(res.data){
+          // console.log(res.data.data)
           const displayBrands = res.data.data
           setCarBrands(displayBrands)
       }
     }).catch((e)=>{
         console.log('call failed' , e)
     })
+
+    getLocations.then((res)=>{
+      if(res.data){
+          // console.log(res.data)
+          const displayLocations = res.data.data
+          setLocations(displayLocations)
+      }
+    }).catch((e)=>{
+        console.log('call failed location' , e)
+    })
   }, [])
 
   const handleFilterChange = (name,value) => {
     setFilters({...filters,[name]:value})
-    // console.log(filters)
+    console.log(filters)
+  }
+
+  const handleLocationsChange = (value) => {
+    locations.forEach((el)=>{
+      if(el._id===value){
+        setFilters({
+          ...filters,
+          location:{
+            id:el._id,
+            city:el.city,
+            region:el.region_name,
+            country:"SG",
+          }
+        })
+      }
+    })
   }
 
   const onSaveFilter = () => {
-    let filter = {
-      keyword: filters.keyword,
-      search_only:false,
-      car_details: {
-          car_brand_id: filters.brand,
-          car_condition: filters.condition,
-          vehicle_type: filters.vehicle_type,
-          color: [filters.color],
-          driven_wheel: filters.driven_wheel,
-          transmission: filters.transmission,
-          fuel_type: filters.fuel_type
-      },
-      location: {
-          state: "",
-          country: ""
-      },
-      model_year_range: {
-          minimum_year: filters.model_from_year,
-          maximum_year: filters.model_to_year
-      },
-      reg_year_range: {
-        minimum_year: filters.reg_from_year,
-        maximum_year: filters.reg_to_year
-      },
-      price_range: {
-          minimum_price: filters.min_price,
-          maximum_price: filters.max_price
-      },
-      mileage_range: {
-          minimum_mileage: filters.min_mileage,
-          maximum_mileage: filters.max_mileage
-      },
-      cc_range: {
-        minimum_mileage: filters.min_cc,
-        maximum_mileage: filters.max_cc
-      },
-      sort:'desc-price'
-    }
-
-    addPinnedFilter(filter)
+    addPinnedFilter(filters)
     toast.show('Filter Saved!' , {type: "success"})
   }
 
@@ -139,15 +131,15 @@ const FilterIndex = ({navigation}) => {
         </View>
         <Spacer bottom={16} />
 
-        {/* <View>
-          <CustomPicker
+        <View>
+          <CustomPickerLocation
             placeholder="Select location"
             items={locations}
-            value={filters.location}
-            onChange={(value)=>handleFilterChange('location',value)}
+            value={filters.location.id}
+            onChange={(value)=>handleLocationsChange(value)}
           />
         </View>
-        <Spacer bottom={16} /> */}
+        <Spacer bottom={35} />
 
         <View>
           <Text style={{fontWeight: 'bold', marginBottom: 8}}>
@@ -277,6 +269,8 @@ const FilterIndex = ({navigation}) => {
         </View>
         <Spacer bottom={16} />
 
+        <Text style={{fontWeight: 'bold', marginVertical: 20}}>Other Filters : </Text>
+
         <View>
           <CustomPicker
             placeholder="Select transmission"
@@ -315,7 +309,7 @@ const FilterIndex = ({navigation}) => {
             onChange={(value)=>handleFilterChange('fuel_type',value)}
           />
         </View>
-        <Spacer bottom={16} />
+        <Spacer bottom={25} />
 
         {/* <View>
           <CustomPicker

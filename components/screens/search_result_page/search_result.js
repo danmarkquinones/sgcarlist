@@ -35,6 +35,7 @@ const SearchResult = ({navigation}) => {
   const [isLoading , setIsLoading] = useState(true)
 
   const fetchData = () => {
+    console.log('from search-result', filters)
     setIsLoading(true)
     const getCars = fetchFilterResults(filters)
     getCars.then((res)=>{
