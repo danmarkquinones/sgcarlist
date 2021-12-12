@@ -149,7 +149,7 @@ export const GridCard = props => {
 export const DealerCard = props => {
   const {dealer, onPress} = props;
 
-  console.log('dealer',dealer.number_of_product_sold)
+  // console.log('dealer',dealer.number_of_product_sold)
 
   return (
     <TouchableOpacity onPress={onPress}>
