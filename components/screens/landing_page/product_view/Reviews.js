@@ -44,9 +44,9 @@ const Reviews = (props) => {
             getReviews.then((res)=>{
                 if(res.data){
                     let sortedData = res.data.data
-                    sortedData.sort(function(a,b){
-                        return new Date(moment(b.date_created).format()) - new Date(moment(a.date_created).format());
-                    });
+                    // sortedData.sort(function(a,b){
+                    //     return new Date(moment(b.date_created).format()) - new Date(moment(a.date_created).format());
+                    // });
                     setReviews(sortedData)
                 }
             }).catch((e)=>{

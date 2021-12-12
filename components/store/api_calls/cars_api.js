@@ -100,7 +100,7 @@ export const showProductPassIPAddress = async (product_id) => {
             ip_address: ipv4Address
         }
 
-        console.log(obj);
+        // console.log(obj);
         const encodedData = Kjur.encode(obj)
 
         axios.get(`${API_BASE_URL}/product-catalog/show?token=${encodedData}` , 
@@ -150,4 +150,16 @@ export const addProductReview = async (data , rating) => {
         {token:encodedData},
         axiosConfig
     )
+}
+
+export const fetchSimilarCars = async (id,brand) => {
+    const obj = {
+        product_id:id,
+        brand_name:brand
+    }
+
+    const encodedData = Kjur.encode(obj)
+
+    console.log(obj ,encodedData)
+    return await axios.get(`${API_BASE_URL}/product-catalog/similar-cars?token=${encodedData}`)
 }
