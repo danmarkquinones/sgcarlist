@@ -113,6 +113,86 @@ export const productStyles = StyleSheet.create({
         borderRadius:2,
         color:theme.white,
         fontWeight:'bold'
+    },
+    aveScoreBody:{
+        display:'flex',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    ratingHeaderContainer:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'space-between',
+        marginBottom:10
+    },
+    aveScoreContainer:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    aveScore:{
+        fontSize:20,
+        fontWeight:'bold' , 
+        marginRight:10
+    },
+
+    reviewContainer:{
+        backgroundColor:theme.white,
+        
+    },
+    reviewBody:{
+        paddingHorizontal:20,
+        paddingVertical:10
+    },
+    reviewLabel:{
+        fontSize:20,
+        color:theme.primaryBlue,
+        marginVertical:10
+    },
+    reviewCommentLabel:{
+        fontSize:14,
+        color:theme.gray,
+        marginVertical:10
+    },
+    comment:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'flex-start',
+        justifyContent:'space-between',
+        marginVertical:5
+    },
+    scoreContainer:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+    },
+    score:{
+        color:theme.primaryBlue,
+        fontSize:20,
+        fontWeight:'bold'
+    },
+    overallScore:{
+        fontSize:15,
+        color:theme.black
+    },
+    commenterHeaderContainer:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center',
+    },
+    commenter:{
+        fontSize:18,
+        color:theme.primaryBlue
+    },
+    timeCommented:{
+        fontSize:15,
+        color:theme.gray
+    },
+    commentText:{
+        color:theme.black,
+        fontSize:18
     }
 })
 

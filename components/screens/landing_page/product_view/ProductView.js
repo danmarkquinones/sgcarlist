@@ -8,7 +8,6 @@ import FAIcon from 'react-native-vector-icons/FontAwesome';
 import { productStyles } from '../../../styles/productStyle';
 import { Divider } from 'react-native-elements/dist/divider/Divider';
 import SpecsView from './SpecsView';
-import { Reviews } from '../seller_view/SellerViewScene';
 import { cars, reviews } from '../../../contants/dummyCarData';
 import { FlatList } from 'react-native-gesture-handler';
 import { SquareCard } from '../../../custom_components/customCards';
@@ -17,6 +16,8 @@ import ImageSliderView from './ImageSlider';
 import { PrimaryButton } from '../../../custom_components/customButtons';
 import { addToSavedCars, isInFavorites, onCallUser, removeToSavedCars } from '../../../store/helpers/globalFunctions';
 import { useIsFocused } from '@react-navigation/native';
+import { fetchProductReview, showProductPassIPAddress } from '../../../store/api_calls/cars_api';
+import Reviews from './Reviews';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -42,6 +43,8 @@ const ProductView = (props) => {
             value.then((res)=>
                 setConfig({...config , inFavorites:res})
             )
+
+            // showProductPassIPAddress(item._id)
         }
     }, [isFocused])
 
@@ -180,7 +183,7 @@ const ProductView = (props) => {
                 </View>
                 
                 <View style={productStyles.sellerContainer}>
-                    <Reviews config={config} setConfig={setConfig} {...props}/>
+                    <Reviews item={item}/>
                 </View>
 
                 <View style={productStyles.adContainer}>
