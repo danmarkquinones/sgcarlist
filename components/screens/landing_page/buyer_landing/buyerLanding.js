@@ -68,7 +68,7 @@ const BuyerLanding = (props) => {
         >
             {userConfig.isLoggedIn && userConfig.userDetails?
                 <View style={landingStyles.headerContainer}>
-                    <CustomAvatar initial={userConfig.userDetails?.user_email.substring(0,1).toUpperCase()} color={theme.secondaryBlue} size={50}/>
+                    <CustomAvatar initial={userConfig.userDetails?.user_email} color={theme.secondaryBlue} size={50}/>
                     <View style={landingStyles.headerNameView}>
                         <Text style={landingStyles.greetName}>
                             {userConfig.isLoggedIn?`Hello , ${userConfig.userDetails.user_first_name} ${userConfig.userDetails.user_last_name}`:'Hi There!'}

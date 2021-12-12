@@ -1,10 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, Dimensions, Image} from 'react-native';
 import {theme} from '../../contants/colors';
-import CustomAvatar from '../../custom_components/customAvatar';
-import {sellersStyles} from '../../styles/sellersStyles';
-import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-// import {About, Listings, Reviews} from './SellerViewScene';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {cars, reviews} from '../../contants/dummyCarData';
 import CustomHeader from '../../custom_components/customHeader';

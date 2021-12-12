@@ -136,7 +136,7 @@ const ProfileIndex = (props) => {
                     <View
                         style={profileStyles.headerContainer}
                     >
-                        <CustomAvatar initial={userConfig.userDetails.user_email.substring(0,1).toUpperCase()} size={40} color={theme.gray}/>
+                        <CustomAvatar initial={userConfig.userDetails.user_email} size={40} color={theme.gray}/>
                         <Text style={profileStyles.headerName}>{userConfig.userDetails.user_email}</Text>
                     </View>
 

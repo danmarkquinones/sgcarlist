@@ -53,7 +53,7 @@ const SellerView = (props) => {
                     style={sellersStyles.back}
                 />
 
-                <CustomAvatar initial={data.name.substr(0,1)} color={theme.gray} size={50}/>
+                <CustomAvatar initial={data.name} color={theme.gray} size={50}/>
                 
                 <View style={sellersStyles.nameContainer}>
                     <Text style={sellersStyles.headerName}>{data.name}</Text>

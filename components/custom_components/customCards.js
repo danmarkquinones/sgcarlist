@@ -9,6 +9,7 @@ import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import EntIcon from 'react-native-vector-icons/Entypo';
 import { PrimaryButton, SmallButton } from './customButtons';
 import { onCallUser } from '../store/helpers/globalFunctions';
+import CustomAvatar from './customAvatar';
 
 export const SquareCard = props => {
   const {car, Icon, onPress} = props;
@@ -148,15 +149,43 @@ export const GridCard = props => {
 export const DealerCard = props => {
   const {dealer, onPress} = props;
 
+  console.log('dealer',dealer.number_of_product_sold)
+
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={customCardStyles.squareCardContainer}>
         <View style={customCardStyles.dealerContainer}>
-          <View style={customCardStyles.dealerImageContainer}>
-            <Image style={customCardStyles.dealerImage} source={dealer.url} />
+          
+          {dealer.advertisement_contact_details.users_profile_url?
+            <View style={customCardStyles.dealerImageContainer}>
+              <Image style={customCardStyles.dealerImage} source={dealer.url} />
+            </View>
+            :
+            <View style={{marginVertical:10}}>
+              <CustomAvatar
+                initial={dealer.advertisement_contact_details.user_first_name}
+                size={60}
+                color={theme.gray}
+              />
+            </View>
+            
+          }
+          
+          <Text style={customCardStyles.dealerName}>
+            {dealer.advertisement_contact_details.user_first_name} {dealer.advertisement_contact_details.user_last_name}
+          </Text>
+          <View 
+            style={{
+              backgroundColor:dealer.advertisement_contact_details.is_advertiser?theme.green:theme.tertiaryBlue,
+              borderRadius:50,
+              paddingHorizontal:10,
+              paddingVertical:2,
+              marginVertical:5
+            }}
+          >
+            <Text style={{color:theme.white}}>{dealer.advertisement_contact_details.is_advertiser?"Advertiser":"Dealer"}</Text>
           </View>
-          <Text style={customCardStyles.dealerName}>{dealer.name}</Text>
-          <Text style={customCardStyles.dealerDeals}>{dealer.deals} deals</Text>
+          <Text style={customCardStyles.dealerDeals}>{dealer.advertisement_contact_details.number_of_product_sold} deals</Text>
         </View>
       </View>
     </TouchableOpacity>
