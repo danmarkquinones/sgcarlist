@@ -70,7 +70,7 @@ export const ListCard = props => {
               style={customCardStyles.listCarName}
             >{car.product_name}</Text>
             {/* <Text>{car.location}</Text> */}
-            {/* <Text>{car.date_verified.$date.$numberLong}</Text> */}
+            <Text>{car.date_verified}</Text>
           </View>
           {Icon && (
             <View style={customCardStyles.iconSquareContainer}>
