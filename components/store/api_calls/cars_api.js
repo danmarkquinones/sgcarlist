@@ -128,11 +128,11 @@ export const fetchProductReview = async (product_id , page) => {
     return await axios.get(`${API_BASE_URL}/products-review?token=${encodedData}`)
 }
 
-export const addProductReview = async (data) => {
+export const addProductReview = async (data , rating) => {
     const obj = {
         product_id: data.itemId,
         user_id:data.userId,
-        review_score: data.rate,
+        review_score: rating,
         is_anonymous: data.anonymous,
         first_name: data.fname,
         last_name: data.lname,
@@ -144,7 +144,7 @@ export const addProductReview = async (data) => {
 
     const encodedData = Kjur.encode(obj)
 
-    console.log(obj , encodedData)
+    console.log(obj)
 
     return await axios.post(`${API_BASE_URL}/products-review/add`,
         {token:encodedData},

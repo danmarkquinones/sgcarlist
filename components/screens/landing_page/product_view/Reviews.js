@@ -26,7 +26,7 @@ const Reviews = (props) => {
     const generateRateColor = () => {
         if(getAverage() > 3.5){
             return theme.green
-        }else if(getAverage() > 2 && getAverage() < 3.5){
+        }else if(getAverage() > 2 || getAverage() < 3.5){
             return theme.yellow
         }else{
             return theme.red
@@ -43,8 +43,11 @@ const Reviews = (props) => {
 
             getReviews.then((res)=>{
                 if(res.data){
-                    // console.log('reviews',res.data.data)
-                    setReviews(res.data.data)
+                    let sortedData = res.data.data
+                    sortedData.sort(function(a,b){
+                        return new Date(moment(b.date_created).format()) - new Date(moment(a.date_created).format());
+                    });
+                    setReviews(sortedData)
                 }
             }).catch((e)=>{
                 console.log('error reviews' , e)
@@ -92,7 +95,12 @@ const Reviews = (props) => {
                             <View style={productStyles.comment}>
                                 <View>
                                     <View style={productStyles.commenterHeaderContainer}>
-                                        <Text style={productStyles.commenter}>Anonymous</Text>
+                                        <Text style={productStyles.commenter}>
+                                            {item.is_anonymous?
+                                                `#User.${item._id.substring(item._id.length-4,)}`
+                                                :`${item.first_name} ${item.last_name}`
+                                            }
+                                        </Text>
                                         <Text style={productStyles.timeCommented}> - {moment(item.date_created).fromNow()}</Text>
                                     </View>
                                     

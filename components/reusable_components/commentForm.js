@@ -14,7 +14,7 @@ const CommentForm = (props) => {
 
     const {commentArray , setCommentArray , item , onCancel} = props 
     const [userConfig , setUserConfig] = useContext(UserConfigContext)
-
+    const [rating , setRating] = useState(3)
     const [form , setForm] = useState({
         comment:'',
         itemId:item._id,
@@ -22,16 +22,27 @@ const CommentForm = (props) => {
         fname:'',
         lname:'',
         userId:'',
-        rate:''
     })
 
-    const [rating , setRating] = useState(3)
+    console.log(form)
 
     useEffect(()=>{
         if(!form.anonymous){
             setForm({...form , fname:"",lname:""})
         }
     },[form.anonymous])
+
+    useEffect(()=>{
+        if(userConfig.isLoggedIn){
+            setForm({
+                ...form, 
+                userId:userConfig.userDetails.user_id , 
+                fname:userConfig.userDetails.user_first_name,
+                lname:userConfig.userDetails.user_last_name,
+                anonymous:false
+            })
+        }
+    },[userConfig.isLoggedIn])
 
     const onChange = (name , value) => {
         setForm({...form , [name] : value})
@@ -47,12 +58,7 @@ const CommentForm = (props) => {
     }
 
     const onSubmit = () => {
-        if(userConfig.isLoggedIn){
-            setForm({...form, userId:userConfig.userDetails.user_id})
-        }
-        setForm({...form , rate:rating})
-        // console.log('form' , form)
-        addProductReview(form).then((res)=>{
+        addProductReview(form , rating).then((res)=>{
             if(res.data){
                 console.log(res.data)
             }
