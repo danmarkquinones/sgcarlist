@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 import {useNavigation} from '@react-navigation/core';
@@ -10,6 +10,7 @@ import CustomHeader from '../../custom_components/customHeader';
 import {scaleFont} from '../../../utils/scale';
 import SorterComponent from '../../reusable_components/sorterComponent';
 import {cars} from '../../contants/dummyCarData';
+import {getAdvert, deleteProduct} from '../../store/api_calls/authentication';
 
 const MyAdsIndex = () => {
   const navigation = useNavigation();
@@ -20,61 +21,88 @@ const MyAdsIndex = () => {
     listCars: cars,
   });
 
-    const [sortBy, setSortBy] = useState({
-      sort: 'asc-price',
-      height: 250,
-      options: [
-        {value: 'asc-price', label: 'Price - Lowest'},
-        {value: 'desc-price', label: 'Price - Highest'},
-        {value: 'asc-date-posted', label: 'Date - Newest'},
-        {value: 'desc-date-posted', label: 'Date - Oldest'},
-        {value: 'relevancy', label: 'By Relevance'},
-      ],
-    });
+  const [sortBy, setSortBy] = useState({
+    sort: 'asc-price',
+    height: 250,
+    options: [
+      {value: 'asc-price', label: 'Price - Lowest'},
+      {value: 'desc-price', label: 'Price - Highest'},
+      {value: 'asc-date-posted', label: 'Date - Newest'},
+      {value: 'desc-date-posted', label: 'Date - Oldest'},
+      {value: 'relevancy', label: 'By Relevance'},
+    ],
+  });
 
-    return (
+  const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetchAdvertiserProducts();
+  }, []);
+
+  const fetchAdvertiserProducts = async () => {
+    const params = {
+      _id: '61ab43ee561db2167e58ccd2',
+      page: 1,
+      limit: 10,
+    };
+
+    const res = await getAdvert('/advertiser', params);
+
+    if (res?.data?.success) {
+      setProducts(res.data.data[0].advertiser_products);
+      setIsLoading(false);
+    } else {
+      setProducts([]);
+      setIsLoading(false);
+    }
+  };
+
+  const onDeleteProduct = async id => {
+    const res = await deleteProduct('/products/delete', {id});
+    console.log(res);
+  };
+
+  return (
+    <View style={{flex: 1}}>
+      <CustomHeader
+        canGoBack={false}
+        titleStyle={{
+          fontSize: scaleFont(20),
+          color: '#fff',
+          fontWeight: 'bold',
+          textAlign: 'center',
+        }}
+        title="SGCARLIST"
+        isTitleCenter
+      />
+
+      <SorterComponent sortBy={sortBy} config={config} setConfig={setConfig} />
+
       <View style={{flex: 1}}>
-        <CustomHeader
-          canGoBack={false}
-          titleStyle={{
-            fontSize: scaleFont(20),
-            color: '#fff',
-            fontWeight: 'bold',
-            textAlign: 'center',
-          }}
-          title="SGCARLIST"
-          isTitleCenter
-        />
-
-        <SorterComponent
-          sortBy={sortBy}
-          config={config}
-          setConfig={setConfig}
-        />
-
-        <View style={{flex: 1}}>
-          <Spacer bottom={16} />
-          <View style={{width: '90%', alignSelf: 'center'}}>
-            <PrimaryInput placeholder="Search your listed car" />
-          </View>
-          <Spacer bottom={16} />
-          <FlatList
-            contentContainerStyle={{alignItems: 'center'}}
-            data={cars}
-            keyExtractor={item => item.id}
-            showsHorizontalScrollIndicator={false}
-            renderItem={({item, index}) => (
-              <ListCard
-                onPress={() => navigation.navigate('ProductView', item)}
-                car={item}
-                Icon={() => <Icon name="kebab-horizontal" size={20} solid />}
-                sellerMode={true}
-              />
-            )}
-          />
+        <Spacer bottom={16} />
+        <View style={{width: '90%', alignSelf: 'center'}}>
+          <PrimaryInput placeholder="Search your listed car" />
         </View>
+        <Spacer bottom={16} />
+        <FlatList
+          contentContainerStyle={{alignItems: 'center'}}
+          data={products}
+          keyExtractor={item => item.id}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({item, index}) => (
+            <ListCard
+              onPress={() => navigation.navigate('ProductView', item)}
+              car={item}
+              Icon={() => <Icon name="kebab-horizontal" size={20} solid />}
+              sellerMode={true}
+              deleteProduct={onDeleteProduct}
+            />
+          )}
+        />
       </View>
-    );
+    </View>
+  );
 };
 
 export default MyAdsIndex;

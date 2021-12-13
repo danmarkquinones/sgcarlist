@@ -64,9 +64,7 @@ export const WhiteCard = ({options, onPress}) => {
 };
 
 export const ListCard = props => {
-  const {car, Icon, sellerMode, inFavorites, onPress} = props;
-
-  console.log(car);
+  const {car, Icon, sellerMode, inFavorites, onPress, deleteProduct} = props;
 
   return (
     <View style={customCardStyles.listCardContainer}>
@@ -94,7 +92,7 @@ export const ListCard = props => {
                   <MenuOptions>
                     <MenuOption onSelect={() => alert(`Edit`)} text="Edit" />
                     <MenuOption
-                      onSelect={() => alert(`Remove`)}
+                      onSelect={() => deleteProduct(car._id)}
                       text="Remove"
                     />
                     <MenuOption
