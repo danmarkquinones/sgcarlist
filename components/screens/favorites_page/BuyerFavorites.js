@@ -25,9 +25,6 @@ const SavedCars = ({config , setConfig , navigation}) => {
         options:[
             {value:"asc-price" , label:"Price - Lowest"},
             {value:"desc-price" , label:"Price - Highest"},
-            // {value:"asc-date-posted" , label:"Date - Newest"},
-            // {value:"desc-date-posted" , label:"Date - Oldest"},
-            // {value:"relevancy" , label:"By Relevance"},
         ]
     })
 
@@ -41,12 +38,17 @@ const SavedCars = ({config , setConfig , navigation}) => {
         }
     }, [isFocused])
 
+
     const getSavedCars = async () => {
         setIsLoading(true)
         try {
           const data = await AsyncStorage.getItem('savedCars')
           if(data){
-            setFavoriteCars(JSON.parse(data))
+            let sortedData = JSON.parse(data)
+            sortedData.sort(function(a,b){
+                return a.product_price - b.product_price;
+            });
+            setFavoriteCars(sortedData)
             setIsLoading(false)
           }
         } catch(e) {
@@ -65,7 +67,18 @@ const SavedCars = ({config , setConfig , navigation}) => {
     }
 
     const onChange = (value) => {
-        // console.log('sort value : ' ,value)
+        let sortedData = favoriteCars
+
+        if(value==='asc-price'){
+            sortedData.sort(function(a,b){
+                return a.product_price - b.product_price;
+            });
+        }else{
+            sortedData.sort(function(a,b){
+                return b.product_price - a.product_price;
+            });
+        }
+        setFavoriteCars(sortedData)
         setSortBy({...sortBy,sort:value})
     }
 
