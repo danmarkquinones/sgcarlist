@@ -24,25 +24,52 @@ const SellerView = (props) => {
         ads:cars,
         reviews:reviews,
     })
-    const [scrollY , setScrollY] = useState()
+
+    const [sortBy, setSortBy] = useState({
+      sort: 'asc-price',
+      height: 250,
+      options: [
+        {value: 'asc-price', label: 'Price - Lowest'},
+        {value: 'desc-price', label: 'Price - Highest'},
+        {value: 'asc-date-posted', label: 'Date - Newest'},
+        {value: 'desc-date-posted', label: 'Date - Oldest'},
+        {value: 'relevancy', label: 'By Relevance'},
+      ],
+    });
+
+    const [scrollY, setScrollY] = useState();
 
     const [routes] = useState([
-        { key: 'first', title: 'Listings' },
-        { key: 'second', title: 'About' },
-        { key: 'third', title: 'Reviews' },
+      {key: 'first', title: 'Listings'},
+      {key: 'second', title: 'About'},
+      {key: 'third', title: 'Reviews'},
     ]);
 
-    const renderScene = ({ route }) => {
-        switch (route.key) {
-            case 'first':
-                return <Listings config={config} setConfig={setConfig} {...props}/>; 
-            case 'second':
-                return <About config={config} setConfig={setConfig} setScrollY={setScrollY} {...props}/>; 
-            case 'third':
-                return <Reviews config={config} setConfig={setConfig} {...props}/>; 
-            default:
-                return null;
-        }
+    const renderScene = ({route}) => {
+      switch (route.key) {
+        case 'first':
+          return (
+            <Listings
+              sortBy={sortBy}
+              config={config}
+              setConfig={setConfig}
+              {...props}
+            />
+          );
+        case 'second':
+          return (
+            <About
+              config={config}
+              setConfig={setConfig}
+              setScrollY={setScrollY}
+              {...props}
+            />
+          );
+        case 'third':
+          return <Reviews config={config} setConfig={setConfig} {...props} />;
+        default:
+          return null;
+      }
     };
 
     return (
@@ -56,46 +83,41 @@ const SellerView = (props) => {
             style={sellersStyles.back}
           />
 
-                <CustomAvatar 
-                    initial={data.advertisement_contact_details.user_first_name} 
-                    color={theme.gray} 
-                    size={50}
-                />
-                
-                <View style={sellersStyles.nameContainer}>
-                    <View style={sellersStyles.headerNameContainer}>
-                        <Text style={sellersStyles.headerName}>
-                            {data.advertisement_contact_details.user_first_name} {data.advertisement_contact_details.user_last_name} 
-                        </Text>
-                        <View
-                            style={[
-                                sellersStyles.badge,
-                                {
-                                    backgroundColor:data.advertisement_contact_details.is_advertiser?theme.green:theme.tertiaryBlue
-                                }
-                            ]}
-                        >
-                            <Text style={{color:theme.white}}>
-                                {data.advertisement_contact_details.is_advertiser?"Advertiser":"Dealer"}
-                            </Text>
-                        </View>
-                    </View>
-                    
-                    <Text>{data.advertisement_contact_details.contact_details.contact_numbers[0]}</Text>
-                </View>
-            {/* </View> */}
+          <CustomAvatar
+            initial={data.advertisement_contact_details.user_first_name}
+            color={theme.gray}
+            size={50}
+          />
 
           <View style={sellersStyles.nameContainer}>
-            <Text style={sellersStyles.headerName}>
-              {data.advertisement_contact_details.user_first_name}{' '}
-              {data.advertisement_contact_details.user_last_name}
-            </Text>
+            <View style={sellersStyles.headerNameContainer}>
+              <Text style={sellersStyles.headerName}>
+                {data.advertisement_contact_details.user_first_name}{' '}
+                {data.advertisement_contact_details.user_last_name}
+              </Text>
+              <View
+                style={[
+                  sellersStyles.badge,
+                  {
+                    backgroundColor: data.advertisement_contact_details
+                      .is_advertiser
+                      ? theme.green
+                      : theme.tertiaryBlue,
+                  },
+                ]}>
+                <Text style={{color: theme.white}}>
+                  {data.advertisement_contact_details.is_advertiser
+                    ? 'Advertiser'
+                    : 'Dealer'}
+                </Text>
+              </View>
+            </View>
+
             <Text>
               {
                 data.advertisement_contact_details.contact_details
                   .contact_numbers[0]
-              }{' '}
-              - {data.location ? data.location : 'Jurong, Singapore'}
+              }
             </Text>
           </View>
         </View>
