@@ -8,7 +8,6 @@ import FAIcon from 'react-native-vector-icons/FontAwesome';
 import { productStyles } from '../../../styles/productStyle';
 import { Divider } from 'react-native-elements/dist/divider/Divider';
 import SpecsView from './SpecsView';
-import { Reviews } from '../seller_view/SellerViewScene';
 import { cars, reviews } from '../../../contants/dummyCarData';
 import { FlatList } from 'react-native-gesture-handler';
 import { SquareCard } from '../../../custom_components/customCards';
@@ -17,6 +16,8 @@ import ImageSliderView from './ImageSlider';
 import { PrimaryButton } from '../../../custom_components/customButtons';
 import { addToSavedCars, isInFavorites, onCallUser, removeToSavedCars } from '../../../store/helpers/globalFunctions';
 import { useIsFocused } from '@react-navigation/native';
+import { fetchProductReview, fetchSimilarCars, showProductPassIPAddress } from '../../../store/api_calls/cars_api';
+import Reviews from './Reviews';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -31,7 +32,7 @@ const ProductView = (props) => {
         sortBy:'ascending',
         isGridView:true,
         reviews:reviews,
-        cars:cars,
+        similarCars:[],
         sellerDetails:{name:'Lorem Ipsum' , location:'Jurong , Singapore'},
         inFavorites:false
     })
@@ -42,6 +43,18 @@ const ProductView = (props) => {
             value.then((res)=>
                 setConfig({...config , inFavorites:res})
             )
+            // console.log(item)
+            showProductPassIPAddress(item._id)
+            fetchSimilarCars(item._id , item.product_brand?.brand_name).then((res)=>{
+                if(res.data){
+                    setConfig({
+                        ...config,
+                        similarCars:res.data.data
+                    })
+                }
+            }).catch((e)=>{
+                console.log('error fetching similar cars')
+            })
         }
     }, [isFocused])
 
@@ -180,7 +193,7 @@ const ProductView = (props) => {
                 </View>
                 
                 <View style={productStyles.sellerContainer}>
-                    <Reviews config={config} setConfig={setConfig} {...props}/>
+                    <Reviews item={item}/>
                 </View>
 
                 <View style={productStyles.adContainer}>
@@ -191,7 +204,7 @@ const ProductView = (props) => {
                     <Text style={productStyles.similarCarsText}>Similar Cars</Text>
                     <FlatList
                         horizontal={true}
-                        data={config.cars}
+                        data={config.similarCars}
                         keyExtractor={(item) => item.id}
                         showsHorizontalScrollIndicator={false}
                         renderItem={({item , index})=>(

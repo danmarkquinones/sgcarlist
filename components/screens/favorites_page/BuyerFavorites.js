@@ -16,9 +16,17 @@ import { FilterConfigContext } from '../../store/context_api/filterContext';
 
 const SavedCars = ({config , setConfig , navigation}) => {
 
-    const [favoriteCars , setFavoriteCars] = useState()
+    const [favoriteCars , setFavoriteCars] = useState([])
     const [isLoading , setIsLoading] = useState(false)
     const isFocused = useIsFocused()
+    const [sortBy,setSortBy] = useState({
+        sort:"asc-price",
+        height:120,
+        options:[
+            {value:"asc-price" , label:"Price - Lowest"},
+            {value:"desc-price" , label:"Price - Highest"},
+        ]
+    })
 
     useEffect(() => {
         getSavedCars()
@@ -30,12 +38,17 @@ const SavedCars = ({config , setConfig , navigation}) => {
         }
     }, [isFocused])
 
+
     const getSavedCars = async () => {
         setIsLoading(true)
         try {
           const data = await AsyncStorage.getItem('savedCars')
           if(data){
-            setFavoriteCars(JSON.parse(data))
+            let sortedData = JSON.parse(data)
+            sortedData.sort(function(a,b){
+                return a.product_price - b.product_price;
+            });
+            setFavoriteCars(sortedData)
             setIsLoading(false)
           }
         } catch(e) {
@@ -53,10 +66,26 @@ const SavedCars = ({config , setConfig , navigation}) => {
         navigation.navigate('ProductView', item)
     }
 
+    const onChange = (value) => {
+        let sortedData = favoriteCars
+
+        if(value==='asc-price'){
+            sortedData.sort(function(a,b){
+                return a.product_price - b.product_price;
+            });
+        }else{
+            sortedData.sort(function(a,b){
+                return b.product_price - a.product_price;
+            });
+        }
+        setFavoriteCars(sortedData)
+        setSortBy({...sortBy,sort:value})
+    }
+
     return(
         <View style={styles.scene} >
 
-                <SorterComponent config={config} setConfig={setConfig}/>
+                <SorterComponent sortBy={sortBy} setSortBy={setSortBy} config={config} setConfig={setConfig} onChange={onChange}/>
 
                 <View style={styles.sceneList}>
                     {isLoading? 

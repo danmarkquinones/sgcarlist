@@ -14,6 +14,7 @@ import CustomAvatar from '../../custom_components/customAvatar';
 import { UserConfigContext } from '../../store/context_api/userContext';
 import { useIsFocused } from '@react-navigation/core';
 import { logout } from '../../store/api_calls/authentication';
+import PushNotification from "react-native-push-notification";
 
 
 const ProfileIndex = (props) => {
@@ -39,6 +40,8 @@ const ProfileIndex = (props) => {
                 ]
                 setInformation(infoArray)
             }
+
+            onCreateChannel()
         }
     },[isFocused])
 
@@ -118,6 +121,21 @@ const ProfileIndex = (props) => {
         }
     }
 
+
+    const onCreateChannel = () => {
+        PushNotification.createChannel({
+            channelId:'test-channel',
+            channelName:'Test Channel'
+        })
+    }
+    const handleNotif = () => {
+        PushNotification.localNotification({
+            channelId:"test-channel",
+            title:"You clicke me",
+            message:"HEY YOYW!!!!"
+        })
+    }
+
     return (
         <>
         {!userConfig.isLoggedIn?
@@ -125,6 +143,7 @@ const ProfileIndex = (props) => {
                 <Text style={{fontSize:20 , textAlign:'center'}}>You dont have access to this page , please login to continue</Text>
                 <View style={{width:200 , marginTop:50}}>
                     <PrimaryButton onPress={()=>navigation.navigate('Login')} title="Go to Login Page" color={theme.primaryBlue}/>
+                    {/* <PrimaryButton title="push notif" onPress={handleNotif} color={theme.primaryBlue}/> */}
                 </View>
             </View>
             :<ScrollView
@@ -136,7 +155,7 @@ const ProfileIndex = (props) => {
                     <View
                         style={profileStyles.headerContainer}
                     >
-                        <CustomAvatar initial={userConfig.userDetails.user_email.substring(0,1).toUpperCase()} size={40} color={theme.gray}/>
+                        <CustomAvatar initial={userConfig.userDetails.user_email} size={40} color={theme.gray}/>
                         <Text style={profileStyles.headerName}>{userConfig.userDetails.user_email}</Text>
                     </View>
 

@@ -106,6 +106,17 @@ export const sellersStyles = StyleSheet.create({
         fontWeight:'bold',
         color:theme.primaryBlue,
         marginLeft:10
+    },
+    headerNameContainer:{
+        display:'flex',
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    badge:{
+        marginHorizontal:10,
+        paddingHorizontal:10,
+        paddingVertical:2,
+        borderRadius:50
     }
 })
 

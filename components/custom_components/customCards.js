@@ -10,6 +10,7 @@ import EntIcon from 'react-native-vector-icons/Entypo';
 import { PrimaryButton, SmallButton } from './customButtons';
 import { onCallUser } from '../store/helpers/globalFunctions';
 import CustomAvatar from './customAvatar';
+import moment from 'moment'
 
 export const SquareCard = props => {
   const {car, Icon, onPress} = props;
@@ -71,7 +72,7 @@ export const ListCard = props => {
           <View>
             <Text style={customCardStyles.listCarName}>{car.product_name}</Text>
             {/* <Text>{car.location}</Text> */}
-            {/* <Text>{car.date_verified.$date.$numberLong}</Text> */}
+            <Text>{moment(car.date_verified).fromNow()}</Text>
           </View>
           {Icon && (
             <View style={customCardStyles.iconSquareContainer}>
@@ -161,36 +162,43 @@ export const GridCard = props => {
 export const DealerCard = props => {
   const {dealer, onPress} = props;
 
+  // console.log('dealer',dealer.number_of_product_sold)
+
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={customCardStyles.squareCardContainer}>
         <View style={customCardStyles.dealerContainer}>
-          {dealer.advertisement_contact_details.user_profile_url ? (
+          
+          {dealer.advertisement_contact_details.users_profile_url?
             <View style={customCardStyles.dealerImageContainer}>
               <Image style={customCardStyles.dealerImage} source={dealer.url} />
             </View>
-          ) : (
-            <CustomAvatar
-              initial={dealer.advertisement_contact_details.user_first_name.substr(
-                0,
-                1,
-              )}
-              color={theme.tertiaryBlue}
-              size={80}
-            />
-          )}
-
-          <Spacer bottom={10} />
+            :
+            <View style={{marginVertical:10}}>
+              <CustomAvatar
+                initial={dealer.advertisement_contact_details.user_first_name}
+                size={60}
+                color={theme.gray}
+              />
+            </View>
+            
+          }
+          
           <Text style={customCardStyles.dealerName}>
-            {dealer.advertisement_contact_details.user_first_name}{' '}
-            {dealer.advertisement_contact_details.user_last_name}
+            {dealer.advertisement_contact_details.user_first_name} {dealer.advertisement_contact_details.user_last_name}
           </Text>
-          <Text style={customCardStyles.dealerDeals}>
-            {dealer.advertisement_contact_details.number_of_product_sold}{' '}
-            {dealer.advertisement_contact_details.number_of_product_sold > 1
-              ? 'deals'
-              : 'deal'}
-          </Text>
+          <View 
+            style={{
+              backgroundColor:dealer.advertisement_contact_details.is_advertiser?theme.green:theme.tertiaryBlue,
+              borderRadius:50,
+              paddingHorizontal:10,
+              paddingVertical:2,
+              marginVertical:5
+            }}
+          >
+            <Text style={{color:theme.white}}>{dealer.advertisement_contact_details.is_advertiser?"Advertiser":"Dealer"}</Text>
+          </View>
+          <Text style={customCardStyles.dealerDeals}>{dealer.advertisement_contact_details.number_of_product_sold} deals</Text>
         </View>
       </View>
     </TouchableOpacity>

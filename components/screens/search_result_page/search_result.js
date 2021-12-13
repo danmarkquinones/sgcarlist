@@ -23,16 +23,24 @@ import { SkeletonListCard } from '../../custom_components/customCardLoaders';
 
 const SearchResult = ({navigation}) => {
   const [config, setConfig] = useState({
-    sortBy: 'ascending',
     isGridView: false,
     savedCars: cars,
     pinnedFilters: pinnedFilters,
   });
-
-
   const [filters , setFilters] = useContext(FilterConfigContext)
   const [results , setResults] = useState([])
   const [isLoading , setIsLoading] = useState(true)
+  const [sortBy,setSortBy] = useState({
+    sort:filters.sort,
+    height:250,
+    options:[
+        {value:"asc-price" , label:"Price - Lowest"},
+        {value:"desc-price" , label:"Price - Highest"},
+        {value:"asc-date-posted" , label:"Date - Newest"},
+        {value:"desc-date-posted" , label:"Date - Oldest"},
+        {value:"relevancy" , label:"By Relevance"},
+    ]
+  })
 
   const fetchData = () => {
     console.log('from search-result', filters)
@@ -55,14 +63,25 @@ const SearchResult = ({navigation}) => {
     fetchData()
   }, [])
 
+  useEffect(()=>{
+    if(filters.sort){
+      fetchData()
+    }
+  },[filters])
+
   const goToProduct = item => {
     navigation.navigate('ProductView', item);
   };
 
+  const onChange = (value) => {
+    setSortBy({...sortBy,sort:value})
+    setFilters({...filters , sort:value})
+  }
+
   return (
     <View>
       <CustomHeader title="Search Results" />
-      <SorterComponent config={config} setConfig={setConfig} />
+      <SorterComponent config={config} setConfig={setConfig} sortBy={sortBy} setSortBy={setSortBy} onChange={onChange}/>
       <ScrollView style={{backgroundColor: theme.lightBlue}} showsVerticalScrollIndicator={false}>
         {/* <Text>BANNER HERE</Text> */}
         <Text

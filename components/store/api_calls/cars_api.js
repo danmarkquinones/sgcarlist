@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_BASE_URL } from '@env'
 import Kjur from '../helpers/jwt'
+import { NetworkInfo } from "react-native-network-info";
 
 let axiosConfig = {
     headers: {
@@ -88,4 +89,77 @@ export const fetchLocations = async () => {
     const encodedData = Kjur.encode(obj)
 
     return await axios.get(`${API_BASE_URL}/list_of_cities?token=${encodedData}`)
+}
+
+
+export const showProductPassIPAddress = async (product_id) => {
+
+    NetworkInfo.getIPV4Address().then(ipv4Address => {
+        let obj = {
+            id:product_id,
+            ip_address: ipv4Address
+        }
+
+        // console.log(obj);
+        const encodedData = Kjur.encode(obj)
+
+        axios.get(`${API_BASE_URL}/product-catalog/show?token=${encodedData}` , 
+            {},
+            axiosConfig
+        ).then((res)=>{
+            console.log('success')
+        }).catch((e)=>{
+            console.log('error' , e)
+        })
+    });
+}
+
+export const fetchProductReview = async (product_id , page) => {
+
+    const obj = {
+        product_id:product_id,
+        page:page
+    }
+
+    const encodedData = Kjur.encode(obj)
+
+    console.log(encodedData)
+
+    return await axios.get(`${API_BASE_URL}/products-review?token=${encodedData}`)
+}
+
+export const addProductReview = async (data , rating) => {
+    const obj = {
+        product_id: data.itemId,
+        user_id:data.userId,
+        review_score: rating,
+        is_anonymous: data.anonymous,
+        first_name: data.fname,
+        last_name: data.lname,
+        comment: {
+            review_text: data.comment,
+            show: true
+        }
+    }
+
+    const encodedData = Kjur.encode(obj)
+
+    console.log(obj)
+
+    return await axios.post(`${API_BASE_URL}/products-review/add`,
+        {token:encodedData},
+        axiosConfig
+    )
+}
+
+export const fetchSimilarCars = async (id,brand) => {
+    const obj = {
+        product_id:id,
+        brand_name:brand
+    }
+
+    const encodedData = Kjur.encode(obj)
+
+    console.log(obj ,encodedData)
+    return await axios.get(`${API_BASE_URL}/product-catalog/similar-cars?token=${encodedData}`)
 }

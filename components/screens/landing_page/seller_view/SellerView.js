@@ -12,8 +12,11 @@ const initialLayout = { width: Dimensions.get('window').width };
 
 const SellerView = (props) => {
 
+    
+
     const {navigation , route} = props 
     const data = route.params
+    console.log(data)
     const [index, setIndex] = useState(0);
     const [config , setConfig] = useState({
         sortBy:'ascending',
@@ -53,14 +56,34 @@ const SellerView = (props) => {
             style={sellersStyles.back}
           />
 
-          <CustomAvatar
-            initial={data.advertisement_contact_details.user_first_name.substr(
-              0,
-              1,
-            )}
-            color={theme.gray}
-            size={50}
-          />
+                <CustomAvatar 
+                    initial={data.advertisement_contact_details.user_first_name} 
+                    color={theme.gray} 
+                    size={50}
+                />
+                
+                <View style={sellersStyles.nameContainer}>
+                    <View style={sellersStyles.headerNameContainer}>
+                        <Text style={sellersStyles.headerName}>
+                            {data.advertisement_contact_details.user_first_name} {data.advertisement_contact_details.user_last_name} 
+                        </Text>
+                        <View
+                            style={[
+                                sellersStyles.badge,
+                                {
+                                    backgroundColor:data.advertisement_contact_details.is_advertiser?theme.green:theme.tertiaryBlue
+                                }
+                            ]}
+                        >
+                            <Text style={{color:theme.white}}>
+                                {data.advertisement_contact_details.is_advertiser?"Advertiser":"Dealer"}
+                            </Text>
+                        </View>
+                    </View>
+                    
+                    <Text>{data.advertisement_contact_details.contact_details.contact_numbers[0]}</Text>
+                </View>
+            {/* </View> */}
 
           <View style={sellersStyles.nameContainer}>
             <Text style={sellersStyles.headerName}>

@@ -68,7 +68,7 @@ const BuyerLanding = (props) => {
         >
             {userConfig.isLoggedIn && userConfig.userDetails?
                 <View style={landingStyles.headerContainer}>
-                    <CustomAvatar initial={userConfig.userDetails?.user_email.substring(0,1).toUpperCase()} color={theme.secondaryBlue} size={50}/>
+                    <CustomAvatar initial={userConfig.userDetails?.user_email} color={theme.secondaryBlue} size={50}/>
                     <View style={landingStyles.headerNameView}>
                         <Text style={landingStyles.greetName}>
                             {userConfig.isLoggedIn?`Hello , ${userConfig.userDetails.user_first_name} ${userConfig.userDetails.user_last_name}`:'Hi There!'}
@@ -148,7 +148,7 @@ const BuyerLanding = (props) => {
 
             <View style={landingStyles.listHeaderContainer}>
                 <View style={landingStyles.listHeaders}>
-                    <Text style={landingStyles.listDealerText}>Dealer - Car Sold</Text>
+                    <Text style={landingStyles.listDealerText}>Top Sellers</Text>
                 </View>
                 {/* <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text> */}
             </View>
@@ -160,7 +160,7 @@ const BuyerLanding = (props) => {
             <View style={landingStyles.locationListContainer}>
 
                 <View style={landingStyles.listHeaders}>
-                    <Text refreshing={refreshing} style={landingStyles.listDealerText}>Top 10 Search Locations</Text>
+                    <Text refreshing={refreshing} style={landingStyles.listDealerText}>Top Search Locations</Text>
                 </View>
 
                 <TopLocations refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/>
