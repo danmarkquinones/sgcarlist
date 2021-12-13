@@ -11,6 +11,12 @@ import { PrimaryButton, SmallButton } from './customButtons';
 import { onCallUser } from '../store/helpers/globalFunctions';
 import CustomAvatar from './customAvatar';
 import moment from 'moment'
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 
 export const SquareCard = props => {
   const {car, Icon, onPress} = props;
@@ -81,7 +87,22 @@ export const ListCard = props => {
                   <Icon />
                 </TouchableOpacity>
               ) : (
-                <Icon />
+                <Menu>
+                  <MenuTrigger>
+                    <Icon />
+                  </MenuTrigger>
+                  <MenuOptions>
+                    <MenuOption onSelect={() => alert(`Edit`)} text="Edit" />
+                    <MenuOption
+                      onSelect={() => alert(`Remove`)}
+                      text="Remove"
+                    />
+                    <MenuOption
+                      onSelect={() => alert(`Sold`)}
+                      text="Mark as Sold"
+                    />
+                  </MenuOptions>
+                </Menu>
               )}
             </View>
           )}

@@ -9,25 +9,34 @@ import SplashScreen from 'react-native-splash-screen'
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import { theme } from './components/contants/colors';
+import {MenuProvider} from 'react-native-popup-menu';
 
 const App = () => {
-
   useEffect(() => {
     SplashScreen.hide();
-  }, [])
+  }, []);
 
   return (
     <SafeAreaProvider>
       <FilterConfigContextProvider>
         <UserConfigContextProvider>
-          <ToastProvider
-            duration={1000}
-            successIcon={<FeatherIcon name='check-circle' size={20} color={theme.white}/>}
-            dangerIcon={<MatIcon name='error-outline' size={20} color={theme.white}/>}
-            textStyle={{ fontSize: 16 }}
-          >
-            <NavigationIndex/>
-          </ToastProvider>
+          <MenuProvider>
+            <ToastProvider
+              duration={1000}
+              successIcon={
+                <FeatherIcon
+                  name="check-circle"
+                  size={20}
+                  color={theme.white}
+                />
+              }
+              dangerIcon={
+                <MatIcon name="error-outline" size={20} color={theme.white} />
+              }
+              textStyle={{fontSize: 16}}>
+              <NavigationIndex />
+            </ToastProvider>
+          </MenuProvider>
         </UserConfigContextProvider>
       </FilterConfigContextProvider>
     </SafeAreaProvider>
