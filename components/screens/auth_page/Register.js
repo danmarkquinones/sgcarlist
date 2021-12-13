@@ -6,7 +6,7 @@ import logo from '../../../assets/images/carlistsg_white.png';
 import PrimaryInput from '../../custom_components/customInput';
 import Spacer from '../../custom_components/spacer';
 import {PrimaryButton} from '../../custom_components/customButtons';
-import {post} from '../../store/api_calls/authentication';
+import {post, api} from '../../store/api_calls/useApi';
 
 const Register = props => {
   const {width, height} = Dimensions.get('screen');
@@ -33,7 +33,7 @@ const Register = props => {
       sms: true,
     };
 
-    let res = await post(params, '/users/registration');
+    let res = await api.POST(params, '/users/registration');
     if (res?.data?.success) {
       navigation.navigate('Verification', {params});
     } else {

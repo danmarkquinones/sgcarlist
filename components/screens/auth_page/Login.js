@@ -6,7 +6,7 @@ import {PrimaryButton} from '../../custom_components/customButtons';
 import PrimaryInput from '../../custom_components/customInput';
 import Spacer from '../../custom_components/spacer';
 import Kjur from '../../store/helpers/jwt';
-import {post} from '../../store/api_calls/authentication';
+import {api} from '../../store/api_calls/useApi';
 import {UserConfigContext} from '../../store/context_api/userContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -23,7 +23,7 @@ const Login = props => {
   const onLogin = async () => {
     setIsFetching(true);
     const params = {username, password};
-    let res = await post(params, '/users/login');
+    let res = await api.POST(params, '/users/login');
     if (res?.data?.success) {
       const data = Kjur.decode(res.data.token);
 

@@ -10,7 +10,7 @@ import logo from '../../../assets/images/verificationBg.png';
 import Spacer from '../../custom_components/spacer';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import {useNavigation} from '@react-navigation/core';
-import {post} from '../../store/api_calls/authentication';
+import {api} from '../../store/api_calls/useApi';
 
 const initialLayout = {width: Dimensions.get('window').width};
 
@@ -48,7 +48,7 @@ const Verification = ({route}) => {
       username: route.params.params.user_email,
       otp: otp,
     };
-    let res = await post(params, '/users/verify-otp');
+    let res = await api.POST(params, '/users/verify-otp');
     if (res?.data?.success) {
       navigation.navigate('Login');
     } else {
