@@ -10,6 +10,7 @@ import EntIcon from 'react-native-vector-icons/Entypo';
 import { PrimaryButton, SmallButton } from './customButtons';
 import { onCallUser } from '../store/helpers/globalFunctions';
 import CustomAvatar from './customAvatar';
+import moment from 'moment'
 
 export const SquareCard = props => {
   const {car, Icon, onPress} = props;
@@ -71,7 +72,7 @@ export const ListCard = props => {
               style={customCardStyles.listCarName}
             >{car.product_name}</Text>
             {/* <Text>{car.location}</Text> */}
-            <Text>{car.date_verified}</Text>
+            <Text>{moment(car.date_verified).fromNow()}</Text>
           </View>
           {Icon && (
             <View style={customCardStyles.iconSquareContainer}>

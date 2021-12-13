@@ -16,9 +16,20 @@ import { FilterConfigContext } from '../../store/context_api/filterContext';
 
 const SavedCars = ({config , setConfig , navigation}) => {
 
-    const [favoriteCars , setFavoriteCars] = useState()
+    const [favoriteCars , setFavoriteCars] = useState([])
     const [isLoading , setIsLoading] = useState(false)
     const isFocused = useIsFocused()
+    const [sortBy,setSortBy] = useState({
+        sort:"asc-price",
+        height:120,
+        options:[
+            {value:"asc-price" , label:"Price - Lowest"},
+            {value:"desc-price" , label:"Price - Highest"},
+            // {value:"asc-date-posted" , label:"Date - Newest"},
+            // {value:"desc-date-posted" , label:"Date - Oldest"},
+            // {value:"relevancy" , label:"By Relevance"},
+        ]
+    })
 
     useEffect(() => {
         getSavedCars()
@@ -53,10 +64,15 @@ const SavedCars = ({config , setConfig , navigation}) => {
         navigation.navigate('ProductView', item)
     }
 
+    const onChange = (value) => {
+        // console.log('sort value : ' ,value)
+        setSortBy({...sortBy,sort:value})
+    }
+
     return(
         <View style={styles.scene} >
 
-                <SorterComponent config={config} setConfig={setConfig}/>
+                <SorterComponent sortBy={sortBy} setSortBy={setSortBy} config={config} setConfig={setConfig} onChange={onChange}/>
 
                 <View style={styles.sceneList}>
                     {isLoading? 
