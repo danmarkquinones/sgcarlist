@@ -10,10 +10,11 @@ import logo from '../../../assets/images/verificationBg.png';
 import Spacer from '../../custom_components/spacer';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import {useNavigation} from '@react-navigation/core';
+import {api} from '../../store/api_calls/useApi';
 
 const initialLayout = {width: Dimensions.get('window').width};
 
-const Verification = props => {
+const Verification = ({route}) => {
   const {width, height} = Dimensions.get('screen');
   const navigation = useNavigation();
   const [index, setIndex] = useState(0);
@@ -24,6 +25,7 @@ const Verification = props => {
     reviews: reviews,
   });
   const [scrollY, setScrollY] = useState();
+  const [otp, setOtp] = useState('');
 
   const [routes] = useState([
     {key: 'first', title: 'Email Verification'},
@@ -41,6 +43,19 @@ const Verification = props => {
     }
   };
 
+  const onVerifyOtp = async () => {
+    const params = {
+      username: route.params.params.user_email,
+      otp: otp,
+    };
+    let res = await api.POST(params, '/users/verify-otp');
+    if (res?.data?.success) {
+      navigation.navigate('Login');
+    } else {
+      alert('Incorrect OTP!');
+    }
+  };
+
   return (
     <View
       style={{
@@ -50,7 +65,7 @@ const Verification = props => {
       <CustomHeader title="Verification" />
 
       <View style={{flex: 1, justifyContent: 'flex-start'}}>
-        <TabView
+        {/* <TabView
           navigationState={{index, routes}}
           renderScene={renderScene}
           renderTabBar={props => (
@@ -74,12 +89,14 @@ const Verification = props => {
           onIndexChange={setIndex}
           initialLayout={initialLayout}
           style={{padding: 24, zIndex: 2}}
-        />
+        /> */}
+
+        <MobileVerification otp={otp} setOtp={setOtp} />
 
         <View style={{paddingHorizontal: 24, zIndex: 20, marginBottom: 150}}>
           <Spacer bottom={24} />
           <PrimaryButton
-            onPress={() => navigation.navigate('ResetPassword')}
+            onPress={onVerifyOtp}
             color={theme.primaryBlue}
             title="Submit"
             txtStyle={{textTransform: 'capitalize', color: theme.white}}

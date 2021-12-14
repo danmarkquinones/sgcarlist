@@ -1,9 +1,17 @@
-import axios from "axios";
+import axios from 'axios';
 import {API_BASE_URL} from '@env';
 import Kjur from '../helpers/jwt';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const post = (params, route) => {
+let axiosConfig = {
+  headers: {
+    'Content-Type': 'application/json;charset=UTF-8',
+    'Access-Control-Allow-Origin': '*',
+    'Strict-Transport-Security': 'max-age=90',
+  },
+};
+
+const POST = (params, route) => {
   const token = Kjur.encode(params);
   return axios
     .post(
@@ -18,20 +26,6 @@ export const post = (params, route) => {
       },
     )
     .then(res => {
-      console.log('RES', res);
-      return res;
-    })
-    .catch(error => {
-      console.log(error);
-      return {error: error.message, status: 500};
-    });
-};
-
-export const get = (route, params) => {
-  const token = Kjur.encode(params ? params : null);
-  return axios
-    .get(`${API_BASE_URL}${route}`, token ? {token: token} : {})
-    .then(res => {
       return res;
     })
     .catch(error => {
@@ -39,12 +33,8 @@ export const get = (route, params) => {
     });
 };
 
-export const getAdvert = (route, params) => {
-  const token = Kjur.encode({
-    _id: '61ab43ee561db2167e58ccd2',
-    page: 1,
-    limit: 10,
-  });
+const GET = (route, params) => {
+  const token = Kjur.encode(params ? params : {});
 
   return axios
     .get(`${API_BASE_URL}${route}?token=${token}`)
@@ -52,32 +42,31 @@ export const getAdvert = (route, params) => {
       return res;
     })
     .catch(error => {
-      console.log(error);
       return {error: error.message, status: 500};
     });
 };
 
-export const deleteProduct = (route, params) => {
+const DELETE = async (route, params) => {
   const token = Kjur.encode(params);
 
-  console.log(token);
+  const bearerToken = await AsyncStorage.getItem('bearerToken');
+
+  axiosConfig.headers['Authorization'] = `Bearer ${bearerToken}`;
 
   return axios
-    .delete(`${API_BASE_URL}${route}?token=${token}`)
+    .put(`${API_BASE_URL}${route}`, {token: token}, axiosConfig)
     .then(res => {
-      console.log('DELETED', res);
       return res;
     })
     .catch(error => {
-      console.log('DELETE ERROR', error);
       return {error: error.message, status: 500};
     });
 };
 
-
+export const api = {POST, GET, DELETE};
 
 export const logout = () => {
-  AsyncStorage.setItem('isLoggedIn' , '0')
-  AsyncStorage.setItem('userDetails' , '{}')
-  AsyncStorage.setItem('bearerToken' , '{}')
-}
+  AsyncStorage.setItem('isLoggedIn', '0');
+  AsyncStorage.setItem('userDetails', '{}');
+  AsyncStorage.setItem('bearerToken', '{}');
+};

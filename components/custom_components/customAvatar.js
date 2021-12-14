@@ -12,7 +12,7 @@ const CustomAvatar = (props) => {
     }, [])
 
     const generateInitial = (string) => {
-        const letter = string.substring(0,1)
+        const letter = string?.substring(0, 1);
         setText(letter)
     }
 
