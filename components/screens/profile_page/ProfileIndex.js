@@ -110,7 +110,7 @@ const ProfileIndex = (props) => {
     const onConfirmNotif = () => {
         setUserConfig({...userConfig, isNotificationOn:1}) 
         AsyncStorage.setItem('isNotify' , '1')
-        onUpdateNotif(false)
+        onUpdateNotif(true)
         toggleNotifOverlay()
     }
 
