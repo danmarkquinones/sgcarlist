@@ -38,3 +38,20 @@ export const updateProfile = async (data) => {
         axiosConfig
     )
 }
+
+export const updateNotification = async (data) => {
+
+    const encodedData = Kjur.encode(data)
+    const bearerToken = await AsyncStorage.getItem('bearerToken')
+
+    axiosConfig.headers["Authorization"] = `Bearer ${bearerToken}`
+
+    console.log('notif config' , encodedData)
+
+    return await axios.put(`${API_BASE_URL}/profile/set_notification` , 
+        {
+            token:encodedData
+        },
+        axiosConfig
+    )
+}

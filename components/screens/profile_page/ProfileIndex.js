@@ -15,6 +15,9 @@ import { UserConfigContext } from '../../store/context_api/userContext';
 import { useIsFocused } from '@react-navigation/core';
 import { logout } from '../../store/api_calls/authentication';
 import PushNotification from "react-native-push-notification";
+import firebase from '@react-native-firebase/app';
+import messaging from '@react-native-firebase/messaging'
+import { updateNotification } from '../../store/api_calls/user_api';
 
 
 const ProfileIndex = (props) => {
@@ -23,15 +26,23 @@ const ProfileIndex = (props) => {
     const [userConfig , setUserConfig] = useContext(UserConfigContext)
     const isFocused = useIsFocused()
 
+
     //overlays
     const [NotifOverlayVisible, setNotifOverlayVisible] = useState(false);
     const [languageOverlayVisible,setLanguageOverlayVisible] = useState(false);
 
     const [information , setInformation] = useState([])
+    const [deviceToken , setDeviceToken] = useState("")
 
     useEffect(()=>{
         if(isFocused){
             console.log(userConfig.userDetails)
+
+            messaging().getToken().then(token => {
+                console.log('token' , token)
+                setDeviceToken(token)
+            });
+
             if(userConfig.isLoggedIn){
                 const infoArray = [
                     // {type:'Email' , text:userConfig.userDetails.user_email},
@@ -67,10 +78,23 @@ const ProfileIndex = (props) => {
         setLanguageOverlayVisible(!languageOverlayVisible)
     };
 
+    const onUpdateNotif = (value) => {
+        const data = {
+            notif_switch: value,
+            device_token: deviceToken
+        }
+        updateNotification(data).then((res)=>{
+            console.log(res.data)
+        }).catch((e)=>{
+            console.log('error updateing notifs' , e)
+        })
+    }
+
     const toggleSwitchNotif = () => {
         if(userConfig.isNotificationOn===1){
             setUserConfig({...userConfig, isNotificationOn:0}) 
             AsyncStorage.setItem('isNotify' , '0')
+            onUpdateNotif(false)
         }else{
             toggleNotifOverlay()
         }
@@ -86,6 +110,7 @@ const ProfileIndex = (props) => {
     const onConfirmNotif = () => {
         setUserConfig({...userConfig, isNotificationOn:1}) 
         AsyncStorage.setItem('isNotify' , '1')
+        onUpdateNotif(false)
         toggleNotifOverlay()
     }
 

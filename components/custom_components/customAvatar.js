@@ -31,11 +31,11 @@ const CustomAvatar = (props) => {
             <Text
                 style={{
                     color:theme.white,
-                    fontWeight:'bold',
-                    fontSize:size*0.4
+                    fontWeight:'500',
+                    fontSize:size*0.5
                 }}
             >
-                {text}
+                {text.toUpperCase()}
             </Text>
         </View>
     )
