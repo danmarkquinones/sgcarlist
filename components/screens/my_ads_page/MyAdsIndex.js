@@ -17,8 +17,6 @@ const MyAdsIndex = () => {
   const navigation = useNavigation();
   const [userConfig] = useContext(UserConfigContext);
 
-  console.log('USER', userConfig.userDetails._id);
-
   const [config, setConfig] = useState({
     sortBy: 'ascending',
     isGridView: true,
