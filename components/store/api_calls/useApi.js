@@ -11,20 +11,15 @@ let axiosConfig = {
   },
 };
 
-const POST = (params, route) => {
+const POST = async (params, route) => {
   const token = Kjur.encode(params);
+
+  const bearerToken = await AsyncStorage.getItem('bearerToken');
+
+  axiosConfig.headers['Authorization'] = `Bearer ${bearerToken}`;
+
   return axios
-    .post(
-      `${API_BASE_URL}${route}`,
-      {token: token},
-      {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Strict-Transport-Security': 'max-age=90',
-        },
-      },
-    )
+    .post(`${API_BASE_URL}${route}`, {token: token}, axiosConfig)
     .then(res => {
       return res;
     })
