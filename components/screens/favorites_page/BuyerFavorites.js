@@ -45,14 +45,19 @@ const SavedCars = ({config , setConfig , navigation}) => {
           const data = await AsyncStorage.getItem('savedCars')
           if(data){
             let sortedData = JSON.parse(data)
+            console.log('filter data' , sortedData)
             sortedData.sort(function(a,b){
                 return a.product_price - b.product_price;
             });
             setFavoriteCars(sortedData)
             setIsLoading(false)
+          }else{
+              AsyncStorage.setItem('savedCars' , '[]')
+              setIsLoading(false)
           }
         } catch(e) {
-          console.log(e)
+            console.log('ERROR',e)
+            setIsLoading(false)
         }
     }
 
@@ -161,9 +166,13 @@ const PinnedFilters = ({config , setConfig , navigation}) => {
           if(data){
             setPinnedFilters(JSON.parse(data))
             setIsLoading(false)
+          }else{
+              AsyncStorage.setItem('pinnedFilters' , '[]')
+              setIsLoading(false)
           }
         } catch(e) {
           console.log(e)
+          setIsLoading(false)
         }
     }
 

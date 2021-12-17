@@ -168,9 +168,9 @@ const ProfileIndex = (props) => {
         <>
         {!userConfig.isLoggedIn?
             <View style={{display:'flex' , flex:1, alignItems:'center' , justifyContent:'center' , paddingHorizontal:30 , backgroundColor:theme.lightBlue}}>
-                <Text style={{fontSize:20 , textAlign:'center'}}>You dont have access to this page , please login to continue</Text>
+                <Text style={{fontSize:20 , textAlign:'center'}}>{localizedStrings.NoAccess.Message}</Text>
                 <View style={{width:200 , marginTop:50}}>
-                    <PrimaryButton onPress={()=>navigation.navigate('Login')} title="Go to Login Page" color={theme.primaryBlue}/>
+                    <PrimaryButton onPress={()=>navigation.navigate('Login')} title={localizedStrings.NoAccess.ButtonText} color={theme.primaryBlue}/>
                     {/* <PrimaryButton title="push notif" onPress={handleNotif} color={theme.primaryBlue}/> */}
                 </View>
             </View>

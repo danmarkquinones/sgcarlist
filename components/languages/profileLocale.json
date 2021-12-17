@@ -16,6 +16,11 @@
             "Logout" : "logout",
             "Version" : "version"
         },
+        "NoAccess" : {
+            "Message" : "You don't have access to this feature, please login to continue.",
+            "ButtonText" : "Go to Login"
+            
+        },
         "EditProfile":{
             "Header" : "Kindly fill out the fields you want to edit.",
             "FName" : "First Name",
@@ -62,6 +67,11 @@
             "Share" : "分享这个应用程式",
             "Logout" : "登出",
             "Version" : "版本"
+        },
+        "NoAccess" : {
+            "Message" : "您无权使用此功能，请登录以继续.",
+            "ButtonText" : "去登录"
+            
         },
         "EditProfile":{
             "Header" : "请填写您要编辑的字段.",
