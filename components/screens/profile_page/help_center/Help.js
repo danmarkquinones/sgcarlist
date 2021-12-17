@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useContext} from 'react'
 import { View , Text, Linking, Alert, Platform } from 'react-native'
 import { globalStyles } from '../../../styles/globalStyles'
 import { helpStyles } from './helpStyles'
@@ -8,8 +8,16 @@ import { theme } from '../../../contants/colors';
 import { PrimaryButton } from '../../../custom_components/customButtons';
 import CustomHeader from '../../../custom_components/customHeader';
 import { onCallUser } from '../../../store/helpers/globalFunctions';
+import LocalizedStrings from 'react-native-localization';
+import { UserConfigContext } from '../../../store/context_api/userContext';
+
+var localFile = require('../../../languages/profileLocale.json')
+let localizedStrings = new LocalizedStrings(localFile)
 
 const Help = () => {
+
+    const [userConfig] = useContext(UserConfigContext)
+    localizedStrings.setLanguage(userConfig.language)
 
     const onEmailLaunch = () => {
         const email = 'enquiries@sgcarlist.com'
@@ -24,7 +32,7 @@ const Help = () => {
         <View
             style={globalStyles.container}
         >
-            <CustomHeader title="Help & Feedback"/>
+            <CustomHeader title={localizedStrings.NavStackHeaders.Help}/>
             
             <View style={helpStyles.helpContainer}>
                 <View
@@ -36,13 +44,13 @@ const Help = () => {
                 </View>
 
                 <View style={helpStyles.textContainer}>
-                    <Text style={helpStyles.textHeader}>We are here to assist you</Text>
-                    <Text style={helpStyles.textParagraph}>If you required help with listings or have general enquiries, call or send us an email</Text>
+                    <Text style={helpStyles.textHeader}>{localizedStrings.Help.Header}</Text>
+                    <Text style={helpStyles.textParagraph}>{localizedStrings.Help.Body}</Text>
 
                     <View style={helpStyles.buttons}>
                         <PrimaryButton
                             color={theme.primaryBlue}
-                            title="Call Us : 65-67177933"
+                            title={`${localizedStrings.Help.Call} : 65-67177933`}
                             onPress={()=>onCallUser('65-67177933')}
                             Icon={()=><MatIcon name="call" size={20} color={theme.white}/>}
                         />
@@ -50,7 +58,7 @@ const Help = () => {
                     <View style={helpStyles.buttons}>
                         <PrimaryButton
                             color={theme.primaryBlue}
-                            title="Email Us : enquiries@sgcarlist.com"
+                            title={`${localizedStrings.Help.Email} : enquiries@sgcarlist.com`}
                             onPress={onEmailLaunch}
                             Icon={()=><MatIcon name="mail" size={20} color={theme.white}/>}
                         />

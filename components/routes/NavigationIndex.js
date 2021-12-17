@@ -18,16 +18,26 @@ import {UserConfigContext} from '../store/context_api/userContext';
 import ResetPassword from '../screens/reset_password_page/reset_password';
 import Verification from '../screens/verification_page/verification';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LocalizedStrings from 'react-native-localization';
+import { getLanguage } from '../store/helpers/languageFunctions';
+
+var localFile = require('../languages/navigationLocale.json')
+let localizedStrings = new LocalizedStrings(localFile)
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const RootStack = () => {
-  const [userConfig] = useContext(UserConfigContext);
+  const [userConfig , setUserConfig] = useContext(UserConfigContext);
   const [isFirstLaunched, setIsFirstLaunched] = useState(null);
 
   useEffect(() => {
     getIsFirstLaunched();
+    getLanguage().then(language => {
+      setUserConfig({...userConfig , language:language})
+    }).catch(e=>{
+      setUserConfig({...userConfig , language:"en"})
+    })
   }, []);
 
   const getIsFirstLaunched = async () => {
@@ -38,6 +48,9 @@ const RootStack = () => {
       setIsFirstLaunched('0');
     }
   };
+
+  localizedStrings.setLanguage(userConfig.language)
+
 
   if (isFirstLaunched === null) return <></>;
 
@@ -88,7 +101,7 @@ const RootStack = () => {
 
 const AppTabNavigation = () => {
 
-    const [userConfig] = useContext(UserConfigContext)
+    const [userConfig , setUserConfig] = useContext(UserConfigContext)
 
     return(
         <Tab.Navigator
@@ -102,7 +115,12 @@ const AppTabNavigation = () => {
                 options={{
                     headerShown:false,
                     tabBarLabel: ({ color })=>(
-                        <Text style={{color:color }}>{userConfig.isSellMode===0?'Explore':'Post Ad'}</Text>
+                        <Text style={{color:color }}>
+                          {userConfig.isSellMode===0?
+                            localizedStrings.BottomTab.Explore
+                            :localizedStrings.BottomTab.PostAd
+                          }
+                        </Text>
                     ),
                     tabBarIcon: ({ color }) => (
                         userConfig.isSellMode===0?
@@ -116,7 +134,12 @@ const AppTabNavigation = () => {
                 options={{
                     headerShown:false,
                     tabBarLabel: ({ color })=>(
-                        <Text style={{color:color }}>{userConfig.isSellMode===0?"Favorites":"My Ads"}</Text>
+                        <Text style={{color:color }}>
+                          {userConfig.isSellMode===0?
+                            localizedStrings.BottomTab.Favorites
+                            :localizedStrings.BottomTab.MyAds
+                          }
+                        </Text>
                     ),
                     tabBarIcon: ({ color }) => (
                         userConfig.isSellMode===0?
@@ -131,7 +154,9 @@ const AppTabNavigation = () => {
                 options={() => ({
                     headerShown:false,
                     tabBarLabel: ({ color })=>(
-                        <Text style={{color:color }}>Profile</Text>
+                        <Text style={{color:color }}>
+                          {localizedStrings.BottomTab.Profile}
+                        </Text>
                     ),
                     tabBarIcon: ({ color }) => (
                         userConfig.isSellMode===0?

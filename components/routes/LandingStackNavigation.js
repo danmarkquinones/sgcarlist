@@ -9,6 +9,7 @@ import SellerView from '../screens/landing_page/seller_view/SellerView';
 import Sellers from '../screens/landing_page/seller_view/Sellers';
 import ImageViewer from '../screens/landing_page/product_view/ImageViewer';
 import SearchResult from '../screens/search_result_page/search_result';
+import Help from '../screens/profile_page/help_center/Help';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,7 @@ export const LandingStackNavigation = ({navigation, route}) => {
       <Stack.Screen name="SellerView" component={SellerView} />
       <Stack.Screen name="TopDealers" component={Sellers} />
       <Stack.Screen name="SearchResult" component={SearchResult} />
+      <Stack.Screen name="Help" component={Help}/>
     </Stack.Navigator>
   );
 };
