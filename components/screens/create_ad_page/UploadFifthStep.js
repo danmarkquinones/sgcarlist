@@ -48,7 +48,7 @@ const vehicleTypes = [
 const UploadFifthStep = ({onScreenChange}) => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
   const navigation = useNavigation();
-  const [selectedValueEmail, setSelectedValueEmail] = useState('0');
+  const [selectedValue, setSelectedValue] = useState('');
   const [carBrands, setCarBrands] = useState([]);
 
   const onSetCarDetails = keyValue => {
@@ -149,8 +149,8 @@ const UploadFifthStep = ({onScreenChange}) => {
                     label: 'Normal car converted to Revised OPC scheme',
                   },
                 ]}
-                selectedValue={selectedValueEmail}
-                onSelectRadio={value => setSelectedValueEmail(value)}
+                selectedValue={selectedValue}
+                onSelectRadio={value => setSelectedValue(value)}
                 isHorizontal
               />
             </View>
@@ -233,7 +233,7 @@ const UploadFifthStep = ({onScreenChange}) => {
               height={100}
               multiline={true}
             />
-            <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/150</Text>
+            {/* <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/150</Text> */}
           </View>
           <Spacer bottom={8} />
 
@@ -247,7 +247,7 @@ const UploadFifthStep = ({onScreenChange}) => {
               height={100}
               multiline={true}
             />
-            <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/150</Text>
+            {/* <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/150</Text> */}
           </View>
           <Spacer bottom={8} />
 
@@ -273,7 +273,7 @@ const UploadFifthStep = ({onScreenChange}) => {
           }}>
           <View style={{flex: 1}}>
             <PrimaryButton
-              onPress={() => onScreenChange(3)}
+              onPress={() => onScreenChange(!carDetails.details_type ? 2 : 3)}
               title="Back"
               color={theme.secondaryBlue}
             />

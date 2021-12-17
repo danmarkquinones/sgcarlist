@@ -165,165 +165,213 @@ const ProfileIndex = (props) => {
     }
 
     return (
-        <>
-        {!userConfig.isLoggedIn?
-            <View style={{display:'flex' , flex:1, alignItems:'center' , justifyContent:'center' , paddingHorizontal:30 , backgroundColor:theme.lightBlue}}>
-                <Text style={{fontSize:20 , textAlign:'center'}}>{localizedStrings.NoAccess.Message}</Text>
-                <View style={{width:200 , marginTop:50}}>
-                    <PrimaryButton onPress={()=>navigation.navigate('Login')} title={localizedStrings.NoAccess.ButtonText} color={theme.primaryBlue}/>
-                    {/* <PrimaryButton title="push notif" onPress={handleNotif} color={theme.primaryBlue}/> */}
-                </View>
+      <>
+        {!userConfig.isLoggedIn ? (
+          <View
+            style={{
+              display: 'flex',
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingHorizontal: 30,
+              backgroundColor: theme.lightBlue,
+            }}>
+            <Text style={{fontSize: 20, textAlign: 'center'}}>
+              {localizedStrings.NoAccess.Message}
+            </Text>
+            <View style={{width: 200, marginTop: 50}}>
+              <PrimaryButton
+                onPress={() => navigation.navigate('Login')}
+                title={localizedStrings.NoAccess.ButtonText}
+                color={theme.primaryBlue}
+              />
+              {/* <PrimaryButton title="push notif" onPress={handleNotif} color={theme.primaryBlue}/> */}
             </View>
-            :<ScrollView
-                showsVerticalScrollIndicator={false}
-            >    
-                <View
-                    style={globalStyles.container}
-                >
-                    <View
-                        style={profileStyles.headerContainer}
-                    >
-                        <CustomAvatar initial={userConfig.userDetails.user_email} size={40} color={theme.gray}/>
-                        <Text style={profileStyles.headerName}>{userConfig.userDetails.user_email}</Text>
+          </View>
+        ) : (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={globalStyles.container}>
+              <View style={profileStyles.headerContainer}>
+                <CustomAvatar
+                  initial={userConfig.userDetails.user_email}
+                  size={40}
+                  color={theme.gray}
+                />
+                <Text style={profileStyles.headerName}>
+                  {userConfig.userDetails.user_email}
+                </Text>
+              </View>
+
+              <View style={profileStyles.infoContainer}>
+                <View style={profileStyles.infoHead}>
+                  <Text style={profileStyles.infoHeadTitle}>
+                    {localizedStrings.ProfileIndex.ProfileInformation}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('EditProfile', {
+                        data: userConfig.userDetails,
+                        callback: setInformation,
+                      })
+                    }>
+                    <View style={profileStyles.editContainer}>
+                      <Icon name="edit" size={15} />
+                      <Text style={{fontSize: 15, marginLeft: 5}}>
+                        {localizedStrings.ProfileIndex.Edit}
+                      </Text>
                     </View>
-
-                    <View
-                        style={profileStyles.infoContainer}
-                    >
-                        <View style={profileStyles.infoHead}>
-                            <Text style={profileStyles.infoHeadTitle}>{localizedStrings.ProfileIndex.ProfileInformation}</Text>
-                            <TouchableOpacity onPress={()=>navigation.navigate('EditProfile', {data:userConfig.userDetails,callback:setInformation})}>
-                                <View style={profileStyles.editContainer}>
-                                    <Icon name='edit' size={15} />
-                                    <Text style={{fontSize:15 , marginLeft:5}}>{localizedStrings.ProfileIndex.Edit}</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-
-                        {information.map((info , i)=>
-                            <View key={i} style={profileStyles.infoDetailsContainer}>
-                                <Text style={profileStyles.infoDetailsType}>{info.type}</Text>
-                                <Text style={profileStyles.infoDetailsText}>{info.text}</Text>
-                                
-                                <Divider style={profileStyles.line}/> 
-                            </View>
-                        )}
-                    </View>
-
-                    <View
-                        style={profileStyles.othersContainer}
-                    >
-                        <View style={profileStyles.otherDetailsContainer}>
-                            <Text style={profileStyles.othersDetailsText}>{localizedStrings.ProfileIndex.SwitchToSelling}</Text>
-                            <SwitchSelector
-                                style={{width:120}}
-                                options={options}
-                                initial={+userConfig.isSellMode}
-                                value={+userConfig.isSellMode}
-                                onPress={(value) => handleSellModeChange(value)}
-                                textColor={theme.primaryBlue}
-                                selectedColor={theme.white}
-                                buttonColor={theme.primaryBlue}
-                                borderColor={theme.primaryBlue}
-                                hasPadding
-                                valuePadding={3}
-                                height={35}
-                            />
-                        </View>
-
-                        <Divider style={profileStyles.line}/>
-
-                        <View style={profileStyles.otherDetailsContainer}>
-                            <Text style={profileStyles.othersDetailsText}>{localizedStrings.ProfileIndex.Notification}</Text>
-                            <Switch 
-                                trackColor={{ false: theme.gray, true: theme.secondaryBlue }}
-                                thumbColor={+userConfig.isNotificationOn===1 ? theme.primaryBlue : theme.white}
-                                ios_backgroundColor={theme.gray}
-                                onValueChange={toggleSwitchNotif}
-                                value={+userConfig.isNotificationOn===1?true:false}
-                            />
-                        </View>
-
-                        <Divider style={profileStyles.line}/>
-
-                        <TouchableOpacity
-                            onPress={toggleLanguageOverlay}
-                        >
-                            <View style={profileStyles.otherDetailsContainer}>
-                                <Text style={profileStyles.othersDetailsText}>{localizedStrings.ProfileIndex.Language}</Text>
-                                <Text>{userConfig.language==="en"?"English" : "Chinese"}</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        <Divider style={profileStyles.line}/>
-
-                        <TouchableOpacity
-                            onPress={()=>navigation.navigate('TOS')}
-                        >
-                            <View style={profileStyles.otherDetailsContainer}>
-                                <Text style={profileStyles.othersDetailsText}>{localizedStrings.ProfileIndex.PPTOS}</Text>
-                                <Icon name="keyboard-arrow-right" size={25}  color={theme.gray}/>
-                            </View>
-                        </TouchableOpacity>
-
-                        <Divider style={profileStyles.line}/>
-
-                        <TouchableOpacity
-                            onPress={()=>navigation.navigate('Help')}
-                        >
-                            <View style={profileStyles.otherDetailsContainer}>
-                                <Text style={profileStyles.othersDetailsText}>{localizedStrings.ProfileIndex.Help}</Text>
-                                <Icon name="keyboard-arrow-right" size={25}  color={theme.gray}/>
-                            </View>
-                        </TouchableOpacity>
-
-                        <Divider style={profileStyles.line}/>
-                        
-                        <TouchableOpacity onPress={onShare}>
-                            <View style={profileStyles.otherDetailsContainer}>
-                                <Text style={profileStyles.othersDetailsText}>{localizedStrings.ProfileIndex.Share}</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        <Divider style={profileStyles.line}/>
-
-
-                    </View>
-
-                    <View
-                        style={profileStyles.logoutBtn}
-                    >
-                        <PrimaryButton
-                            title={localizedStrings.ProfileIndex.Logout}
-                            onPress={onClick}
-                            color={theme.primaryBlue}
-                        />
-                        <Text style={profileStyles.versionText}>{localizedStrings.ProfileIndex.Version} 1.1.0</Text>
-                    </View>
-                    
+                  </TouchableOpacity>
                 </View>
-                
 
-                <Overlay isVisible={NotifOverlayVisible} onBackdropPress={toggleNotifOverlay}>
-                    <NotificationModal onConfirm={onConfirmNotif} onCancel={onCancelNotif} localizedStrings={localizedStrings}/>
-                </Overlay>
+                {information.map((info, i) => (
+                  <View key={i} style={profileStyles.infoDetailsContainer}>
+                    <Text style={profileStyles.infoDetailsType}>
+                      {info.type}
+                    </Text>
+                    <Text style={profileStyles.infoDetailsText}>
+                      {info.text}
+                    </Text>
 
-                <Overlay isVisible={languageOverlayVisible} onBackdropPress={toggleLanguageOverlay}>
-                    <View style={profileStyles.languageOverlay}>
-                        <TouchableOpacity onPress={()=>handleLanguageChange('en')}>
-                            <Text>English</Text>
-                        </TouchableOpacity>
+                    <Divider style={profileStyles.line} />
+                  </View>
+                ))}
+              </View>
 
-                        <TouchableOpacity onPress={()=>handleLanguageChange('zh')}>
-                            <Text>Chinese</Text>
-                        </TouchableOpacity>
-                    </View>
-                </Overlay>
+              <View style={profileStyles.othersContainer}>
+                <View style={profileStyles.otherDetailsContainer}>
+                  <Text style={profileStyles.othersDetailsText}>
+                    {localizedStrings.ProfileIndex.SwitchToSelling}
+                  </Text>
+                  <SwitchSelector
+                    style={{width: 120}}
+                    options={options}
+                    initial={+userConfig.isSellMode}
+                    value={+userConfig.isSellMode}
+                    onPress={value => handleSellModeChange(value)}
+                    textColor={theme.primaryBlue}
+                    selectedColor={theme.white}
+                    buttonColor={theme.primaryBlue}
+                    borderColor={theme.primaryBlue}
+                    hasPadding
+                    valuePadding={3}
+                    height={35}
+                  />
+                </View>
 
-            </ScrollView>
-        }
-        </>
-    )
+                <Divider style={profileStyles.line} />
+
+                <View style={profileStyles.otherDetailsContainer}>
+                  <Text style={profileStyles.othersDetailsText}>
+                    {localizedStrings.ProfileIndex.Notification}
+                  </Text>
+                  <Switch
+                    trackColor={{false: theme.gray, true: theme.secondaryBlue}}
+                    thumbColor={
+                      +userConfig.isNotificationOn === 1
+                        ? theme.primaryBlue
+                        : theme.white
+                    }
+                    ios_backgroundColor={theme.gray}
+                    onValueChange={toggleSwitchNotif}
+                    value={+userConfig.isNotificationOn === 1 ? true : false}
+                  />
+                </View>
+
+                <Divider style={profileStyles.line} />
+
+                <TouchableOpacity onPress={toggleLanguageOverlay}>
+                  <View style={profileStyles.otherDetailsContainer}>
+                    <Text style={profileStyles.othersDetailsText}>
+                      {localizedStrings.ProfileIndex.Language}
+                    </Text>
+                    <Text>
+                      {userConfig.language === 'en' ? 'English' : 'Chinese'}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+
+                <Divider style={profileStyles.line} />
+
+                <TouchableOpacity onPress={() => navigation.navigate('TOS')}>
+                  <View style={profileStyles.otherDetailsContainer}>
+                    <Text style={profileStyles.othersDetailsText}>
+                      {localizedStrings.ProfileIndex.PPTOS}
+                    </Text>
+                    <Icon
+                      name="keyboard-arrow-right"
+                      size={25}
+                      color={theme.gray}
+                    />
+                  </View>
+                </TouchableOpacity>
+
+                <Divider style={profileStyles.line} />
+
+                <TouchableOpacity onPress={() => navigation.navigate('Help')}>
+                  <View style={profileStyles.otherDetailsContainer}>
+                    <Text style={profileStyles.othersDetailsText}>
+                      {localizedStrings.ProfileIndex.Help}
+                    </Text>
+                    <Icon
+                      name="keyboard-arrow-right"
+                      size={25}
+                      color={theme.gray}
+                    />
+                  </View>
+                </TouchableOpacity>
+
+                <Divider style={profileStyles.line} />
+
+                <TouchableOpacity onPress={onShare}>
+                  <View style={profileStyles.otherDetailsContainer}>
+                    <Text style={profileStyles.othersDetailsText}>
+                      {localizedStrings.ProfileIndex.Share}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+
+                <Divider style={profileStyles.line} />
+              </View>
+
+              <View style={profileStyles.logoutBtn}>
+                <PrimaryButton
+                  title={localizedStrings.ProfileIndex.Logout}
+                  onPress={onClick}
+                  color={theme.primaryBlue}
+                />
+                <Text style={profileStyles.versionText}>
+                  {localizedStrings.ProfileIndex.Version} 1.1.0
+                </Text>
+              </View>
+            </View>
+
+            <Overlay
+              isVisible={NotifOverlayVisible}
+              onBackdropPress={toggleNotifOverlay}>
+              <NotificationModal
+                onConfirm={onConfirmNotif}
+                onCancel={onCancelNotif}
+                localizedStrings={localizedStrings}
+              />
+            </Overlay>
+
+            <Overlay
+              isVisible={languageOverlayVisible}
+              onBackdropPress={toggleLanguageOverlay}>
+              <View style={profileStyles.languageOverlay}>
+                <TouchableOpacity onPress={() => handleLanguageChange('en')}>
+                  <Text>English</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => handleLanguageChange('zh')}>
+                  <Text>Chinese</Text>
+                </TouchableOpacity>
+              </View>
+            </Overlay>
+          </ScrollView>
+        )}
+      </>
+    );
 }
 
 export default ProfileIndex

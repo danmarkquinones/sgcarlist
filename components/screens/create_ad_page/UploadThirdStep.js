@@ -15,7 +15,7 @@ const height = Dimensions.get('window').height;
 const UploadThirdStep = ({onScreenChange}) => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
   const navigation = useNavigation();
-  const [selectedValueEmail, setSelectedValueEmail] = useState('0');
+  const [selectedValue, setSelectedValue] = useState('0');
 
   const onSetCarDetails = keyValue => {
     setCarDetails({...carDetails, ...keyValue});
@@ -79,17 +79,17 @@ const UploadThirdStep = ({onScreenChange}) => {
             <CustomRadioButton
               data={[
                 {
-                  value: '0',
+                  value: false,
                   label:
                     'Use my carplate number and owner ID to fill my car details automatically',
                 },
                 {
-                  value: '1',
+                  value: true,
                   label: 'I wish to manually input all my car details',
                 },
               ]}
-              selectedValue={selectedValueEmail}
-              onSelectRadio={value => setSelectedValueEmail(value)}
+              selectedValue={carDetails.details_type}
+              onSelectRadio={value => onSetCarDetails({details_type: value})}
               isHorizontal
             />
           </View>
@@ -113,7 +113,7 @@ const UploadThirdStep = ({onScreenChange}) => {
           <Spacer left={48} />
           <View style={{flex: 1}}>
             <PrimaryButton
-              onPress={() => onScreenChange(3)}
+              onPress={() => onScreenChange(carDetails.details_type ? 3 : 4)}
               color={theme.primaryBlue}
               title="Next"
             />

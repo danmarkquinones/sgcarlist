@@ -30,19 +30,29 @@ const LandingIndex = props => {
       {/* if !isSellMode */}
       {userConfig.isSellMode === 0 ? (
         <View>
-            <Overlay
-              isVisible={showAdModal} onBackdropPress={toggleOverlay}
-            >
-              <View style={{position:'relative'}}> 
-                <TouchableOpacity onPress={()=>toggleOverlay()} style={{position:'absolute' , right:-20,top:-20 , zIndex:2}} >
-                  <AntIcon name='closecircle' size={30}  color={theme.secondaryBlue}/> 
-                </TouchableOpacity>
-                <Image style={{height: 350 , width:width*0.8 }} source={require('../../../assets/images/main_ad.jpg')}/>
-              </View>
-            </Overlay>
-            <BuyerLanding items={cars} navigation={navigation} dealers={dealers} />
+          <Overlay isVisible={showAdModal} onBackdropPress={toggleOverlay}>
+            <View style={{position: 'relative'}}>
+              <TouchableOpacity
+                onPress={() => toggleOverlay()}
+                style={{position: 'absolute', right: -20, top: -20, zIndex: 2}}>
+                <AntIcon
+                  name="closecircle"
+                  size={30}
+                  color={theme.secondaryBlue}
+                />
+              </TouchableOpacity>
+              <Image
+                style={{height: 350, width: width * 0.8}}
+                source={require('../../../assets/images/main_ad.jpg')}
+              />
+            </View>
+          </Overlay>
+          <BuyerLanding
+            items={cars}
+            navigation={navigation}
+            dealers={dealers}
+          />
         </View>
-        
       ) : (
         <PostAds />
       )}

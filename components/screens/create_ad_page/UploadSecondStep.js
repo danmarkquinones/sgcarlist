@@ -175,7 +175,7 @@ const UploadSecondStep = ({onScreenChange}) => {
               onChange={val => onSetCarDetails({title: val})}
               placeholder="Title"
             />
-            <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/52</Text>
+            {/* <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/52</Text> */}
           </View>
           <Spacer bottom={24} />
           <View>
@@ -192,7 +192,7 @@ const UploadSecondStep = ({onScreenChange}) => {
               height={100}
               multiline={true}
             />
-            <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/80</Text>
+            {/* <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/80</Text> */}
           </View>
         </View>
         <Spacer bottom={24} />

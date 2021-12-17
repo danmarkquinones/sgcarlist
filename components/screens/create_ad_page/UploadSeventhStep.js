@@ -13,11 +13,13 @@ import {useNavigation} from '@react-navigation/core';
 import Spacer from '../../custom_components/spacer';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import {CarConfigContext} from '../../store/context_api/carContext';
+import ImageSlider from 'react-native-image-slider';
 
 const initialLayout = {width: Dimensions.get('window').width};
 
 const UploadSeventhStep = ({onScreenChange}) => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
+  console.log(carDetails.images);
 
   const navigation = useNavigation();
   const [index, setIndex] = useState(0);
@@ -55,12 +57,23 @@ const UploadSeventhStep = ({onScreenChange}) => {
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: theme.lightBlue}}>
-      <Image
+      {/* <Image
         style={{
           width: '100%',
           height: 250,
         }}
         source={require('../../../assets/images/car3.jpg')}
+      /> */}
+      <ImageSlider
+        images={carDetails.images}
+        customSlide={({index, item, style, width}) => (
+          <View key={index} style={{display: 'flex', flex: 1}}>
+            <Image
+              source={{uri: item.uri}}
+              style={{height: 300, width: initialLayout.width}}
+            />
+          </View>
+        )}
       />
       <View style={{padding: 16, backgroundColor: theme.white}}>
         <Text
@@ -70,7 +83,7 @@ const UploadSeventhStep = ({onScreenChange}) => {
           }}>
           {carDetails.title}
         </Text>
-        <Text>85 - 90 KM Singapore</Text>
+        <Text>{`${carDetails.location.city} - ${carDetails.location.region_name}`}</Text>
       </View>
       <View
         style={{
@@ -86,59 +99,63 @@ const UploadSeventhStep = ({onScreenChange}) => {
           style={{color: theme.primaryBlue, fontWeight: 'bold', fontSize: 18}}>
           {carDetails.asking_price} USD
         </Text>
-        <Text>625 USD / month</Text>
+        {/* <Text>625 USD / month</Text> */}
       </View>
 
-      <View
-        style={{
-          marginTop: 16,
-          padding: 16,
-          backgroundColor: theme.white,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-        <Text>2012</Text>
-        <Text>{carDetails.mileage} KM</Text>
-      </View>
-      <View
-        style={{
-          borderTopWidth: 0.5,
-          borderTopColor: theme.black,
-          padding: 16,
-          backgroundColor: theme.white,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-        <Text>{carDetails.transmission}</Text>
-        <Text>1368 cc</Text>
-      </View>
-      <View
-        style={{
-          borderTopWidth: 0.5,
-          borderTopColor: theme.black,
-          padding: 16,
-          backgroundColor: theme.white,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-        <Text>White</Text>
-        <Text>Used car</Text>
-      </View>
-      <View
-        style={{
-          borderTopWidth: 0.5,
-          borderTopColor: theme.black,
-          padding: 16,
-          backgroundColor: theme.white,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-        <Text>Jurong Singapore</Text>
-      </View>
+      {carDetails.details_type ? (
+        <View>
+          <View
+            style={{
+              marginTop: 16,
+              padding: 16,
+              backgroundColor: theme.white,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text>2012</Text>
+            <Text>{carDetails.mileage} KM</Text>
+          </View>
+          <View
+            style={{
+              borderTopWidth: 0.5,
+              borderTopColor: theme.black,
+              padding: 16,
+              backgroundColor: theme.white,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text>{carDetails.transmission}</Text>
+            <Text>{carDetails.engince_capacity} cc</Text>
+          </View>
+          <View
+            style={{
+              borderTopWidth: 0.5,
+              borderTopColor: theme.black,
+              padding: 16,
+              backgroundColor: theme.white,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text>White</Text>
+            <Text>Used car</Text>
+          </View>
+          <View
+            style={{
+              borderTopWidth: 0.5,
+              borderTopColor: theme.black,
+              padding: 16,
+              backgroundColor: theme.white,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text>Jurong Singapore</Text>
+          </View>
+        </View>
+      ) : null}
       <Spacer bottom={16} />
       <View style={{height: 250}}>
         <TabView
