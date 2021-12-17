@@ -46,10 +46,7 @@ const UploadEighthStep = () => {
         region_name: carDetails.location.region,
         city: carDetails.location.city,
       },
-      selected_ads_id:
-        carDetails.price === 108
-          ? '61bca24824a406dfb983d722'
-          : '61bca22e24a406dfb983d6f9',
+      selected_ads_id: carDetails.ads_id,
     };
 
     // uploadImages();

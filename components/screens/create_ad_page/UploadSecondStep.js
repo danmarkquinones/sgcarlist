@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -15,13 +15,27 @@ import Spacer from '../../custom_components/spacer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/core';
 import {CarConfigContext} from '../../store/context_api/carContext';
+import {api} from '../../store/api_calls/useApi';
 
 const UploadSecondStep = ({onScreenChange}) => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
   const navigation = useNavigation();
+  const [packages, setPackages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const onSetCarDetails = keyValue => {
     setCarDetails({...carDetails, ...keyValue});
+  };
+
+  useEffect(() => {
+    getPackages();
+  }, []);
+
+  const getPackages = async () => {
+    const res = await api.GET('/product_advertisement_packages');
+    setIsLoading(false);
+    console.log(res.data.data);
+    setPackages(res.data.data);
   };
 
   return (
@@ -36,125 +50,167 @@ const UploadSecondStep = ({onScreenChange}) => {
         <Spacer bottom={24} />
         <View>
           <Spacer bottom={8} />
-          <TouchableOpacity onPress={() => onSetCarDetails({price: 90})}>
-            <View
-              style={{
-                width: '100%',
-                backgroundColor:
-                  carDetails.price === 90 ? theme.primaryBlue : theme.white,
-                borderRadius: 5,
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                padding: 16,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{fontSize: 32, color: '#2C9C22', fontWeight: 'bold'}}>
-                  S$90{' '}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: carDetails.price === 90 ? theme.white : '#4F4A4A',
-                  }}>
-                  till vehicle is sold
-                </Text>
-              </View>
-              <View
-                style={{
-                  width: '100%',
-                  borderBottomWidth: StyleSheet.hairlineWidth,
-                  borderBottomColor: '#bbb',
-                  marginVertical: 8,
-                }}
-              />
-              <Text
-                style={{
-                  color: carDetails.price === 90 ? theme.white : '#4F4A4A',
-                }}>
-                This package will allow you to post a normal "Direct Owner"
-                advertisement.
-              </Text>
-            </View>
-          </TouchableOpacity>
+
+          {!isLoading
+            ? packages.map(item => {
+                return item.package_name === 'star_ad' ? (
+                  <TouchableOpacity
+                    onPress={() =>
+                      onSetCarDetails({
+                        price: item.package_price,
+                        ads_id: item._id,
+                      })
+                    }>
+                    <View
+                      style={{
+                        width: '100%',
+                        backgroundColor: '#fff',
+                        borderRadius: 5,
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-start',
+                        overflow: 'hidden',
+                      }}>
+                      <View
+                        style={{
+                          backgroundColor: '#EA3636',
+                          width: '100%',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          padding: 8,
+                        }}>
+                        <Text style={{color: theme.white}}>
+                          GET 3x MORE SALES INQUIRIES
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          backgroundColor:
+                            carDetails.ads_id === item._id
+                              ? theme.primaryBlue
+                              : theme.white,
+                          width: '100%',
+                          padding: 16,
+                        }}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 32,
+                              color: '#36D828',
+                              fontWeight: 'bold',
+                            }}>
+                            S${item.package_price}{' '}
+                          </Text>
+                          <View>
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                color:
+                                  carDetails.ads_id === item._id
+                                    ? theme.white
+                                    : '#4F4A4A',
+                                paddingRight: 16,
+                              }}>
+                              till vehicle is sold (with 1 day StarAd {'\n'}
+                              exposure)
+                            </Text>
+                          </View>
+                        </View>
+                        <View
+                          style={{
+                            width: '100%',
+                            borderBottomWidth: StyleSheet.hairlineWidth,
+                            borderBottomColor: '#bbb',
+                            marginVertical: 8,
+                          }}
+                        />
+                        <Text
+                          style={{
+                            color:
+                              carDetails.ads_id === item._id
+                                ? theme.white
+                                : '#4F4A4A',
+                          }}>
+                          Sell it fast with StarAd package as you will get over
+                          100,000 views a day.{'\n'}
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    style={{marginBottom: 24}}
+                    onPress={() =>
+                      onSetCarDetails({
+                        price: item.package_price,
+                        ads_id: item._id,
+                      })
+                    }>
+                    <View
+                      style={{
+                        width: '100%',
+                        backgroundColor:
+                          carDetails.ads_id === item._id
+                            ? theme.primaryBlue
+                            : theme.white,
+                        borderRadius: 5,
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-start',
+                        padding: 16,
+                      }}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: 32,
+                            color: '#2C9C22',
+                            fontWeight: 'bold',
+                          }}>
+                          S${item.package_price}{' '}
+                        </Text>
+                        <Text
+                          style={{
+                            fontSize: 20,
+                            color:
+                              carDetails.ads_id === item._id
+                                ? theme.white
+                                : '#4F4A4A',
+                          }}>
+                          till vehicle is sold
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          width: '100%',
+                          borderBottomWidth: StyleSheet.hairlineWidth,
+                          borderBottomColor: '#bbb',
+                          marginVertical: 8,
+                        }}
+                      />
+                      <Text
+                        style={{
+                          color:
+                            carDetails.ads_id === item._id
+                              ? theme.white
+                              : '#4F4A4A',
+                        }}>
+                        This package will allow you to post a normal "Direct
+                        Owner" advertisement.
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })
+            : null}
+
           <Spacer bottom={24} />
 
-          <TouchableOpacity onPress={() => onSetCarDetails({price: 108})}>
-            <View
-              style={{
-                width: '100%',
-                backgroundColor: '#fff',
-                borderRadius: 5,
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                overflow: 'hidden',
-              }}>
-              <View
-                style={{
-                  backgroundColor: '#EA3636',
-                  width: '100%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  padding: 8,
-                }}>
-                <Text style={{color: theme.white}}>
-                  GET 3x MORE SALES INQUIRIES
-                </Text>
-              </View>
-              <View
-                style={{
-                  backgroundColor:
-                    carDetails.price === 108 ? theme.primaryBlue : theme.white,
-                  width: '100%',
-                  padding: 16,
-                }}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 32,
-                      color: '#36D828',
-                      fontWeight: 'bold',
-                    }}>
-                    S$108{' '}
-                  </Text>
-                  <View>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color:
-                          carDetails.price === 108 ? theme.white : '#4F4A4A',
-                        paddingRight: 16,
-                      }}>
-                      till vehicle is sold (with 1 day StarAd {'\n'}exposure)
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    width: '100%',
-                    borderBottomWidth: StyleSheet.hairlineWidth,
-                    borderBottomColor: '#bbb',
-                    marginVertical: 8,
-                  }}
-                />
-                <Text
-                  style={{
-                    color: carDetails.price === 108 ? theme.white : '#4F4A4A',
-                  }}>
-                  Sell it fast with StarAd package as you will get over 100,000
-                  views a day.{'\n'}
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
           {/* <Spacer bottom={24} />
           <View>
             <Text style={styles.label}>
