@@ -38,7 +38,7 @@ const ProfileIndex = (props) => {
     const [deviceToken , setDeviceToken] = useState("")
 
     useEffect(()=>{
-        if(isFocused){
+        if(isFocused || userConfig.language){
             // console.log(userConfig.userDetails)
 
             messaging().getToken().then(token => {
@@ -57,7 +57,7 @@ const ProfileIndex = (props) => {
 
             onCreateChannel()
         }
-    },[isFocused])
+    },[isFocused , userConfig.language])
 
     const options = [
         { label: localizedStrings.ProfileIndex.Buy, value: "0" },

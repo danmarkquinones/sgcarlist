@@ -12,10 +12,17 @@ import { addPinnedFilter } from '../../store/helpers/globalFunctions';
 import { useToast } from "react-native-toast-notifications";
 import { fetchBrands, fetchLocations } from '../../store/api_calls/cars_api';
 import { FilterConfigContext } from '../../store/context_api/filterContext';
+import LocalizedStrings from 'react-native-localization';
+import { UserConfigContext } from '../../store/context_api/userContext';
+
+var localFile = require('../../languages/filterLocale.json')
+let localizedStrings = new LocalizedStrings(localFile)
 
 const FilterIndex = ({navigation}) => {
 
   const [filters,setFilters] = useContext(FilterConfigContext)
+  const [userConfig] = useContext(UserConfigContext)
+  localizedStrings.setLanguage(userConfig.language)
 
   const toast = useToast();
 
@@ -100,11 +107,11 @@ const FilterIndex = ({navigation}) => {
 
   return (
     <View style={{backgroundColor: theme.lightBlue, flex: 1}}>
-      <CustomHeader title="Search / Filter" />
+      <CustomHeader title={localizedStrings.StackNavHeader.Search} />
       <ScrollView style={{padding: 24, flex: 1}}>
         <View>
           <PrimaryInput
-            placeholder="Keyword"
+            placeholder={localizedStrings.Placeholders.Keyword}
             onChange={(value)=>handleFilterChange('keyword',value)}
             value={filters.keyword}
             editable
@@ -114,7 +121,7 @@ const FilterIndex = ({navigation}) => {
         <Spacer bottom={16} />
         <View>
           <CustomPickerAsync
-            placeholder="Select car brand"
+            placeholder={localizedStrings.Placeholders.Brand}
             items={carBrands}
             value={filters.brand}
             onChange={(value)=>handleFilterChange('brand',value)}
@@ -123,7 +130,7 @@ const FilterIndex = ({navigation}) => {
         <Spacer bottom={16} />
         <View>
           <CustomPicker
-            placeholder="Select car condition"
+            placeholder={localizedStrings.Placeholders.Condition}
             items={carConditions}
             value={filters.condition}
             onChange={(value)=>handleFilterChange('condition',value)}
@@ -133,7 +140,7 @@ const FilterIndex = ({navigation}) => {
 
         <View>
           <CustomPickerLocation
-            placeholder="Select location"
+            placeholder={localizedStrings.Placeholders.Location}
             items={locations}
             value={filters.location.id}
             onChange={(value)=>handleLocationsChange(value)}
@@ -143,7 +150,7 @@ const FilterIndex = ({navigation}) => {
 
         <View>
           <Text style={{fontWeight: 'bold', marginBottom: 8}}>
-            Price range:
+            {localizedStrings.Labels.PriceRange} :
           </Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View style={{flex: 1}}>
@@ -170,7 +177,7 @@ const FilterIndex = ({navigation}) => {
         <Spacer bottom={16} />
 
         <View>
-          <Text style={{fontWeight: 'bold', marginBottom: 8}}>Model Year range:</Text>
+          <Text style={{fontWeight: 'bold', marginBottom: 8}}>{localizedStrings.Labels.ModelRange} :</Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View style={{flex: 1}}>
               <PrimaryInput
@@ -194,7 +201,7 @@ const FilterIndex = ({navigation}) => {
         <Spacer bottom={16} />
 
         <View>
-          <Text style={{fontWeight: 'bold', marginBottom: 8}}>Registration Year range:</Text>
+          <Text style={{fontWeight: 'bold', marginBottom: 8}}>{localizedStrings.Labels.RegistrationRange} :</Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View style={{flex: 1}}>
               <PrimaryInput
@@ -218,7 +225,7 @@ const FilterIndex = ({navigation}) => {
         <Spacer bottom={16} />
 
         <View>
-          <Text style={{fontWeight: 'bold', marginBottom: 8}}>Mileage range:</Text>
+          <Text style={{fontWeight: 'bold', marginBottom: 8}}>{localizedStrings.Labels.MileageRange} :</Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View style={{flex: 1}}>
               <PrimaryInput
@@ -244,7 +251,7 @@ const FilterIndex = ({navigation}) => {
         <Spacer bottom={16} />
 
         <View>
-          <Text style={{fontWeight: 'bold', marginBottom: 8}}>Engine Cap range:</Text>
+          <Text style={{fontWeight: 'bold', marginBottom: 8}}>{localizedStrings.Labels.ECRange} :</Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <View style={{flex: 1}}>
               <PrimaryInput
@@ -269,11 +276,11 @@ const FilterIndex = ({navigation}) => {
         </View>
         <Spacer bottom={16} />
 
-        <Text style={{fontWeight: 'bold', marginVertical: 20}}>Other Filters : </Text>
+        <Text style={{fontWeight: 'bold', marginVertical: 20}}>{localizedStrings.Labels.OtherFilters} : </Text>
 
         <View>
           <CustomPicker
-            placeholder="Select transmission"
+            placeholder={localizedStrings.Placeholders.Transmission}
             items={transmissions}
             value={filters.transmission}
             onChange={(value)=>handleFilterChange('transmission',value)}
@@ -283,7 +290,7 @@ const FilterIndex = ({navigation}) => {
 
         <View>
           <CustomPicker
-            placeholder="Select body type"
+            placeholder={localizedStrings.Placeholders.BodyType}
             items={vehicleTypes}
             value={filters.vehicle_type}
             onChange={(value)=>handleFilterChange('vehicle_type',value)}
@@ -293,7 +300,7 @@ const FilterIndex = ({navigation}) => {
 
         <View>
           <CustomPicker
-            placeholder="Select color"
+            placeholder={localizedStrings.Placeholders.Color}
             items={carColors}
             value={filters.color}
             onChange={(value)=>handleFilterChange('color',value)}
@@ -303,7 +310,7 @@ const FilterIndex = ({navigation}) => {
 
         <View>
           <CustomPicker
-            placeholder="Select fuel type"
+            placeholder={localizedStrings.Placeholders.FuelType}
             items={fuelTypes}
             value={filters.fuel_type}
             onChange={(value)=>handleFilterChange('fuel_type',value)}
@@ -335,13 +342,13 @@ const FilterIndex = ({navigation}) => {
           }}>
           <PrimaryButton
             color={'#20A8F4'}
-            title={'Save filter'}
+            title={localizedStrings.Buttons.Save}
             onPress={onSaveFilter}
           />
           <Spacer bottom={8} />
           <PrimaryButton
             color={'#254A7C'}
-            title={'Apply filter'}
+            title={localizedStrings.Buttons.Apply}
             onPress={onApplyFilter}
           />
         </View>

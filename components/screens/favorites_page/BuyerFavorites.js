@@ -13,8 +13,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { removePinnedFilter, removeToSavedCars } from '../../store/helpers/globalFunctions';
 import { SkeletonListCard } from '../../custom_components/customCardLoaders';
 import { FilterConfigContext } from '../../store/context_api/filterContext';
+import { UserConfigContext } from '../../store/context_api/userContext';
+import LocalizedStrings from 'react-native-localization';
 
-const SavedCars = ({config , setConfig , navigation}) => {
+var localFile = require('../../languages/favoritesLocale.json')
+let localizedStrings = new LocalizedStrings(localFile)
+
+const SavedCars = ({config , setConfig , navigation , localizedStrings}) => {
 
     const [favoriteCars , setFavoriteCars] = useState([])
     const [isLoading , setIsLoading] = useState(false)
@@ -22,10 +27,7 @@ const SavedCars = ({config , setConfig , navigation}) => {
     const [sortBy,setSortBy] = useState({
         sort:"asc-price",
         height:120,
-        options:[
-            {value:"asc-price" , label:"Price - Lowest"},
-            {value:"desc-price" , label:"Price - Highest"},
-        ]
+        options:[]
     })
 
     useEffect(() => {
@@ -35,6 +37,13 @@ const SavedCars = ({config , setConfig , navigation}) => {
     useEffect(() => {
         if(isFocused){
             getSavedCars()
+            setSortBy({
+                ...sortBy,
+                options:[
+                    {value:"asc-price" , label:localizedStrings.Dropdown.PriceLowest},
+                    {value:"desc-price" , label:localizedStrings.Dropdown.PriceHighest},
+                ]
+            })
         }
     }, [isFocused])
 
@@ -102,7 +111,7 @@ const SavedCars = ({config , setConfig , navigation}) => {
                             }
                         />
                     :!isLoading&&favoriteCars?.length===0?
-                        <SimpleFallback message='No saved car.'/>
+                        <SimpleFallback message={localizedStrings.Fallbacks.NoSavedCars}/>
                     :<FlatList
                         data={favoriteCars}
                         key={config.isGridView}
@@ -140,23 +149,24 @@ const SavedCars = ({config , setConfig , navigation}) => {
     )
 };
 
-const PinnedFilters = ({config , setConfig , navigation}) => {
+const PinnedFilters = ({config , setConfig , navigation , localizedStrings}) => {
 
     const [pinnedFilters , setPinnedFilters] = useState([])
     const [isLoading , setIsLoading] = useState([])
     const [filters , setFilters] = useContext(FilterConfigContext)
     const isFocused = useIsFocused()
+    
 
     useEffect(() => {
         if(isFocused){
             getPinnedFilters()
         }
-        console.log('filters',pinnedFilters) 
+        // console.log('filters',pinnedFilters) 
     }, [isFocused])
 
     const goToSearchResult = (data) => {
         setFilters(data)
-        navigation.navigate('SearchResult')
+        // navigation.navigate('SearchResult')
     }
 
     const getPinnedFilters = async () => {
@@ -220,6 +230,9 @@ const BuyerFavorites = (props) => {
     const {navigation} = props
 
     const [index, setIndex] = useState(0);
+    const [userConfig] = useContext(UserConfigContext)
+    const isFocused = useIsFocused()
+    localizedStrings.setLanguage(userConfig.language)
 
     const [config , setConfig] = useState({
         sortBy:'ascending',
@@ -228,18 +241,24 @@ const BuyerFavorites = (props) => {
         pinnedFilters:pinnedFilters
     })
 
-    const [routes] = React.useState([
-        { key: 'first', title: 'Saved Cars' },
-        { key: 'second', title: 'Pinned Filters' },
-    ]);
+    const [routes , setRoutes] = React.useState([]);
+
+    useEffect(()=>{
+        if(isFocused){
+            setRoutes([
+                { key: 'first', title: localizedStrings.Tab.SavedCars },
+                { key: 'second', title: localizedStrings.Tab.PinnedFilters },
+            ])
+        }
+    },[isFocused])
 
 
     const renderScene = ({ route }) => {
         switch (route.key) {
           case 'first':
-            return <SavedCars config={config} setConfig={setConfig} {...props}/>; // passing data as data prop
+            return <SavedCars config={config} setConfig={setConfig} {...props} localizedStrings={localizedStrings}/>; // passing data as data prop
           case 'second':
-            return <PinnedFilters config={config} setConfig={setConfig} {...props}/>; 
+            return <PinnedFilters config={config} setConfig={setConfig} {...props} localizedStrings={localizedStrings}/>; 
           default:
             return null;
         }
@@ -247,7 +266,7 @@ const BuyerFavorites = (props) => {
 
     return (
         <View style={{flex:1}}>
-            <CustomHeader title="Favorites"/>
+            <CustomHeader title={localizedStrings.StackNavHeader.Favorites}/>
             <TabView
                 navigationState={{ index, routes }}
                 renderScene={renderScene}

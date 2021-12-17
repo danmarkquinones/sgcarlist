@@ -11,9 +11,13 @@ import HotDealsLists from './HotDealsLists'
 import NewCarLists from './NewCarLists'
 import TopDealersLists from './TopDealersLists'
 import TopLocations from './TopLocations'
-import { SkeletonSquareCard } from '../../../custom_components/customCardLoaders';
+import { useIsFocused } from '@react-navigation/core';
 import { UserConfigContext } from '../../../store/context_api/userContext';
 import { fetchTotalVerifiedCars } from '../../../store/api_calls/cars_api';
+import LocalizedStrings from 'react-native-localization';
+
+var localFile = require('../../../languages/landingLocale.json')
+let localizedStrings = new LocalizedStrings(localFile)
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -26,6 +30,8 @@ const BuyerLanding = (props) => {
 
     const [refreshing, setRefreshing] = useState(false);
     const [totalVerifiedCars , setTotalVerifiedCars] = useState(0)
+    const isFocused = useIsFocused()
+    localizedStrings.setLanguage(userConfig.language)
 
     const getTotal = () => {
         const total = fetchTotalVerifiedCars()
@@ -71,9 +77,9 @@ const BuyerLanding = (props) => {
                     <CustomAvatar initial={userConfig.userDetails?.user_email} color={theme.secondaryBlue} size={50}/>
                     <View style={landingStyles.headerNameView}>
                         <Text style={landingStyles.greetName}>
-                            {userConfig.isLoggedIn?`Hello , ${userConfig.userDetails.user_first_name} ${userConfig.userDetails.user_last_name}`:'Hi There!'}
+                            {userConfig.isLoggedIn?`${localizedStrings.BuyerLanding.Greeting.Header} , ${userConfig.userDetails.user_first_name} ${userConfig.userDetails.user_last_name}`:'Hi There!'}
                         </Text>
-                        <Text style={landingStyles.listedCar}>We have {totalVerifiedCars} cars listed</Text>
+                        <Text style={landingStyles.listedCar}>{localizedStrings.BuyerLanding.Greeting.WeHave} {totalVerifiedCars} {localizedStrings.BuyerLanding.Greeting.CarsListed}</Text>
                     </View>
                 </View>
             :null}
@@ -82,7 +88,7 @@ const BuyerLanding = (props) => {
                 <TouchableOpacity onPress={()=>navigation.navigate('FilterIndex')}>
                     <PrimaryInput 
                         editable={false} 
-                        placeholder="Find you dream car now" 
+                        placeholder={localizedStrings.BuyerLanding.Search.InputPlaceholder}
                         Icon={()=><FontAwesome5 name='search' size={20}/>}
                     />
                 </TouchableOpacity>
@@ -95,7 +101,7 @@ const BuyerLanding = (props) => {
             <View style={landingStyles.listHeaderContainer}>
                 <View style={landingStyles.listHeaders}>
                     <FontAwesome5 name='star' size={20} solid color={theme.yellow}/>
-                    <Text style={landingStyles.listHeaderText}>Your Favorites</Text>
+                    <Text style={landingStyles.listHeaderText}>{localizedStrings.BuyerLanding.Categories.Favorite}</Text>
                 </View>
                 {/* <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text> */}
             </View>
@@ -108,7 +114,7 @@ const BuyerLanding = (props) => {
             <View style={landingStyles.listHeaderContainer}>
                 <View style={landingStyles.listHeaders}>
                     <FontAwesome5 name='check-circle' size={20} solid color={theme.green}/>
-                    <Text style={landingStyles.listHeaderText}>Carlist Qualified</Text>
+                    <Text style={landingStyles.listHeaderText}>{localizedStrings.BuyerLanding.Categories.Qualified}</Text>
                 </View>
                 {/* <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text> */}
             </View>
@@ -121,7 +127,7 @@ const BuyerLanding = (props) => {
             <View style={landingStyles.listHeaderContainer}>
                 <View style={landingStyles.listHeaders}>
                     <FontAwesome5 name='hotjar' size={20} solid color={theme.red}/>
-                    <Text style={landingStyles.listHeaderText}>Popular Deals</Text>
+                    <Text style={landingStyles.listHeaderText}>{localizedStrings.BuyerLanding.Categories.Popular}</Text>
                 </View>
                 {/* <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text> */}
             </View>
@@ -132,8 +138,8 @@ const BuyerLanding = (props) => {
 
             <View style={landingStyles.listHeaderContainer}>
                 <View style={landingStyles.listHeaders}>
-                    <Text style={landingStyles.newBadge}>NEW</Text>
-                    <Text style={landingStyles.listHeaderText}>Listings</Text>
+                    <Text style={landingStyles.newBadge}>{localizedStrings.BuyerLanding.Categories.New}</Text>
+                    <Text style={landingStyles.listHeaderText}>{localizedStrings.BuyerLanding.Categories.Listings}</Text>
                 </View>
                 {/* <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text> */}
             </View>
@@ -148,7 +154,7 @@ const BuyerLanding = (props) => {
 
             <View style={landingStyles.listHeaderContainer}>
                 <View style={landingStyles.listHeaders}>
-                    <Text style={landingStyles.listDealerText}>Top Sellers</Text>
+                    <Text style={landingStyles.listDealerText}>{localizedStrings.BuyerLanding.Categories.TopSellers}</Text>
                 </View>
                 {/* <Text style={landingStyles.listDesc}>The cars are thoroughly inspected and protected with an extended warranty endorsed by Warranty Smart</Text> */}
             </View>
@@ -160,7 +166,7 @@ const BuyerLanding = (props) => {
             <View style={landingStyles.locationListContainer}>
 
                 <View style={landingStyles.listHeaders}>
-                    <Text refreshing={refreshing} style={landingStyles.listDealerText}>Top Search Locations</Text>
+                    <Text refreshing={refreshing} style={landingStyles.listDealerText}>{localizedStrings.BuyerLanding.Categories.TopLocations}</Text>
                 </View>
 
                 <TopLocations refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/>
