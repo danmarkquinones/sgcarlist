@@ -61,7 +61,7 @@ const MyAdsIndex = () => {
   };
 
   const onDeleteProduct = async id => {
-    const res = await api.UPDATE('/products/delete', {id});
+    const res = await api.DELETE('/products/delete', {id});
     console.log(res);
   };
 

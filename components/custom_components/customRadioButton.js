@@ -41,7 +41,7 @@ const CustomRadioButton = ({
                 }}
               />
             </View>
-            <View>
+            <View style={{paddingRight: 25}}>
               <Text>{item.label}</Text>
             </View>
           </View>

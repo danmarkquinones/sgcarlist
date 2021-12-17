@@ -59,7 +59,25 @@ const UPDATE = async (route, params) => {
     });
 };
 
-export const api = {POST, GET, UPDATE};
+const DELETE = async (route, params) => {
+  const token = Kjur.encode(params);
+
+  const bearerToken = await AsyncStorage.getItem('bearerToken');
+
+  axiosConfig.headers['Authorization'] = `Bearer ${bearerToken}`;
+
+  return axios
+    .delete(`${API_BASE_URL}${route}`, {token: token}, axiosConfig)
+    .then(res => {
+      console.log('DELET', res);
+      return res;
+    })
+    .catch(error => {
+      return {error: error.message, status: 500};
+    });
+};
+
+export const api = {POST, GET, UPDATE, DELETE};
 
 export const logout = () => {
   AsyncStorage.setItem('isLoggedIn', '0');

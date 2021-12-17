@@ -1,5 +1,12 @@
-import React, {useState, useContext} from 'react';
-import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
+import React, {useState, useContext, useEffect} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import {scaleFont} from '../../../utils/scale';
 import {theme} from '../../contants/colors';
 import {PrimaryButton} from '../../custom_components/customButtons';
@@ -9,18 +16,60 @@ import {useNavigation} from '@react-navigation/core';
 import CustomRadioButton from '../../custom_components/customRadioButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {CarConfigContext} from '../../store/context_api/carContext';
+import {fetchBrands} from '../../store/api_calls/cars_api';
+import {
+  CustomPicker,
+  CustomPickerAsync,
+} from '../../custom_components/customPicker';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
+const carConditions = ['Brand new', 'Used', 'Repossesed'];
+const fuelTypes = ['Diesel', 'Petrol'];
+const drivenWheel = ['FWD(Front Wheel Drive)', 'RWD(Rear Wheel Drive)'];
+const transmissions = ['Manual', 'Automatic'];
+
+const vehicleTypes = [
+  'Hybrid',
+  'Electric',
+  'Hatchback',
+  'Luxury Sedan',
+  'MPV',
+  'Mid-sized Sedan',
+  'Sports Car',
+  'Stationwagon',
+  'SUV',
+  'Commercial Vehicle',
+  'Passenger Cars',
+  'Any',
+];
 
 const UploadFifthStep = ({onScreenChange}) => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
   const navigation = useNavigation();
   const [selectedValueEmail, setSelectedValueEmail] = useState('0');
+  const [carBrands, setCarBrands] = useState([]);
 
   const onSetCarDetails = keyValue => {
     setCarDetails({...carDetails, ...keyValue});
   };
+
+  useEffect(() => {
+    const getBrands = fetchBrands();
+
+    getBrands
+      .then(res => {
+        if (res.data) {
+          console.log('Brands', res.data.data);
+          const displayBrands = res.data.data;
+          setCarBrands(displayBrands);
+        }
+      })
+      .catch(e => {
+        console.log('call failed', e);
+      });
+  }, []);
 
   return (
     <ScrollView style={{flex: 1}}>
@@ -32,8 +81,20 @@ const UploadFifthStep = ({onScreenChange}) => {
           <Text style={styles.subtitle}>
             note: (*) fields are compulsory to be filled up
           </Text>
-
           <Spacer bottom={24} />
+          <View>
+            <Text style={styles.label}>
+              Car Brand <Text style={{color: theme.red}}>*</Text>:
+            </Text>
+            <CustomPickerAsync
+              placeholder="Select car brand"
+              items={carBrands}
+              value={carDetails.car_brand}
+              onChange={val => onSetCarDetails({car_brand: val})}
+            />
+          </View>
+
+          <Spacer bottom={8} />
 
           <View>
             <Text style={styles.label}>
@@ -46,44 +107,67 @@ const UploadFifthStep = ({onScreenChange}) => {
               placeholder="Select Car Model"
             />
           </View>
+          <Spacer bottom={16} />
+
+          <TouchableOpacity
+            onPress={() => onSetCarDetails({isOffPeak: !carDetails.isOffPeak})}>
+            <View
+              style={{
+                marginBottom: 8,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <Icon
+                style={{marginRight: 8}}
+                name={
+                  carDetails.isOffPeak
+                    ? 'checkbox-marked'
+                    : 'checkbox-blank-outline'
+                }
+                size={20}
+              />
+              <Text>Tick if your car is an Off-Peak Car</Text>
+            </View>
+          </TouchableOpacity>
           <Spacer bottom={8} />
 
-          <View
-            style={{
-              marginBottom: 8,
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <Icon
-              style={{marginRight: 8}}
-              name="checkbox-blank-outline"
-              size={20}
+          {carDetails.isOffPeak ? (
+            <View
+              style={{flexDirection: 'row', paddingLeft: 16, paddingRight: 32}}>
+              <CustomRadioButton
+                data={[
+                  {
+                    value: '0',
+                    label: 'Old OPC scheme (Use half-day on Saturdays)',
+                  },
+                  {
+                    value: '1',
+                    label: 'Revised OPC scheme (Use full-day on Saturdays)',
+                  },
+                  {
+                    value: '2',
+                    label: 'Normal car converted to Revised OPC scheme',
+                  },
+                ]}
+                selectedValue={selectedValueEmail}
+                onSelectRadio={value => setSelectedValueEmail(value)}
+                isHorizontal
+              />
+            </View>
+          ) : null}
+          <View>
+            <Text style={styles.label}>
+              Car Condition <Text style={{color: theme.red}}>*</Text>:
+            </Text>
+            <Spacer bottom={8} />
+            <CustomPicker
+              placeholder="Select Car Condition"
+              items={carConditions}
+              value={carDetails.car_condition}
+              onChange={val => onSetCarDetails({car_condition: val})}
             />
-            <Text>Tick if your car is an Off-Peak Car</Text>
           </View>
-
-          <View
-            style={{flexDirection: 'row', paddingLeft: 16, paddingRight: 32}}>
-            <CustomRadioButton
-              data={[
-                {
-                  value: '0',
-                  label: 'Old OPC scheme (Use half-day on Saturdays)',
-                },
-                {
-                  value: '1',
-                  label: 'Old OPC scheme (Use half-day on Saturdays)',
-                },
-                {
-                  value: '2',
-                  label: 'Old OPC scheme (Use half-day on Saturdays)',
-                },
-              ]}
-              selectedValue={selectedValueEmail}
-              onSelectRadio={value => setSelectedValueEmail(value)}
-              isHorizontal
-            />
-          </View>
+          <Spacer bottom={8} />
 
           <View>
             <Text style={styles.label}>
@@ -103,10 +187,11 @@ const UploadFifthStep = ({onScreenChange}) => {
               Transmission <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput
+            <CustomPicker
+              placeholder="Select Car Transmission"
+              items={transmissions}
               value={carDetails.transmission}
               onChange={val => onSetCarDetails({transmission: val})}
-              placeholder="Transmission"
             />
           </View>
           <Spacer bottom={8} />
@@ -116,10 +201,11 @@ const UploadFifthStep = ({onScreenChange}) => {
               Fuel Type <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput
+            <CustomPicker
+              placeholder="Select Fuel Type"
+              items={fuelTypes}
               value={carDetails.fuel_type}
               onChange={val => onSetCarDetails({fuel_type: val})}
-              placeholder="Fuel Type"
             />
           </View>
           <Spacer bottom={8} />

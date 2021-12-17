@@ -9,9 +9,25 @@ import {useNavigation} from '@react-navigation/core';
 import CustomRadioButton from '../../custom_components/customRadioButton';
 import DatePicker from 'react-native-datepicker';
 import {CarConfigContext} from '../../store/context_api/carContext';
+import {CustomPicker} from '../../custom_components/customPicker';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
+const vehicleTypes = [
+  'Hybrid',
+  'Electric',
+  'Hatchback',
+  'Luxury Sedan',
+  'MPV',
+  'Mid-sized Sedan',
+  'Sports Car',
+  'Stationwagon',
+  'SUV',
+  'Commercial Vehicle',
+  'Passenger Cars',
+  'Any',
+];
 
 const UploadFourthStep = ({onScreenChange}) => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
@@ -166,7 +182,7 @@ const UploadFourthStep = ({onScreenChange}) => {
               }}
               onDateChange={date => {
                 setDate(date);
-                setCarDetails({coe_expiry_date: date});
+                onSetCarDetails({coe_expiry_date: date});
               }}
             />
           </View>
@@ -190,10 +206,11 @@ const UploadFourthStep = ({onScreenChange}) => {
               Type of Vehicle <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput
+            <CustomPicker
+              placeholder="Select Vehicle Type"
+              items={vehicleTypes}
               value={carDetails.type_of_vehicle}
               onChange={val => onSetCarDetails({type_of_vehicle: val})}
-              placeholder="Type of Vehicle"
             />
           </View>
           <Spacer bottom={24} />

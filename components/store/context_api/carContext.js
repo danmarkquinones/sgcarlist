@@ -9,7 +9,8 @@ export const CarConfigContextProvider = props => {
     display_contact: '',
     email: '',
     inquiry_via_email: '',
-    viewing_area: '',
+    location: '',
+    street: '',
     price: '',
     date: '',
     title: '',
@@ -25,7 +26,10 @@ export const CarConfigContextProvider = props => {
     coe_expiry_date: '',
     number_of_owners: '',
     type_of_vehicle: '',
+    car_brand: '',
     car_model: '',
+    car_condition: '',
+    product_brand_id: '1',
     asking_price: '',
     transmission: '',
     fuel_type: '',
@@ -33,6 +37,7 @@ export const CarConfigContextProvider = props => {
     features: '',
     accessories: '',
     description: '',
+    offPeak: '',
   };
   const [carDetails, setCarDetails] = useState(initialValue);
 

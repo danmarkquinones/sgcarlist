@@ -1,19 +1,22 @@
 import {useNavigation} from '@react-navigation/core';
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {scaleFont} from '../../../utils/scale';
 import {theme} from '../../contants/colors';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import CustomHeader from '../../custom_components/customHeader';
 import PrimaryInput from '../../custom_components/customInput';
+import {CustomPickerLocation} from '../../custom_components/customPicker';
 import CustomRadioButton from '../../custom_components/customRadioButton';
 import Spacer from '../../custom_components/spacer';
+import {fetchLocations} from '../../store/api_calls/cars_api';
 import {CarConfigContext} from '../../store/context_api/carContext';
 
 const {width, height} = Dimensions.get('screen');
 
 const UploadVehicleNumber = ({onScreenChange}) => {
   const [carDetails, setCarDetails, onReset] = useContext(CarConfigContext);
+  const [locations, setLocations] = useState([]);
 
   const onSetCarDetails = keyValue => {
     setCarDetails({...carDetails, ...keyValue});
@@ -22,17 +25,43 @@ const UploadVehicleNumber = ({onScreenChange}) => {
   const navigation = useNavigation();
   const [selectedValueContact, setSelectedValueContact] = useState('yes');
   const [selectedValueEmail, setSelectedValueEmail] = useState('yes');
+
+  useEffect(() => {
+    const getLocations = fetchLocations();
+
+    getLocations
+      .then(res => {
+        if (res.data) {
+          console.log(res.data);
+          const displayLocations = res.data.data;
+          setLocations(displayLocations);
+        }
+      })
+      .catch(e => {
+        console.log('call failed location', e);
+      });
+  }, []);
+
+  const onSetLocation = id => {
+    const selectedLocation = locations.filter(
+      location => location._id === id,
+    )[0];
+    onSetCarDetails({
+      location: selectedLocation,
+    });
+  };
+
   return (
     <ScrollView style={{flex: 1, backgroundColor: theme.lightBlue}}>
       <View style={styles.container}>
         <View>
           <Spacer bottom={8} />
-          <Text style={styles.title}>Personal Details</Text>
+          <Text style={styles.title}>Preffered Viewing Area</Text>
           <Text style={styles.subtitle}>
             note: (*) fields are compulsory to be filled up
           </Text>
           <Spacer bottom={40} />
-          <View>
+          {/* <View>
             <Text style={styles.label}>
               Name <Text style={{color: theme.red}}>*</Text>:
             </Text>
@@ -57,19 +86,6 @@ const UploadVehicleNumber = ({onScreenChange}) => {
           </View>
           <Spacer bottom={24} />
 
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.label}>Display Contact Number?</Text>
-            <CustomRadioButton
-              data={[
-                {value: 'yes', label: 'Yes'},
-                {value: 'no', label: 'No'},
-              ]}
-              selectedValue={selectedValueContact}
-              onSelectRadio={value => setSelectedValueContact(value)}
-            />
-          </View>
-          <Spacer bottom={24} />
-
           <View>
             <Text style={styles.label}>
               Email Address <Text style={{color: theme.red}}>*</Text>:
@@ -81,34 +97,36 @@ const UploadVehicleNumber = ({onScreenChange}) => {
               placeholder="Email Address"
             />
           </View>
-          <Spacer bottom={24} />
-
-          <View style={{flexDirection: 'row'}}>
-            <Text style={styles.label}>Enable inquiry via email?</Text>
-            <CustomRadioButton
-              data={[
-                {value: 'yes', label: 'Yes'},
-                {value: 'no', label: 'No'},
-              ]}
-              selectedValue={selectedValueEmail}
-              onSelectRadio={value => setSelectedValueEmail(value)}
-            />
-          </View>
-          <Spacer bottom={24} />
+          <Spacer bottom={24} /> */}
 
           <View>
             <Text style={styles.label}>
-              Preferred Viewing Area <Text style={{color: theme.red}}>*</Text>:
+              Location <Text style={{color: theme.red}}>*</Text>:
+            </Text>
+            <Spacer bottom={8} />
+            <CustomPickerLocation
+              placeholder="Select Location"
+              items={locations}
+              value={carDetails.location._id}
+              onChange={val => onSetLocation(val)}
+            />
+          </View>
+
+          <Spacer bottom={24} />
+          <View>
+            <Text style={styles.label}>
+              Street <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
             <PrimaryInput
-              value={carDetails.viewing_area}
-              onChange={val => onSetCarDetails({viewing_area: val})}
-              placeholder="Preferred Viewing Area"
+              value={carDetails.street}
+              onChange={val => onSetCarDetails({street: val})}
+              placeholder="Street"
             />
           </View>
         </View>
       </View>
+      <Spacer bottom={330} />
       <View style={{flex: 1, justifyContent: 'flex-end', padding: 24}}>
         <View
           style={{

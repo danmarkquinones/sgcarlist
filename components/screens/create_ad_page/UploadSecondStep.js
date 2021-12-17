@@ -40,7 +40,8 @@ const UploadSecondStep = ({onScreenChange}) => {
             <View
               style={{
                 width: '100%',
-                backgroundColor: '#fff',
+                backgroundColor:
+                  carDetails.price === 90 ? theme.primaryBlue : theme.white,
                 borderRadius: 5,
                 justifyContent: 'space-between',
                 alignItems: 'flex-start',
@@ -55,7 +56,11 @@ const UploadSecondStep = ({onScreenChange}) => {
                   style={{fontSize: 32, color: '#2C9C22', fontWeight: 'bold'}}>
                   S$90{' '}
                 </Text>
-                <Text style={{fontSize: 20, color: '#4F4A4A'}}>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: carDetails.price === 90 ? theme.white : '#4F4A4A',
+                  }}>
                   till vehicle is sold
                 </Text>
               </View>
@@ -67,7 +72,10 @@ const UploadSecondStep = ({onScreenChange}) => {
                   marginVertical: 8,
                 }}
               />
-              <Text>
+              <Text
+                style={{
+                  color: carDetails.price === 90 ? theme.white : '#4F4A4A',
+                }}>
                 This package will allow you to post a normal "Direct Owner"
                 advertisement.
               </Text>
@@ -99,7 +107,8 @@ const UploadSecondStep = ({onScreenChange}) => {
               </View>
               <View
                 style={{
-                  backgroundColor: theme.primaryBlue,
+                  backgroundColor:
+                    carDetails.price === 108 ? theme.primaryBlue : theme.white,
                   width: '100%',
                   padding: 16,
                 }}>
@@ -118,7 +127,12 @@ const UploadSecondStep = ({onScreenChange}) => {
                   </Text>
                   <View>
                     <Text
-                      style={{fontSize: 14, color: '#fff', paddingRight: 16}}>
+                      style={{
+                        fontSize: 14,
+                        color:
+                          carDetails.price === 108 ? theme.white : '#4F4A4A',
+                        paddingRight: 16,
+                      }}>
                       till vehicle is sold (with 1 day StarAd {'\n'}exposure)
                     </Text>
                   </View>
@@ -131,7 +145,10 @@ const UploadSecondStep = ({onScreenChange}) => {
                     marginVertical: 8,
                   }}
                 />
-                <Text style={{color: theme.white}}>
+                <Text
+                  style={{
+                    color: carDetails.price === 108 ? theme.white : '#4F4A4A',
+                  }}>
                   Sell it fast with StarAd package as you will get over 100,000
                   views a day.{'\n'}
                 </Text>
