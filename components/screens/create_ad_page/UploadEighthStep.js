@@ -6,6 +6,8 @@ import logo from '../../../assets/images/qr.png';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import {CarConfigContext} from '../../store/context_api/carContext';
 import {api} from '../../store/api_calls/useApi';
+import {RNS3} from 'react-native-aws3';
+import {aws} from '../../store/helpers/keys';
 
 const UploadEighthStep = () => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
@@ -26,7 +28,6 @@ const UploadEighthStep = () => {
       number_of_owners: carDetails.number_of_owners,
       vehicle_type: carDetails.type_of_vehicle,
       product_edition: carDetails.car_model,
-      // product_brand_id: carDetails.product_brand_id,
       product_price: carDetails.asking_price,
       product_transmission: carDetails.transmission,
       fuel_type: carDetails.fuel_type,
@@ -38,30 +39,43 @@ const UploadEighthStep = () => {
       product_image_url: null,
       product_condition: carDetails.car_condition,
       product_brand_id: carDetails.car_brand,
-      is_off_peak_car : false,
-      product_pickup_location : {
-        street : carDetails.street,
-        country : carDetails.location.country,
-        region_name : carDetails.location.region,
-        city : carDetails.location.city,
-    },
-    selected_ads_id: carDetails.price === 108 ? "61bca24824a406dfb983d722" : "61bca22e24a406dfb983d6f9"
-    //     product_vehicle_number : "ABC01234",
-    // product_vehicle_unit_number : "ABC01234",
-    // product_reference_number : "ABC01234",
-    // product_vehicle_registration_card_number : "ABC01234",
-    // product_edition : 2017,
-    // product_is_rental : false,
-    // product_description : "The Harrier Shares Many Traits With Singapore. It Is More Powerful Than You Think It Is. Its Captivating Exterior And Unsurpassed Comfort With Class Leading Cabin Space, Fills Your Journey With Sheer Pleasure And Joy. Buy With Confidence With Toyota Certified Preowned Selection, 145 Points Certification, Approved Service History, 12 Mth/20,000km Mileage Warranty, Complimentary Servicing Inclusive.",
-
+      is_off_peak_car: false,
+      product_pickup_location: {
+        street: carDetails.street,
+        country: carDetails.location.country,
+        region_name: carDetails.location.region,
+        city: carDetails.location.city,
+      },
+      selected_ads_id:
+        carDetails.price === 108
+          ? '61bca24824a406dfb983d722'
+          : '61bca22e24a406dfb983d6f9',
     };
-    // console.log(carDetails);
-    // console.log(JSON.stringify(payload));
 
-    // let res = await api.POST(payload, '/products');
-    console.log(payload);
+    // uploadImages();
+
+    let res = await api.POST(payload, '/products');
+    console.log(res);
   };
 
+  const uploadImages = () => {
+    const images = carDetails.images;
+
+    const config = {
+      keyPrefix: 's3/',
+      bucket: 'photos',
+      region: 'us-east-1',
+      accessKey: aws.accessKeyId,
+      secretKey: aws.secretAccessKey,
+      successActionStatus: 201,
+    };
+
+    images.forEach(image => {
+      RNS3.put(image, config).then(response => {
+        console.log(response);
+      });
+    });
+  };
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: theme.white}}>

@@ -38,6 +38,7 @@ export const CarConfigContextProvider = props => {
     accessories: '',
     description: '',
     offPeak: '',
+    images: [],
   };
   const [carDetails, setCarDetails] = useState(initialValue);
 
