@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {View, Text, ScrollView, StyleSheet , TouchableOpacity} from 'react-native';
 import {scaleFont} from '../../../../utils/scale';
 import CustomHeader from '../../../custom_components/customHeader';
 import Spacer from '../../../custom_components/spacer';
@@ -24,7 +24,7 @@ const PostAds = () => {
           fontWeight: 'bold',
           textAlign: 'center',
         }}
-        title="SGCARLIST"
+        title="CARLIST.SG"
         isTitleCenter
       />
       <ScrollView style={{flex: 1}}>
@@ -37,10 +37,10 @@ const PostAds = () => {
         <Spacer bottom={24} />
         <View style={{paddingHorizontal: 24}}>
           <Card containerStyle={{borderRadius: 8}}>
-            <Text style={styles.cardTitle}>Sell it on SGCarList</Text>
+            <Text style={styles.cardTitle}>Sell it on Carlist.SG</Text>
             <Spacer bottom={4} />
             <Text style={styles.cardSubtitle}>
-              List your car on SGCarlist and Ut occaecat cupidatat non proident.
+              List your car on Carlist.my and get direct enquiries from interested buyers.
             </Text>
 
             <Spacer bottom={32} />
@@ -50,7 +50,7 @@ const PostAds = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={styles.itemTitle}>Selling price</Text>
+              <Text style={styles.itemTitle}>Selling Price</Text>
               <View style={{flexDirection: 'row'}}>
                 {[...Array(5)].map((_, i) => (
                   <FontAwesome5
@@ -70,9 +70,9 @@ const PostAds = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={styles.itemTitle}>Selling time</Text>
+              <Text style={styles.itemTitle}>Selling Time</Text>
               <View style={{flexDirection: 'row'}}>
-                {[...Array(5)].map((_, i) => (
+                {[...Array(3)].map((_, i) => (
                   <FontAwesome5
                     key={i}
                     name="star"
@@ -81,6 +81,20 @@ const PostAds = () => {
                     color={theme.yellow}
                   />
                 ))}
+                {/* <FontAwesome5
+                    key={4}
+                    name="star"
+                    size={15}
+                    solid
+                    color={theme.gray}
+                  /> */}
+                <FontAwesome5
+                    key={5}
+                    name="star"
+                    size={15}
+                    solid
+                    color={theme.gray}
+                  />
               </View>
             </View>
             <Spacer bottom={16} />
@@ -90,9 +104,9 @@ const PostAds = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={styles.itemTitle}>Selling time</Text>
+              <Text style={styles.itemTitle}>Convenience</Text>
               <View style={{flexDirection: 'row'}}>
-                {[...Array(5)].map((_, i) => (
+                {[...Array(4)].map((_, i) => (
                   <FontAwesome5
                     key={i}
                     name="star"
@@ -101,6 +115,13 @@ const PostAds = () => {
                     color={theme.yellow}
                   />
                 ))}
+                <FontAwesome5
+                    key={5}
+                    name="star"
+                    size={15}
+                    solid
+                    color={theme.gray}
+                  />
               </View>
             </View>
             <Spacer bottom={24} />
@@ -115,7 +136,7 @@ const PostAds = () => {
           </Card>
         </View>
 
-        <View style={{paddingHorizontal: 24}}>
+        {/* <View style={{paddingHorizontal: 24}}>
           <Card containerStyle={{borderRadius: 8}}>
             <Text style={styles.cardTitle}>Sell it on our Partner</Text>
             <Spacer bottom={4} />
@@ -191,13 +212,21 @@ const PostAds = () => {
             />
           </Card>
         </View>
+        <Spacer bottom={24} /> */}
+
         <Spacer bottom={24} />
 
-        <Text style={styles.footerText}>
-          {' '}
-          To post more than one ad,{' '}
-          <Text style={{color: '#20A8F4'}}>contact us</Text>
-        </Text>
+        <View style={{display:'flex' , flexDirection:'row' , alignItems:'center' , justifyContent:'center'}}>
+          <Text style={styles.footerText}>
+            {' '}
+            To post more than one ad,{' '}
+            
+          </Text>
+          <TouchableOpacity onPress={()=>navigation.navigate('Help')}>
+            <Text style={{color: '#20A8F4'}}>contact us</Text>
+          </TouchableOpacity>
+        </View>
+          
         <Spacer bottom={32} />
       </ScrollView>
     </View>
