@@ -11,20 +11,15 @@ let axiosConfig = {
   },
 };
 
-const POST = (params, route) => {
+const POST = async (params, route) => {
   const token = Kjur.encode(params);
+
+  const bearerToken = await AsyncStorage.getItem('bearerToken');
+
+  axiosConfig.headers['Authorization'] = `Bearer ${bearerToken}`;
+
   return axios
-    .post(
-      `${API_BASE_URL}${route}`,
-      {token: token},
-      {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Strict-Transport-Security': 'max-age=90',
-        },
-      },
-    )
+    .post(`${API_BASE_URL}${route}`, {token: token}, axiosConfig)
     .then(res => {
       return res;
     })
@@ -46,7 +41,7 @@ const GET = (route, params) => {
     });
 };
 
-const DELETE = async (route, params) => {
+const UPDATE = async (route, params) => {
   const token = Kjur.encode(params);
 
   const bearerToken = await AsyncStorage.getItem('bearerToken');
@@ -56,6 +51,7 @@ const DELETE = async (route, params) => {
   return axios
     .put(`${API_BASE_URL}${route}`, {token: token}, axiosConfig)
     .then(res => {
+      console.log('DELET', res);
       return res;
     })
     .catch(error => {
@@ -63,7 +59,7 @@ const DELETE = async (route, params) => {
     });
 };
 
-export const api = {POST, GET, DELETE};
+export const api = {POST, GET, UPDATE};
 
 export const logout = () => {
   AsyncStorage.setItem('isLoggedIn', '0');

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {scaleFont} from '../../../utils/scale';
 import {theme} from '../../contants/colors';
@@ -8,15 +8,21 @@ import Spacer from '../../custom_components/spacer';
 import {useNavigation} from '@react-navigation/core';
 import CustomRadioButton from '../../custom_components/customRadioButton';
 import DatePicker from 'react-native-datepicker';
+import {CarConfigContext} from '../../store/context_api/carContext';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const UploadFourthStep = ({onScreenChange}) => {
+  const [carDetails, setCarDetails] = useContext(CarConfigContext);
   const navigation = useNavigation();
   const [date, setDate] = useState('');
   const [registrationDate, setRegistrationDate] = useState('');
   const [selectedValueEmail, setSelectedValueEmail] = useState('0');
+
+  const onSetCarDetails = keyValue => {
+    setCarDetails({...carDetails, ...keyValue});
+  };
 
   return (
     <ScrollView style={{flex: 1}}>
@@ -43,7 +49,7 @@ const UploadFourthStep = ({onScreenChange}) => {
                 borderRadius: 5,
                 paddingVertical: 8,
               }}
-              date={registrationDate}
+              date={carDetails.registration_date}
               mode="date"
               placeholder="MM/DD/YYYY"
               format="MM/DD/YYYY"
@@ -66,6 +72,7 @@ const UploadFourthStep = ({onScreenChange}) => {
               }}
               onDateChange={date => {
                 setRegistrationDate(date);
+                onSetCarDetails({registration_date: date});
               }}
             />
           </View>
@@ -76,7 +83,11 @@ const UploadFourthStep = ({onScreenChange}) => {
               Engine Capacity <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="Engine Capacity" />
+            <PrimaryInput
+              value={carDetails.engine_capacity}
+              onChange={val => onSetCarDetails({engine_capacity: val})}
+              placeholder="Engine Capacity"
+            />
           </View>
           <Spacer bottom={8} />
 
@@ -87,7 +98,8 @@ const UploadFourthStep = ({onScreenChange}) => {
               LeftIcon={() => (
                 <Text style={{width: 20, fontWeight: 'bold'}}>S$</Text>
               )}
-              onChange={() => {}}
+              value={carDetails.omv}
+              onChange={val => onSetCarDetails({omv: val})}
               placeholder=""
             />
           </View>
@@ -100,7 +112,8 @@ const UploadFourthStep = ({onScreenChange}) => {
               LeftIcon={() => (
                 <Text style={{width: 20, fontWeight: 'bold'}}>S$</Text>
               )}
-              onChange={() => {}}
+              value={carDetails.arf}
+              onChange={val => onSetCarDetails({arf: val})}
               placeholder=""
             />
           </View>
@@ -113,7 +126,8 @@ const UploadFourthStep = ({onScreenChange}) => {
               LeftIcon={() => (
                 <Text style={{width: 20, fontWeight: 'bold'}}>S$</Text>
               )}
-              onChange={() => {}}
+              value={carDetails.coe}
+              onChange={val => onSetCarDetails({coe: val})}
               placeholder=""
             />
           </View>
@@ -129,7 +143,7 @@ const UploadFourthStep = ({onScreenChange}) => {
                 borderRadius: 5,
                 paddingVertical: 8,
               }}
-              date={date}
+              date={carDetails.coe_expiry_date}
               mode="date"
               placeholder="MM/DD/YYYY"
               format="MM/DD/YYYY"
@@ -152,6 +166,7 @@ const UploadFourthStep = ({onScreenChange}) => {
               }}
               onDateChange={date => {
                 setDate(date);
+                setCarDetails({coe_expiry_date: date});
               }}
             />
           </View>
@@ -162,7 +177,11 @@ const UploadFourthStep = ({onScreenChange}) => {
               Number of Owners <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="Number of Owners" />
+            <PrimaryInput
+              value={carDetails.number_of_owners}
+              onChange={val => onSetCarDetails({number_of_owners: val})}
+              placeholder="Number of Owners"
+            />
           </View>
           <Spacer bottom={8} />
 
@@ -171,7 +190,11 @@ const UploadFourthStep = ({onScreenChange}) => {
               Type of Vehicle <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="Type of Vehicle" />
+            <PrimaryInput
+              value={carDetails.type_of_vehicle}
+              onChange={val => onSetCarDetails({type_of_vehicle: val})}
+              placeholder="Type of Vehicle"
+            />
           </View>
           <Spacer bottom={24} />
         </View>

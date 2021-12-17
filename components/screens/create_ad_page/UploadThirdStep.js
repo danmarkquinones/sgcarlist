@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {scaleFont} from '../../../utils/scale';
 import {theme} from '../../contants/colors';
@@ -7,13 +7,19 @@ import PrimaryInput from '../../custom_components/customInput';
 import Spacer from '../../custom_components/spacer';
 import {useNavigation} from '@react-navigation/core';
 import CustomRadioButton from '../../custom_components/customRadioButton';
+import {CarConfigContext} from '../../store/context_api/carContext';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const UploadThirdStep = ({onScreenChange}) => {
+  const [carDetails, setCarDetails] = useContext(CarConfigContext);
   const navigation = useNavigation();
   const [selectedValueEmail, setSelectedValueEmail] = useState('0');
+
+  const onSetCarDetails = keyValue => {
+    setCarDetails({...carDetails, ...keyValue});
+  };
 
   return (
     <ScrollView contentContainerStyle={{flex: 1}}>
@@ -33,7 +39,11 @@ const UploadThirdStep = ({onScreenChange}) => {
               Car Plate Number <Text style={{color: theme.red}}>*</Text>
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="AAA-DA059" />
+            <PrimaryInput
+              value={carDetails.plate_number}
+              onChange={val => onSetCarDetails({plate_number: val})}
+              placeholder="AAA-DA059"
+            />
           </View>
 
           <Spacer bottom={24} />
@@ -43,7 +53,11 @@ const UploadThirdStep = ({onScreenChange}) => {
               Owner ID Type <Text style={{color: theme.red}}>*</Text>
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="ID Type" />
+            <PrimaryInput
+              value={carDetails.owner_id_type}
+              onChange={val => onSetCarDetails({owner_id_type: val})}
+              placeholder="ID Type"
+            />
           </View>
 
           <Spacer bottom={24} />
@@ -53,7 +67,11 @@ const UploadThirdStep = ({onScreenChange}) => {
               Owner ID <Text style={{color: theme.red}}>*</Text>
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="Owner ID" />
+            <PrimaryInput
+              value={carDetails.owner_id}
+              onChange={val => onSetCarDetails({owner_id: val})}
+              placeholder="Owner ID"
+            />
           </View>
           <Spacer bottom={24} />
 

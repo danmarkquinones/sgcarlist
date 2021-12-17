@@ -17,8 +17,6 @@ const MyAdsIndex = () => {
   const navigation = useNavigation();
   const [userConfig] = useContext(UserConfigContext);
 
-  console.log('USER', userConfig.userDetails._id);
-
   const [config, setConfig] = useState({
     sortBy: 'ascending',
     isGridView: true,
@@ -63,7 +61,12 @@ const MyAdsIndex = () => {
   };
 
   const onDeleteProduct = async id => {
-    const res = await api.DELETE('/products/delete', {id});
+    const res = await api.UPDATE('/products/delete', {id});
+    console.log(res);
+  };
+
+  const onMarkAsSold = async id => {
+    const res = await api.UPDATE('/products/sell', {id});
     console.log(res);
   };
 
@@ -102,6 +105,7 @@ const MyAdsIndex = () => {
                 Icon={() => <Icon name="kebab-horizontal" size={20} solid />}
                 sellerMode={true}
                 deleteProduct={onDeleteProduct}
+                onMarkAsSold={onMarkAsSold}
               />
             )}
           />

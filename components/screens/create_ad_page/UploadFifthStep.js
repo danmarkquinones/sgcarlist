@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {scaleFont} from '../../../utils/scale';
 import {theme} from '../../contants/colors';
@@ -8,13 +8,19 @@ import Spacer from '../../custom_components/spacer';
 import {useNavigation} from '@react-navigation/core';
 import CustomRadioButton from '../../custom_components/customRadioButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {CarConfigContext} from '../../store/context_api/carContext';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const UploadFifthStep = ({onScreenChange}) => {
+  const [carDetails, setCarDetails] = useContext(CarConfigContext);
   const navigation = useNavigation();
   const [selectedValueEmail, setSelectedValueEmail] = useState('0');
+
+  const onSetCarDetails = keyValue => {
+    setCarDetails({...carDetails, ...keyValue});
+  };
 
   return (
     <ScrollView style={{flex: 1}}>
@@ -34,7 +40,11 @@ const UploadFifthStep = ({onScreenChange}) => {
               Car Model <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="Select Car Model" />
+            <PrimaryInput
+              value={carDetails.car_model}
+              onChange={val => onSetCarDetails({car_model: val})}
+              placeholder="Select Car Model"
+            />
           </View>
           <Spacer bottom={8} />
 
@@ -80,7 +90,11 @@ const UploadFifthStep = ({onScreenChange}) => {
               Asking Price <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="Asking Price" />
+            <PrimaryInput
+              value={carDetails.asking_price}
+              onChange={val => onSetCarDetails({asking_price: val})}
+              placeholder="Asking Price"
+            />
           </View>
           <Spacer bottom={8} />
 
@@ -89,7 +103,11 @@ const UploadFifthStep = ({onScreenChange}) => {
               Transmission <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="Transmission" />
+            <PrimaryInput
+              value={carDetails.transmission}
+              onChange={val => onSetCarDetails({transmission: val})}
+              placeholder="Transmission"
+            />
           </View>
           <Spacer bottom={8} />
 
@@ -98,7 +116,11 @@ const UploadFifthStep = ({onScreenChange}) => {
               Fuel Type <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="Fuel Type" />
+            <PrimaryInput
+              value={carDetails.fuel_type}
+              onChange={val => onSetCarDetails({fuel_type: val})}
+              placeholder="Fuel Type"
+            />
           </View>
           <Spacer bottom={8} />
 
@@ -107,7 +129,11 @@ const UploadFifthStep = ({onScreenChange}) => {
               Mileage <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="Mileage" />
+            <PrimaryInput
+              value={carDetails.mileage}
+              onChange={val => onSetCarDetails({mileage: val})}
+              placeholder="Mileage"
+            />
           </View>
           <Spacer bottom={8} />
 
@@ -115,7 +141,8 @@ const UploadFifthStep = ({onScreenChange}) => {
             <Text style={styles.label}>Vehicle Features :</Text>
             <Spacer bottom={8} />
             <PrimaryInput
-              onChange={() => {}}
+              value={carDetails.features}
+              onChange={val => onSetCarDetails({features: val})}
               placeholder=""
               height={100}
               multiline={true}
@@ -128,7 +155,8 @@ const UploadFifthStep = ({onScreenChange}) => {
             <Text style={styles.label}>Accessories :</Text>
             <Spacer bottom={8} />
             <PrimaryInput
-              onChange={() => {}}
+              value={carDetails.accessories}
+              onChange={val => onSetCarDetails({accessories: val})}
               placeholder=""
               height={100}
               multiline={true}
@@ -137,7 +165,7 @@ const UploadFifthStep = ({onScreenChange}) => {
           </View>
           <Spacer bottom={8} />
 
-          <View>
+          {/* <View>
             <Text style={styles.label}>Description :</Text>
             <Spacer bottom={8} />
             <PrimaryInput
@@ -147,7 +175,7 @@ const UploadFifthStep = ({onScreenChange}) => {
               multiline={true}
             />
             <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/150</Text>
-          </View>
+          </View> */}
           <Spacer bottom={8} />
         </View>
 

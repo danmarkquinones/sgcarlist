@@ -1,5 +1,11 @@
-import React from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import React, {useContext} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {scaleFont} from '../../../utils/scale';
 import {theme} from '../../contants/colors';
 import {PrimaryButton} from '../../custom_components/customButtons';
@@ -8,9 +14,15 @@ import PrimaryInput from '../../custom_components/customInput';
 import Spacer from '../../custom_components/spacer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/core';
+import {CarConfigContext} from '../../store/context_api/carContext';
 
 const UploadSecondStep = ({onScreenChange}) => {
+  const [carDetails, setCarDetails] = useContext(CarConfigContext);
   const navigation = useNavigation();
+
+  const onSetCarDetails = keyValue => {
+    setCarDetails({...carDetails, ...keyValue});
+  };
 
   return (
     <ScrollView style={{flex: 1}}>
@@ -24,68 +36,14 @@ const UploadSecondStep = ({onScreenChange}) => {
         <Spacer bottom={24} />
         <View>
           <Spacer bottom={8} />
-          <View
-            style={{
-              width: '100%',
-              backgroundColor: '#fff',
-              borderRadius: 5,
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-              padding: 16,
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <Text
-                style={{fontSize: 32, color: '#2C9C22', fontWeight: 'bold'}}>
-                S$90{' '}
-              </Text>
-              <Text style={{fontSize: 20, color: '#4F4A4A'}}>
-                till vehicle is sold
-              </Text>
-            </View>
+          <TouchableOpacity onPress={() => onSetCarDetails({price: 90})}>
             <View
               style={{
                 width: '100%',
-                borderBottomWidth: StyleSheet.hairlineWidth,
-                borderBottomColor: '#bbb',
-                marginVertical: 8,
-              }}
-            />
-            <Text>
-              This package will allow you to post a normal "Direct Owner"
-              advertisement.
-            </Text>
-          </View>
-          <Spacer bottom={24} />
-
-          <View
-            style={{
-              width: '100%',
-              backgroundColor: '#fff',
-              borderRadius: 5,
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-              overflow: 'hidden',
-            }}>
-            <View
-              style={{
-                backgroundColor: '#EA3636',
-                width: '100%',
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: 8,
-              }}>
-              <Text style={{color: theme.white}}>
-                GET 3x MORE SALES INQUIRIES
-              </Text>
-            </View>
-            <View
-              style={{
-                backgroundColor: theme.primaryBlue,
-                width: '100%',
+                backgroundColor: '#fff',
+                borderRadius: 5,
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
                 padding: 16,
               }}>
               <View
@@ -94,14 +52,12 @@ const UploadSecondStep = ({onScreenChange}) => {
                   alignItems: 'center',
                 }}>
                 <Text
-                  style={{fontSize: 32, color: '#36D828', fontWeight: 'bold'}}>
-                  S$108{' '}
+                  style={{fontSize: 32, color: '#2C9C22', fontWeight: 'bold'}}>
+                  S$90{' '}
                 </Text>
-                <View>
-                  <Text style={{fontSize: 14, color: '#fff', paddingRight: 16}}>
-                    till vehicle is sold (with 1 day StarAd {'\n'}exposure)
-                  </Text>
-                </View>
+                <Text style={{fontSize: 20, color: '#4F4A4A'}}>
+                  till vehicle is sold
+                </Text>
               </View>
               <View
                 style={{
@@ -111,20 +67,85 @@ const UploadSecondStep = ({onScreenChange}) => {
                   marginVertical: 8,
                 }}
               />
-              <Text style={{color: theme.white}}>
-                Sell it fast with StarAd package as you will get over 100,000
-                views a day.{'\n'}
+              <Text>
+                This package will allow you to post a normal "Direct Owner"
+                advertisement.
               </Text>
             </View>
-          </View>
+          </TouchableOpacity>
           <Spacer bottom={24} />
+
+          <TouchableOpacity onPress={() => onSetCarDetails({price: 108})}>
+            <View
+              style={{
+                width: '100%',
+                backgroundColor: '#fff',
+                borderRadius: 5,
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                overflow: 'hidden',
+              }}>
+              <View
+                style={{
+                  backgroundColor: '#EA3636',
+                  width: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  padding: 8,
+                }}>
+                <Text style={{color: theme.white}}>
+                  GET 3x MORE SALES INQUIRIES
+                </Text>
+              </View>
+              <View
+                style={{
+                  backgroundColor: theme.primaryBlue,
+                  width: '100%',
+                  padding: 16,
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 32,
+                      color: '#36D828',
+                      fontWeight: 'bold',
+                    }}>
+                    S$108{' '}
+                  </Text>
+                  <View>
+                    <Text
+                      style={{fontSize: 14, color: '#fff', paddingRight: 16}}>
+                      till vehicle is sold (with 1 day StarAd {'\n'}exposure)
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    width: '100%',
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                    borderBottomColor: '#bbb',
+                    marginVertical: 8,
+                  }}
+                />
+                <Text style={{color: theme.white}}>
+                  Sell it fast with StarAd package as you will get over 100,000
+                  views a day.{'\n'}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          {/* <Spacer bottom={24} />
           <View>
             <Text style={styles.label}>
               Date of insertion <Text style={{color: theme.red}}>*</Text>
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="MM/DD/YYYY" />
-          </View>
+            <PrimaryInput onChange={(val) => {}} placeholder="MM/DD/YYYY" />
+          </View> */}
           <Spacer bottom={24} />
           <View>
             <Text style={styles.label}>Title</Text>
@@ -132,7 +153,11 @@ const UploadSecondStep = ({onScreenChange}) => {
               Title : Eg. 2004 Toyota Vios 1.5A at $35K
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="Title" />
+            <PrimaryInput
+              value={carDetails.title}
+              onChange={val => onSetCarDetails({title: val})}
+              placeholder="Title"
+            />
             <Text style={[styles.sublabel, {textAlign: 'right'}]}>0/52</Text>
           </View>
           <Spacer bottom={24} />
@@ -144,7 +169,8 @@ const UploadSecondStep = ({onScreenChange}) => {
             </Text>
             <Spacer bottom={8} />
             <PrimaryInput
-              onChange={() => {}}
+              value={carDetails.description}
+              onChange={val => onSetCarDetails({description: val})}
               placeholder=""
               height={100}
               multiline={true}

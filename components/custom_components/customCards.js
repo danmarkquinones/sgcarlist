@@ -64,7 +64,15 @@ export const WhiteCard = ({options, onPress}) => {
 };
 
 export const ListCard = props => {
-  const {car, Icon, sellerMode, inFavorites, onPress, deleteProduct} = props;
+  const {
+    car,
+    Icon,
+    sellerMode,
+    inFavorites,
+    onPress,
+    deleteProduct,
+    onMarkAsSold,
+  } = props;
 
   return (
     <View style={customCardStyles.listCardContainer}>
@@ -96,7 +104,7 @@ export const ListCard = props => {
                       text="Remove"
                     />
                     <MenuOption
-                      onSelect={() => alert(`Sold`)}
+                      onSelect={() => onMarkAsSold(car._id)}
                       text="Mark as Sold"
                     />
                   </MenuOptions>

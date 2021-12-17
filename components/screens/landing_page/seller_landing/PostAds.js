@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
 import {scaleFont} from '../../../../utils/scale';
 import CustomHeader from '../../../custom_components/customHeader';
@@ -8,9 +8,12 @@ import {theme} from '../../../contants/colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {PrimaryButton} from '../../../custom_components/customButtons';
 import {useNavigation} from '@react-navigation/core';
+import {CarConfigContext} from '../../../store/context_api/carContext';
 
 const PostAds = () => {
   const navigation = useNavigation();
+  const [carDetails, setCarDetails, onReset] = useContext(CarConfigContext);
+
   return (
     <View style={{flex: 1}}>
       <CustomHeader
@@ -102,7 +105,10 @@ const PostAds = () => {
             </View>
             <Spacer bottom={24} />
             <PrimaryButton
-              onPress={() => navigation.navigate('CreateAdIndex')}
+              onPress={() => {
+                navigation.navigate('CreateAdIndex');
+                onReset();
+              }}
               title="Create Ad"
               color={theme.primaryBlue}
             />

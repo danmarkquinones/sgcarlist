@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/core';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {scaleFont} from '../../../utils/scale';
 import {theme} from '../../contants/colors';
@@ -8,10 +8,17 @@ import CustomHeader from '../../custom_components/customHeader';
 import PrimaryInput from '../../custom_components/customInput';
 import CustomRadioButton from '../../custom_components/customRadioButton';
 import Spacer from '../../custom_components/spacer';
+import {CarConfigContext} from '../../store/context_api/carContext';
 
 const {width, height} = Dimensions.get('screen');
 
 const UploadVehicleNumber = ({onScreenChange}) => {
+  const [carDetails, setCarDetails, onReset] = useContext(CarConfigContext);
+
+  const onSetCarDetails = keyValue => {
+    setCarDetails({...carDetails, ...keyValue});
+  };
+
   const navigation = useNavigation();
   const [selectedValueContact, setSelectedValueContact] = useState('yes');
   const [selectedValueEmail, setSelectedValueEmail] = useState('yes');
@@ -30,7 +37,11 @@ const UploadVehicleNumber = ({onScreenChange}) => {
               Name <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="Name" />
+            <PrimaryInput
+              value={carDetails.product_name}
+              onChange={val => onSetCarDetails({product_name: val})}
+              placeholder="Name"
+            />
           </View>
           <Spacer bottom={24} />
           <View>
@@ -38,7 +49,11 @@ const UploadVehicleNumber = ({onScreenChange}) => {
               Contact No. <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="Contact No." />
+            <PrimaryInput
+              value={carDetails.contact_no}
+              onChange={val => onSetCarDetails({contact_no: val})}
+              placeholder="Contact No."
+            />
           </View>
           <Spacer bottom={24} />
 
@@ -60,7 +75,11 @@ const UploadVehicleNumber = ({onScreenChange}) => {
               Email Address <Text style={{color: theme.red}}>*</Text>:
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput onChange={() => {}} placeholder="Email Address" />
+            <PrimaryInput
+              value={carDetails.email}
+              onChange={val => onSetCarDetails({email: val})}
+              placeholder="Email Address"
+            />
           </View>
           <Spacer bottom={24} />
 
@@ -83,7 +102,8 @@ const UploadVehicleNumber = ({onScreenChange}) => {
             </Text>
             <Spacer bottom={8} />
             <PrimaryInput
-              onChange={() => {}}
+              value={carDetails.viewing_area}
+              onChange={val => onSetCarDetails({viewing_area: val})}
               placeholder="Preferred Viewing Area"
             />
           </View>

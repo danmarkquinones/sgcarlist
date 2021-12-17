@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
@@ -12,17 +12,20 @@ import {TabView, TabBar} from 'react-native-tab-view';
 import {useNavigation} from '@react-navigation/core';
 import Spacer from '../../custom_components/spacer';
 import {PrimaryButton} from '../../custom_components/customButtons';
+import {CarConfigContext} from '../../store/context_api/carContext';
 
 const initialLayout = {width: Dimensions.get('window').width};
 
 const UploadSeventhStep = ({onScreenChange}) => {
+  const [carDetails, setCarDetails] = useContext(CarConfigContext);
+
   const navigation = useNavigation();
   const [index, setIndex] = useState(0);
 
   const [routes] = useState([
     {key: 'first', title: 'Descriptions'},
-    {key: 'second', title: 'Equipments'},
-    {key: 'third', title: 'Specifications'},
+    {key: 'second', title: 'Accessories'},
+    {key: 'third', title: 'Features'},
   ]);
 
   const renderScene = ({route}) => {
@@ -30,34 +33,19 @@ const UploadSeventhStep = ({onScreenChange}) => {
       case 'first':
         return (
           <View style={{height: 250, padding: 16}}>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              occaecat cupidatat non proident, sunt in culpa qui officia
-              deserunt mollit anim id est laborum.
-            </Text>
+            <Text>{carDetails.description}</Text>
           </View>
         );
       case 'second':
         return (
           <View style={{height: 250, padding: 16}}>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              occaecat cupidatat non proident, sunt in culpa qui officia
-              deserunt mollit anim id est laborum.
-            </Text>
+            <Text>{carDetails.accessories}</Text>
           </View>
         );
       case 'third':
         return (
           <View style={{height: 250, padding: 16}}>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              occaecat cupidatat non proident, sunt in culpa qui officia
-              deserunt mollit anim id est laborum.
-            </Text>
+            <Text>{carDetails.features}</Text>
           </View>
         );
       default:
@@ -80,7 +68,7 @@ const UploadSeventhStep = ({onScreenChange}) => {
             fontSize: 18,
             fontWeight: 'bold',
           }}>
-          Future 1 Premium MPV 1.6 Turbo
+          {carDetails.title}
         </Text>
         <Text>85 - 90 KM Singapore</Text>
       </View>
@@ -96,7 +84,7 @@ const UploadSeventhStep = ({onScreenChange}) => {
         }}>
         <Text
           style={{color: theme.primaryBlue, fontWeight: 'bold', fontSize: 18}}>
-          15, 000 USD
+          {carDetails.asking_price} USD
         </Text>
         <Text>625 USD / month</Text>
       </View>
@@ -111,7 +99,7 @@ const UploadSeventhStep = ({onScreenChange}) => {
           alignItems: 'center',
         }}>
         <Text>2012</Text>
-        <Text>180, 000 KM</Text>
+        <Text>{carDetails.mileage} KM</Text>
       </View>
       <View
         style={{
@@ -123,7 +111,7 @@ const UploadSeventhStep = ({onScreenChange}) => {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-        <Text>Automatic</Text>
+        <Text>{carDetails.transmission}</Text>
         <Text>1368 cc</Text>
       </View>
       <View
