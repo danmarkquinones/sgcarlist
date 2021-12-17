@@ -49,7 +49,7 @@ const UploadEighthStep = () => {
       selected_ads_id: carDetails.ads_id,
     };
 
-    // uploadImages();
+    uploadImages();
 
     let res = await api.POST(payload, '/products');
     console.log(res);
@@ -60,8 +60,8 @@ const UploadEighthStep = () => {
 
     const config = {
       keyPrefix: 's3/',
-      bucket: 'photos',
-      region: 'us-east-1',
+      bucket: 'sgcarlist-app',
+      region: 'ap-southeast-1',
       accessKey: aws.accessKeyId,
       secretKey: aws.secretAccessKey,
       successActionStatus: 201,
