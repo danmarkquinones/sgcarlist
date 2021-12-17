@@ -18,6 +18,7 @@ export const UserConfigContextProvider = (props) => {
     
     useEffect(()=>{
         const userInfo = getAsyncStorageData('userDetails' , '{}')
+        getAsyncStorageData('language','en')
         userInfo.then((data)=>{
             if(Object.keys(data)>0){
                 // console.log('login',data)

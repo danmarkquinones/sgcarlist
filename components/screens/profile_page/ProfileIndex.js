@@ -15,16 +15,19 @@ import { UserConfigContext } from '../../store/context_api/userContext';
 import { useIsFocused } from '@react-navigation/core';
 import { logout } from '../../store/api_calls/authentication';
 import PushNotification from "react-native-push-notification";
-import firebase from '@react-native-firebase/app';
+import LocalizedStrings from 'react-native-localization';
 import messaging from '@react-native-firebase/messaging'
 import { updateNotification } from '../../store/api_calls/user_api';
 
+var localFile = require('../../languages/profileLocale.json')
+let localizedStrings = new LocalizedStrings(localFile)
 
 const ProfileIndex = (props) => {
 
     const {navigation} = props
     const [userConfig , setUserConfig] = useContext(UserConfigContext)
     const isFocused = useIsFocused()
+    localizedStrings.setLanguage(userConfig.language)
 
 
     //overlays
@@ -36,7 +39,7 @@ const ProfileIndex = (props) => {
 
     useEffect(()=>{
         if(isFocused){
-            console.log(userConfig.userDetails)
+            // console.log(userConfig.userDetails)
 
             messaging().getToken().then(token => {
                 console.log('token' , token)
@@ -46,8 +49,8 @@ const ProfileIndex = (props) => {
             if(userConfig.isLoggedIn){
                 const infoArray = [
                     // {type:'Email' , text:userConfig.userDetails.user_email},
-                    {type:'Full Name' , text:`${userConfig.userDetails.user_first_name} ${userConfig.userDetails.user_last_name}`},
-                    {type:'Mobile Number' , text:userConfig.userDetails.user_contact_details.contact_numbers[0]}
+                    {type:localizedStrings.ProfileIndex.FullName , text:`${userConfig.userDetails.user_first_name} ${userConfig.userDetails.user_last_name}`},
+                    {type:localizedStrings.ProfileIndex.MobileNumber , text:userConfig.userDetails.user_contact_details.contact_numbers[0]}
                 ]
                 setInformation(infoArray)
             }
@@ -57,8 +60,8 @@ const ProfileIndex = (props) => {
     },[isFocused])
 
     const options = [
-        { label: "Buy", value: "0" },
-        { label: "Sell", value: "1" },
+        { label: localizedStrings.ProfileIndex.Buy, value: "0" },
+        { label: localizedStrings.ProfileIndex.Sell, value: "1" },
     ];
 
     const onClick = () => {
@@ -188,11 +191,11 @@ const ProfileIndex = (props) => {
                         style={profileStyles.infoContainer}
                     >
                         <View style={profileStyles.infoHead}>
-                            <Text style={profileStyles.infoHeadTitle}>Profile Informations</Text>
+                            <Text style={profileStyles.infoHeadTitle}>{localizedStrings.ProfileIndex.ProfileInformation}</Text>
                             <TouchableOpacity onPress={()=>navigation.navigate('EditProfile', {data:userConfig.userDetails,callback:setInformation})}>
                                 <View style={profileStyles.editContainer}>
                                     <Icon name='edit' size={15} />
-                                    <Text style={{fontSize:15 , marginLeft:5}}>Edit</Text>
+                                    <Text style={{fontSize:15 , marginLeft:5}}>{localizedStrings.ProfileIndex.Edit}</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
@@ -211,7 +214,7 @@ const ProfileIndex = (props) => {
                         style={profileStyles.othersContainer}
                     >
                         <View style={profileStyles.otherDetailsContainer}>
-                            <Text style={profileStyles.othersDetailsText}>Switch to selling</Text>
+                            <Text style={profileStyles.othersDetailsText}>{localizedStrings.ProfileIndex.SwitchToSelling}</Text>
                             <SwitchSelector
                                 style={{width:120}}
                                 options={options}
@@ -231,7 +234,7 @@ const ProfileIndex = (props) => {
                         <Divider style={profileStyles.line}/>
 
                         <View style={profileStyles.otherDetailsContainer}>
-                            <Text style={profileStyles.othersDetailsText}>Notification</Text>
+                            <Text style={profileStyles.othersDetailsText}>{localizedStrings.ProfileIndex.Notification}</Text>
                             <Switch 
                                 trackColor={{ false: theme.gray, true: theme.secondaryBlue }}
                                 thumbColor={+userConfig.isNotificationOn===1 ? theme.primaryBlue : theme.white}
@@ -247,7 +250,7 @@ const ProfileIndex = (props) => {
                             onPress={toggleLanguageOverlay}
                         >
                             <View style={profileStyles.otherDetailsContainer}>
-                                <Text style={profileStyles.othersDetailsText}>Language</Text>
+                                <Text style={profileStyles.othersDetailsText}>{localizedStrings.ProfileIndex.Language}</Text>
                                 <Text>{userConfig.language==="en"?"English" : "Chinese"}</Text>
                             </View>
                         </TouchableOpacity>
@@ -258,7 +261,7 @@ const ProfileIndex = (props) => {
                             onPress={()=>navigation.navigate('TOS')}
                         >
                             <View style={profileStyles.otherDetailsContainer}>
-                                <Text style={profileStyles.othersDetailsText}>Privacy Policy & Terms of use</Text>
+                                <Text style={profileStyles.othersDetailsText}>{localizedStrings.ProfileIndex.PPTOS}</Text>
                                 <Icon name="keyboard-arrow-right" size={25}  color={theme.gray}/>
                             </View>
                         </TouchableOpacity>
@@ -269,7 +272,7 @@ const ProfileIndex = (props) => {
                             onPress={()=>navigation.navigate('Help')}
                         >
                             <View style={profileStyles.otherDetailsContainer}>
-                                <Text style={profileStyles.othersDetailsText}>Help & Feedback</Text>
+                                <Text style={profileStyles.othersDetailsText}>{localizedStrings.ProfileIndex.Help}</Text>
                                 <Icon name="keyboard-arrow-right" size={25}  color={theme.gray}/>
                             </View>
                         </TouchableOpacity>
@@ -278,7 +281,7 @@ const ProfileIndex = (props) => {
                         
                         <TouchableOpacity onPress={onShare}>
                             <View style={profileStyles.otherDetailsContainer}>
-                                <Text style={profileStyles.othersDetailsText}>Share this App</Text>
+                                <Text style={profileStyles.othersDetailsText}>{localizedStrings.ProfileIndex.Share}</Text>
                             </View>
                         </TouchableOpacity>
 
@@ -291,18 +294,18 @@ const ProfileIndex = (props) => {
                         style={profileStyles.logoutBtn}
                     >
                         <PrimaryButton
-                            title="Log out" 
+                            title={localizedStrings.ProfileIndex.Logout}
                             onPress={onClick}
                             color={theme.primaryBlue}
                         />
-                        <Text style={profileStyles.versionText}>version 1.0.0</Text>
+                        <Text style={profileStyles.versionText}>{localizedStrings.ProfileIndex.Version} 1.1.0</Text>
                     </View>
                     
                 </View>
                 
 
                 <Overlay isVisible={NotifOverlayVisible} onBackdropPress={toggleNotifOverlay}>
-                    <NotificationModal onConfirm={onConfirmNotif} onCancel={onCancelNotif}/>
+                    <NotificationModal onConfirm={onConfirmNotif} onCancel={onCancelNotif} localizedStrings={localizedStrings}/>
                 </Overlay>
 
                 <Overlay isVisible={languageOverlayVisible} onBackdropPress={toggleLanguageOverlay}>

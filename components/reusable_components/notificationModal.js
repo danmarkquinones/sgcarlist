@@ -7,11 +7,11 @@ import { theme } from '../contants/colors';
 
 const NotificationModal = (props) => {
 
-    const {onConfirm , onCancel} = props
+    const {onConfirm , onCancel , localizedStrings} = props
 
     return (
         <View style={notifStyles.container}>
-            <Text style={notifStyles.header}>Get Notified!</Text>
+            <Text style={notifStyles.header}>{localizedStrings.NotifModal.Header}</Text>
 
             <View
                 style={notifStyles.iconContainer}
@@ -21,14 +21,14 @@ const NotificationModal = (props) => {
             </View>
 
             <Text style={notifStyles.paragraph}>
-                Allow SGCars to send you push notifications when you have new message & offers
+                {localizedStrings.NotifModal.Body}
             </Text>
 
             <View
                 style={notifStyles.confirm}
             >
                 <PrimaryButton
-                    title="Let's do it!" 
+                    title={localizedStrings.NotifModal.Okay} 
                     onPress={onConfirm}
                     color={theme.primaryBlue}
                 />
@@ -38,7 +38,7 @@ const NotificationModal = (props) => {
                 style={notifStyles.cancel}
             >
                 <TouchableOpacity onPress={onCancel}>
-                    <Text>No thanks , another time!</Text>
+                    <Text>{localizedStrings.NotifModal.Cancel}</Text>
                 </TouchableOpacity>
             </View>
         </View>

@@ -6,7 +6,11 @@ import { OffCancelButton, PrimaryButton } from '../../../custom_components/custo
 import CustomHeader from '../../../custom_components/customHeader';
 import { updateProfile } from '../../../store/api_calls/user_api'
 import { UserConfigContext } from '../../../store/context_api/userContext'
-import { editFormStyles } from './editFormStyles'
+import { editFormStyles } from './editFormStyles';
+import LocalizedStrings from 'react-native-localization';
+
+var localFile = require('../../../languages/profileLocale.json')
+let localizedStrings = new LocalizedStrings(localFile)
 
 const EditForm = (props) => {
 
@@ -18,6 +22,7 @@ const EditForm = (props) => {
         lname:'',
         contact:''
     })
+    localizedStrings.setLanguage(userConfig.language)
 
     useEffect(() => {
         setProfileForm({
@@ -73,7 +78,7 @@ const EditForm = (props) => {
             stickyHeaderIndices={[0]}
         >
             <View>
-                <CustomHeader title="Edit Profile Informations"/>
+                <CustomHeader title={localizedStrings.NavStackHeaders.EditProfile}/>
             </View>
             
             <View style={editFormStyles.editFormContainer}>
@@ -82,27 +87,27 @@ const EditForm = (props) => {
                 </View> */}
 
                 <View style={editFormStyles.headerLabel}>
-                    <Text style={editFormStyles.headerLabelText}>Kindly fill out the fields you want to edit.</Text>
+                    <Text style={editFormStyles.headerLabelText}>{localizedStrings.EditProfile.Header}</Text>
                 </View>
                 
                 <View style={editFormStyles.fieldContainer}>
-                    <Input onChangeText={(text)=>handleProfileFieldChange('fname',text)} label="First Name" value={profileForm.fname}/>
+                    <Input onChangeText={(text)=>handleProfileFieldChange('fname',text)} label={localizedStrings.EditProfile.FName} value={profileForm.fname}/>
                 </View>
                 <View style={editFormStyles.fieldContainer}>
-                    <Input onChangeText={(text)=>handleProfileFieldChange('lname',text)} label="Last Name" value={profileForm.lname}/>
+                    <Input onChangeText={(text)=>handleProfileFieldChange('lname',text)} label={localizedStrings.EditProfile.LName} value={profileForm.lname}/>
                 </View>
                 {/* <View style={editFormStyles.fieldContainer}>
                     <Input onChangeText={(text)=>handleProfileFieldChange('email',text)} label="Email" value="Lorem Ipsum" value={profileForm.email}/>
                 </View> */}
                 <View style={editFormStyles.fieldContainer}>
-                    <Input onChangeText={(text)=>handleProfileFieldChange('contact',text)} label="Mobile Number" value={profileForm.contact}/>
+                    <Input onChangeText={(text)=>handleProfileFieldChange('contact',text)} label={localizedStrings.EditProfile.Mobile} value={profileForm.contact}/>
                 </View>
 
                 <View style={editFormStyles.fieldContainer}>
-                    <PrimaryButton onPress={()=>handleSubmit()} title="save" color={theme.primaryBlue}/>
+                    <PrimaryButton onPress={()=>handleSubmit()} title={localizedStrings.EditProfile.Save} color={theme.primaryBlue}/>
                 </View>
                 <View style={editFormStyles.fieldContainer}>
-                    <OffCancelButton title="cancel" onPress={()=>navigation.goBack()}/>
+                    <OffCancelButton title={localizedStrings.EditProfile.Cancel} onPress={()=>navigation.goBack()}/>
                 </View>
             </View>
         </ScrollView>
