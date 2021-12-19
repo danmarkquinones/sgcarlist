@@ -14,7 +14,9 @@ import {api} from '../../store/api_calls/useApi';
 
 const initialLayout = {width: Dimensions.get('window').width};
 
-const Verification = ({route}) => {
+const Verification = props => {
+  const {route} = props;
+  console.log(props);
   const {width, height} = Dimensions.get('screen');
   const navigation = useNavigation();
   const [index, setIndex] = useState(0);
@@ -50,7 +52,11 @@ const Verification = ({route}) => {
     };
     let res = await api.POST(params, '/users/verify-otp');
     if (res?.data?.success) {
-      navigation.navigate('Login');
+      if (route.params.fromForgotPassword) {
+        navigation.navigate('ResetPassword');
+      } else {
+        navigation.navigate('Login');
+      }
     } else {
       alert('Incorrect OTP!');
     }

@@ -1,17 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Text, View, Image, Dimensions, ScrollView} from 'react-native';
-import register_img from '../../../assets/images/register.png';
+import React, {useEffect, useState, useRef} from 'react';
+import {Text, View, Image, Dimensions, ScrollView} from 'react-native';
 import {theme} from '../../contants/colors';
 import logo from '../../../assets/images/carlistsg_white.png';
 import PrimaryInput from '../../custom_components/customInput';
 import Spacer from '../../custom_components/spacer';
 import {PrimaryButton} from '../../custom_components/customButtons';
-import {post, api} from '../../store/api_calls/useApi';
+import {api} from '../../store/api_calls/useApi';
+import PhoneInput from 'react-native-phone-number-input';
 
 const Register = props => {
-  const {width, height} = Dimensions.get('screen');
   const {navigation} = props;
 
+  const phoneInput = useRef(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -27,7 +27,7 @@ const Register = props => {
       user_last_name: lastName,
       user_email: email,
       role_name: 'Advertiser',
-      contact_number: contact,
+      contact_number: '9287666301',
       password: password,
       password_confirmation: confirmPassword,
       sms: true,
@@ -110,11 +110,27 @@ const Register = props => {
               placeholder="Email"
             />
             <Spacer bottom={24} />
-            <PrimaryInput
-              onChange={setContact}
-              borderColor={theme.primaryBlue}
-              height={50}
-              placeholder="Contact number"
+            <PhoneInput
+              ref={phoneInput}
+              defaultValue={contact}
+              defaultCode="SG"
+              layout="first"
+              containerStyle={{
+                width: '100%',
+                height: 55,
+                borderColor: theme.primaryBlue,
+                borderWidth: 2,
+                borderRadius: 5,
+              }}
+              textContainerStyle={{
+                paddingVertical: 0,
+                borderRadius: 5,
+              }}
+              textInputStyle={{fontSize: 14}}
+              codeTextStyle={{fontSize: 14}}
+              onChangeFormattedText={text => {
+                setContact(text);
+              }}
             />
             <Spacer bottom={24} />
             <PrimaryInput

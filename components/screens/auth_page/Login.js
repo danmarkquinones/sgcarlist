@@ -90,7 +90,7 @@ const Login = props => {
             />
             <Spacer bottom={24} />
             <Text
-              onPress={() => navigation.navigate('Verification')}
+              onPress={() => navigation.navigate('ForgotPassword')}
               style={{
                 textAlign: 'right',
                 color: '#20A8F4',

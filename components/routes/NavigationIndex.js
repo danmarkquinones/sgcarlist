@@ -20,24 +20,27 @@ import Verification from '../screens/verification_page/verification';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LocalizedStrings from 'react-native-localization';
 import { getLanguage } from '../store/helpers/languageFunctions';
+import ForgotPassword from '../screens/forgot_password_page/forgotPassword';
 
-var localFile = require('../languages/navigationLocale.json')
-let localizedStrings = new LocalizedStrings(localFile)
+var localFile = require('../languages/navigationLocale.json');
+let localizedStrings = new LocalizedStrings(localFile);
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const RootStack = () => {
-  const [userConfig , setUserConfig] = useContext(UserConfigContext);
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
   const [isFirstLaunched, setIsFirstLaunched] = useState(null);
 
   useEffect(() => {
     getIsFirstLaunched();
-    getLanguage().then(language => {
-      setUserConfig({...userConfig , language:language})
-    }).catch(e=>{
-      setUserConfig({...userConfig , language:"en"})
-    })
+    getLanguage()
+      .then(language => {
+        setUserConfig({...userConfig, language: language});
+      })
+      .catch(e => {
+        setUserConfig({...userConfig, language: 'en'});
+      });
   }, []);
 
   const getIsFirstLaunched = async () => {
@@ -49,8 +52,7 @@ const RootStack = () => {
     }
   };
 
-  localizedStrings.setLanguage(userConfig.language)
-
+  localizedStrings.setLanguage(userConfig.language);
 
   if (isFirstLaunched === null) return <></>;
 
@@ -92,6 +94,11 @@ const RootStack = () => {
       <Stack.Screen
         name="LoaderScreen"
         component={LoaderScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPassword}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
