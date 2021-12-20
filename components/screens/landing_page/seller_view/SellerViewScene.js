@@ -9,6 +9,9 @@ import CommentForm from '../../../reusable_components/commentForm';
 import SorterComponent from '../../../reusable_components/sorterComponent';
 import {get, getAdvert} from '../../../store/api_calls/authentication';
 import {sellersStyles} from '../../../styles/sellersStyles';
+import { useIsFocused } from '@react-navigation/native';
+import { getAdvertiserReviews } from '../../../store/api_calls/seller_api';
+import moment from 'moment';
 
 export const Listings = props => {
   const {config, setConfig, navigation} = props;
@@ -40,7 +43,7 @@ export const Listings = props => {
       setIsLoading(false);
     }
 
-    console.log(res.data.data[0].advertiser_products);
+    // console.log(res.data.data[0].advertiser_products);
   };
 
   return (
@@ -107,41 +110,51 @@ export const About = props => {
 };
 
 export const Reviews = props => {
-  const {config, setConfig} = props;
+  const {data} = props;
+
+  const [showForm, setShowForm] = useState(false);
+  const [reviews, setReviews] = useState([]);
+  const isFocused = useIsFocused()
+  const [page , setPage] = useState(1)
 
   const getAverage = () => {
-    const sum = config.reviews.reduce((a, b) => +a + +b.rate, 0);
-    const ave = parseFloat(sum / config.reviews.length).toFixed(1);
+    const sum = reviews.reduce((a, b) => +a + +b.review_score, 0);
+    const ave = parseFloat(sum / reviews.length).toFixed(1);
     return ave;
   };
 
-  const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({
-    rating: 3,
-    comment: '',
-    id: '',
-  });
+  const generateRateColor = () => {
+    if(getAverage() > 3.5){
+        return theme.green
+    }else if(getAverage() > 2 || getAverage() < 3.5){
+        return theme.yellow
+    }else{
+        return theme.red
+    }
+  }
 
-  const onSubmit = () => {
-    const id = config.reviews.length + 1;
-
-    const data = {
-      rate: form.rating,
-      comment: form.comment,
-      commenterName: 'Sample Human',
-      id: id.toString(),
-    };
-    setConfig({
-      ...config,
-      reviews: [data, ...config.reviews],
-    });
-    clearForm();
-  };
-
-  const clearForm = () => {
-    setForm({rating: 3, comment: ''});
+  const onCancel = () => {
     setShowForm(!showForm);
   };
+
+  useEffect(() => {
+    if(isFocused){
+        const getReviews = getAdvertiserReviews(data.advertisement_contact_details._id , page)
+
+        getReviews.then((res)=>{
+            if(res.data){
+                let sortedData = res.data.data
+                console.log('reviews' , sortedData)
+                // sortedData.sort(function(a,b){
+                //     return new Date(moment(b.date_created).format()) - new Date(moment(a.date_created).format());
+                // });
+                setReviews(sortedData)
+            }
+        }).catch((e)=>{
+            console.log('error reviews' , e)
+        })
+    }
+  }, [isFocused])
 
   return (
     <ScrollView
@@ -150,11 +163,11 @@ export const Reviews = props => {
       contentContainerStyle={{flexGrow: 1}}
       showsVerticalScrollIndicator={false}>
       <View style={sellersStyles.ratingHeaderContainer}>
-        {config.sellerDetails ? (
+        {data ? (
           <View style={sellersStyles.sellerDetailsInProduct}>
-            <CustomAvatar initial="L" color={theme.secondaryBlue} size={40} />
+            <CustomAvatar initial={data.advertisement_contact_details.user_first_name} color={theme.secondaryBlue} size={40} />
             <Text style={sellersStyles.sellerDetailsInProductName}>
-              {config.sellerDetails.name}
+              {`${data.advertisement_contact_details.user_first_name} ${data.advertisement_contact_details.user_last_name}`}
             </Text>
           </View>
         ) : (
@@ -162,8 +175,10 @@ export const Reviews = props => {
         )}
 
         <View style={sellersStyles.ratingContainer}>
-          <Text style={sellersStyles.headerRate}>{getAverage()}</Text>
+          <Text style={[sellersStyles.headerRate , {color:generateRateColor()}]}>{getAverage()}</Text>
           <Rating
+            ratingColor={generateRateColor()}
+            type='custom'
             imageSize={15}
             readonly
             startingValue={getAverage()}
@@ -180,33 +195,42 @@ export const Reviews = props => {
             placeholder="Add your review"
           />
         </TouchableOpacity>
-        <Text style={{marginTop: 10}}>{config.reviews.length} review(s)</Text>
+        <Text style={{marginTop: 10}}>{reviews.length} review(s)</Text>
       </View>
       <View style={{flex: 1}}>
-        <FlatList
-          contentContainerStyle={{paddingBottom: 40}}
-          data={config.reviews}
-          keyExtractor={item => item.id}
-          renderItem={({item, i}) => (
-            <View style={sellersStyles.commentContainer}>
-              <View style={{flex: 0.95}}>
-                <Text style={sellersStyles.commentName}>
-                  {item.commenterName}
-                </Text>
-                <Text style={sellersStyles.comment}>{item.comment}</Text>
+        {reviews.length?
+            <FlatList
+            contentContainerStyle={{paddingBottom: 40}}
+            data={reviews}
+            keyExtractor={item => item._id}
+            renderItem={({item, i}) => (
+              <View style={sellersStyles.commentContainer}>
+                <View style={{flex: 0.95}}>
+                  <View style={sellersStyles.commenterHeaderContainer}>
+                      <Text style={sellersStyles.commenter}>
+                          {item.is_anonymous?
+                              `#User.${item._id.substring(item._id.length-4,)}`
+                              :`${item.first_name} ${item.last_name}`
+                          }
+                      </Text>
+                      <Text style={sellersStyles.timeCommented}> - {moment(item.date_created).fromNow()}</Text>
+                  </View>
+                  <Text style={sellersStyles.commentText}>{item.comment.review_text}</Text>
+                </View>
+                <Text style={sellersStyles.commentRate}>{item.review_score}/5</Text>
               </View>
-              <Text style={sellersStyles.commentRate}>{item.rate}/5</Text>
-            </View>
-          )}
-        />
+            )}
+          />
+        :null}
       </View>
 
-      <Overlay isVisible={showForm} onBackdropPress={clearForm}>
+      <Overlay isVisible={showForm} onBackdropPress={onCancel}>
         <CommentForm
-          form={form}
-          setForm={setForm}
-          onSubmit={onSubmit}
-          onCancel={clearForm}
+          type="seller"
+          item={data}
+          commentArray={reviews}
+          setCommentArray={setReviews}
+          onCancel={onCancel}
         />
       </Overlay>
     </ScrollView>
