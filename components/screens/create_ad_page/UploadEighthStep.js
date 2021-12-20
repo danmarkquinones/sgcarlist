@@ -56,22 +56,20 @@ const UploadEighthStep = () => {
   };
 
   const uploadImages = () => {
-    const images = carDetails.images;
-
-    const config = {
-      keyPrefix: 's3/',
-      bucket: 'sgcarlist-app',
-      region: 'ap-southeast-1',
-      accessKey: aws.accessKeyId,
-      secretKey: aws.secretAccessKey,
-      successActionStatus: 201,
-    };
-
-    images.forEach(image => {
-      RNS3.put(image, config).then(response => {
-        console.log(response);
-      });
-    });
+    // const images = carDetails.images;
+    // const config = {
+    //   keyPrefix: 's3/',
+    //   bucket: 'sgcarlist-app',
+    //   region: 'ap-southeast-1',
+    //   accessKey: '',
+    //   secretKey: '',
+    //   successActionStatus: 201,
+    // };
+    // images.forEach(image => {
+    //   RNS3.put(image, config).then(response => {
+    //     console.log(response);
+    //   });
+    // });
   };
 
   return (
