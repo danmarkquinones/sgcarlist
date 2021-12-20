@@ -9,10 +9,18 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {PrimaryButton} from '../../../custom_components/customButtons';
 import {useNavigation} from '@react-navigation/core';
 import {CarConfigContext} from '../../../store/context_api/carContext';
+import {UserConfigContext} from '../../../store/context_api/userContext';
+import LocalizedStrings from 'react-native-localization';
+
+var localFile = require('../../../languages/postAdLocale.json');
+let localizedStrings = new LocalizedStrings(localFile);
 
 const PostAds = () => {
   const navigation = useNavigation();
   const [carDetails, setCarDetails, onReset] = useContext(CarConfigContext);
+
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
+  localizedStrings.setLanguage(userConfig.language);
 
   return (
     <View style={{flex: 1}}>
@@ -29,18 +37,20 @@ const PostAds = () => {
       />
       <ScrollView style={{flex: 1}}>
         <Spacer bottom={24} />
-        <Text style={styles.title}>Got a car to sell?</Text>
+        <Text style={styles.title}>{localizedStrings.ProfileIndex.Title}</Text>
         <Spacer bottom={4} />
         <Text style={styles.subtitle}>
-          Let us help you with the right product
+          {localizedStrings.ProfileIndex.Subtitle}
         </Text>
         <Spacer bottom={24} />
         <View style={{paddingHorizontal: 24}}>
           <Card containerStyle={{borderRadius: 8}}>
-            <Text style={styles.cardTitle}>Sell it on Carlist.SG</Text>
+            <Text style={styles.cardTitle}>
+              {localizedStrings.ProfileIndex.CardTitle}
+            </Text>
             <Spacer bottom={4} />
             <Text style={styles.cardSubtitle}>
-              List your car on Carlist.my and get direct enquiries from interested buyers.
+              {localizedStrings.ProfileIndex.CardSubTitle}
             </Text>
 
             <Spacer bottom={32} />
@@ -50,7 +60,9 @@ const PostAds = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={styles.itemTitle}>Selling Price</Text>
+              <Text style={styles.itemTitle}>
+                {localizedStrings.ProfileIndex.SellingPrice}
+              </Text>
               <View style={{flexDirection: 'row'}}>
                 {[...Array(5)].map((_, i) => (
                   <FontAwesome5
@@ -70,7 +82,9 @@ const PostAds = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={styles.itemTitle}>Selling Time</Text>
+              <Text style={styles.itemTitle}>
+                {localizedStrings.ProfileIndex.SellingTime}
+              </Text>
               <View style={{flexDirection: 'row'}}>
                 {[...Array(3)].map((_, i) => (
                   <FontAwesome5
@@ -89,12 +103,12 @@ const PostAds = () => {
                     color={theme.gray}
                   /> */}
                 <FontAwesome5
-                    key={5}
-                    name="star"
-                    size={15}
-                    solid
-                    color={theme.gray}
-                  />
+                  key={5}
+                  name="star"
+                  size={15}
+                  solid
+                  color={theme.gray}
+                />
               </View>
             </View>
             <Spacer bottom={16} />
@@ -104,7 +118,9 @@ const PostAds = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}>
-              <Text style={styles.itemTitle}>Convenience</Text>
+              <Text style={styles.itemTitle}>
+                {localizedStrings.ProfileIndex.Convenience}
+              </Text>
               <View style={{flexDirection: 'row'}}>
                 {[...Array(4)].map((_, i) => (
                   <FontAwesome5
@@ -116,12 +132,12 @@ const PostAds = () => {
                   />
                 ))}
                 <FontAwesome5
-                    key={5}
-                    name="star"
-                    size={15}
-                    solid
-                    color={theme.gray}
-                  />
+                  key={5}
+                  name="star"
+                  size={15}
+                  solid
+                  color={theme.gray}
+                />
               </View>
             </View>
             <Spacer bottom={24} />
@@ -216,17 +232,19 @@ const PostAds = () => {
 
         <Spacer bottom={24} />
 
-        <View style={{display:'flex' , flexDirection:'row' , alignItems:'center' , justifyContent:'center'}}>
-          <Text style={styles.footerText}>
-            {' '}
-            To post more than one ad,{' '}
-            
-          </Text>
-          <TouchableOpacity onPress={()=>navigation.navigate('Help')}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text style={styles.footerText}> To post more than one ad, </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Help')}>
             <Text style={{color: '#20A8F4'}}>contact us</Text>
           </TouchableOpacity>
         </View>
-          
+
         <Spacer bottom={32} />
       </ScrollView>
     </View>

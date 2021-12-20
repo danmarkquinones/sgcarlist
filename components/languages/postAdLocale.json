@@ -1,0 +1,24 @@
+{
+  "en" : {
+      "ProfileIndex":{
+          "Title" : " Got a car to sell?",
+          "Subtitle" : "Let us help you with the right product",
+          "CardTitle" : "Sell it on Carlist.SG" , 
+          "CardSubTitle" : "List your car on Carlist.sg and get direct inquiries from interested buyers",
+          "SellingPrice" : "Selling Price",
+          "SellingTime":"Selling Time",
+          "Convenience":"Convenience"
+      }
+  },
+  "zh" : {
+      "ProfileIndex":{
+          "Title" : "个人资料",
+          "Subtitle" : "编辑",
+          "CardTitle"  : "全名" , 
+          "CardSubTitle" : "手机号码",
+          "SellingPrice" : "切换到销售",
+          "SellingTime":"买",
+          "Convenience":"卖"
+      }
+  }
+}
