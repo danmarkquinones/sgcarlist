@@ -7,17 +7,18 @@ import PrimaryInput from '../custom_components/customInput'
 import { Rating } from 'react-native-ratings';
 import { UserConfigContext } from '../store/context_api/userContext'
 import { addProductReview } from '../store/api_calls/cars_api'
+import { addAdvertiserReview } from '../store/api_calls/seller_api'
 
 const windowWidth = Dimensions.get('window').width;
 
 const CommentForm = (props) => {
 
-    const {commentArray , setCommentArray , item , onCancel} = props 
+    const {type , item , onCancel , commentArray , setCommentArray} = props 
     const [userConfig , setUserConfig] = useContext(UserConfigContext)
     const [rating , setRating] = useState(3)
     const [form , setForm] = useState({
         comment:'',
-        itemId:item._id,
+        itemId:type==="product"?item._id:item.advertisement_contact_details._id,
         anonymous:true,
         fname:'',
         lname:'',
@@ -58,13 +59,26 @@ const CommentForm = (props) => {
     }
 
     const onSubmit = () => {
-        addProductReview(form , rating).then((res)=>{
-            if(res.data){
-                console.log(res.data)
-            }
-        }).catch((e)=>{
-            console.log('error adding review' , e)
-        })
+        if(type==="product"){
+            addProductReview(form , rating).then((res)=>{
+                if(res.data){
+                    setCommentArray([res.data.data, ...commentArray])
+                    onCancel()
+                }
+            }).catch((e)=>{
+                console.log('error adding review' , e)
+            })
+        }else if(type==="seller"){
+            addAdvertiserReview(form , rating).then((res)=>{
+                if(res.data){
+                    setCommentArray([res.data.data, ...commentArray])
+                    onCancel()
+                }
+            }).catch((e)=>{
+                console.log('error adding review' , e)
+            })
+        }
+        
     }
 
     return (

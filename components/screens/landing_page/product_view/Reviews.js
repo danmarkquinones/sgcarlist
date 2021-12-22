@@ -16,6 +16,7 @@ const Reviews = (props) => {
     const [reviews , setReviews] = useState([])
     const [showForm , setShowForm] = useState(false)
     const isFocused = useIsFocused()
+    const [page , setPage] = useState(1)
 
     const getAverage = () => {
         const sum = reviews.reduce((a, b) => +a + +b.review_score, 0);
@@ -39,11 +40,12 @@ const Reviews = (props) => {
 
     useEffect(() => {
         if(isFocused){
-            const getReviews = fetchProductReview(item._id , 1)
+            const getReviews = fetchProductReview(item._id , page)
 
             getReviews.then((res)=>{
                 if(res.data){
                     let sortedData = res.data.data
+                    console.log(res.data.total_reviews_count)
                     // sortedData.sort(function(a,b){
                     //     return new Date(moment(b.date_created).format()) - new Date(moment(a.date_created).format());
                     // });
@@ -73,7 +75,14 @@ const Reviews = (props) => {
                                 >
                                     {getAverage()}
                                 </Text>
-                                <Rating ratingColor={generateRateColor()} type='custom' imageSize={15} readonly startingValue={getAverage()} ratingCount={5}/>
+                                <Rating 
+                                    ratingColor={generateRateColor()} 
+                                    type='custom' 
+                                    imageSize={15} 
+                                    readonly 
+                                    startingValue={getAverage()} 
+                                    ratingCount={5}
+                                />
                             </View>
                             
                             <Text>Overall Rating</Text>
@@ -118,6 +127,7 @@ const Reviews = (props) => {
 
             <Overlay isVisible={showForm} onBackdropPress={onCancel}>
                 <CommentForm
+                    type="product"
                     item={item}
                     commentArray={reviews}
                     setCommentArray={setReviews}

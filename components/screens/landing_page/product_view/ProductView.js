@@ -8,7 +8,6 @@ import FAIcon from 'react-native-vector-icons/FontAwesome';
 import { productStyles } from '../../../styles/productStyle';
 import { Divider } from 'react-native-elements/dist/divider/Divider';
 import SpecsView from './SpecsView';
-import { cars, reviews } from '../../../contants/dummyCarData';
 import { FlatList } from 'react-native-gesture-handler';
 import { SquareCard } from '../../../custom_components/customCards';
 import { theme } from '../../../contants/colors';
@@ -16,7 +15,7 @@ import ImageSliderView from './ImageSlider';
 import { PrimaryButton } from '../../../custom_components/customButtons';
 import { addToSavedCars, isInFavorites, onCallUser, removeToSavedCars } from '../../../store/helpers/globalFunctions';
 import { useIsFocused } from '@react-navigation/native';
-import { fetchProductReview, fetchSimilarCars, showProductPassIPAddress } from '../../../store/api_calls/cars_api';
+import { fetchSimilarCars, showProductPassIPAddress } from '../../../store/api_calls/cars_api';
 import Reviews from './Reviews';
 
 const windowWidth = Dimensions.get('window').width;
@@ -31,7 +30,6 @@ const ProductView = (props) => {
     const [config , setConfig] = useState({
         sortBy:'ascending',
         isGridView:true,
-        reviews:reviews,
         similarCars:[],
         sellerDetails:{name:'Lorem Ipsum' , location:'Jurong , Singapore'},
         inFavorites:false

@@ -66,7 +66,7 @@ const SellerView = (props) => {
             />
           );
         case 'third':
-          return <Reviews config={config} setConfig={setConfig} {...props} />;
+          return <Reviews data={data} />;
         default:
           return null;
       }
