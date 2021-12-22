@@ -21,6 +21,11 @@ import {
   CustomPicker,
   CustomPickerAsync,
 } from '../../custom_components/customPicker';
+import {UserConfigContext} from '../../store/context_api/userContext';
+import LocalizedStrings from 'react-native-localization';
+
+var localFile = require('../../languages/postAdLocale.json');
+let localizedStrings = new LocalizedStrings(localFile);
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -51,6 +56,9 @@ const UploadFifthStep = ({onScreenChange}) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [carBrands, setCarBrands] = useState([]);
 
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
+  localizedStrings.setLanguage(userConfig.language);
+
   const onSetCarDetails = keyValue => {
     setCarDetails({...carDetails, ...keyValue});
   };
@@ -77,9 +85,11 @@ const UploadFifthStep = ({onScreenChange}) => {
         <View style={{flex: 1}}>
           <Spacer bottom={8} />
 
-          <Text style={styles.title}>Car Details 3 of 3</Text>
+          <Text style={styles.title}>
+            {localizedStrings.CreateAdIndex.Step5Title}
+          </Text>
           <Text style={styles.subtitle}>
-            note: (*) fields are compulsory to be filled up
+            {localizedStrings.CreateAdIndex.Step5Title}
           </Text>
           <Spacer bottom={24} />
           <View>
@@ -274,7 +284,7 @@ const UploadFifthStep = ({onScreenChange}) => {
           <View style={{flex: 1}}>
             <PrimaryButton
               onPress={() => onScreenChange(!carDetails.details_type ? 2 : 3)}
-              title="Back"
+              title={localizedStrings.CreateAdIndex.BackBtn}
               color={theme.secondaryBlue}
             />
           </View>
@@ -283,7 +293,7 @@ const UploadFifthStep = ({onScreenChange}) => {
             <PrimaryButton
               onPress={() => onScreenChange(5)}
               color={theme.primaryBlue}
-              title="Next"
+              title={localizedStrings.CreateAdIndex.NextBtn}
             />
           </View>
         </View>

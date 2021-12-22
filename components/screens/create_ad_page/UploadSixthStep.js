@@ -20,12 +20,20 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {CarConfigContext} from '../../store/context_api/carContext';
+import {UserConfigContext} from '../../store/context_api/userContext';
+import LocalizedStrings from 'react-native-localization';
+
+var localFile = require('../../languages/postAdLocale.json');
+let localizedStrings = new LocalizedStrings(localFile);
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const UploadSixthStep = ({onScreenChange}) => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
+
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
+  localizedStrings.setLanguage(userConfig.language);
 
   const onSetCarDetails = newImages => {
     setCarDetails({
@@ -104,11 +112,12 @@ const UploadSixthStep = ({onScreenChange}) => {
         <View style={{flex: 1}}>
           <Spacer bottom={8} />
 
-          <Text style={styles.title}>Upload Pictures</Text>
+          <Text style={styles.title}>
+            {' '}
+            {localizedStrings.CreateAdIndex.Step6Title}
+          </Text>
           <Text style={styles.subtitle}>
-            Upload requirements: You can upload upto 9 images. Total image file
-            size should not exceed 6MB and it's dimension should not exceed
-            (4800 x 3600)pixels.
+            {localizedStrings.CreateAdIndex.Step6Subtitle}
           </Text>
 
           <Spacer bottom={24} />
@@ -173,7 +182,7 @@ const UploadSixthStep = ({onScreenChange}) => {
           <View style={{flex: 1}}>
             <PrimaryButton
               onPress={() => onScreenChange(4)}
-              title="Back"
+              title={localizedStrings.CreateAdIndex.BackBtn}
               color={theme.secondaryBlue}
             />
           </View>
@@ -182,7 +191,7 @@ const UploadSixthStep = ({onScreenChange}) => {
             <PrimaryButton
               onPress={() => onScreenChange(6)}
               color={theme.primaryBlue}
-              title="Next"
+              title={localizedStrings.CreateAdIndex.NextBtn}
             />
           </View>
         </View>

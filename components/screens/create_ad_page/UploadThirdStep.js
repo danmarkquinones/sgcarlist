@@ -8,6 +8,11 @@ import Spacer from '../../custom_components/spacer';
 import {useNavigation} from '@react-navigation/core';
 import CustomRadioButton from '../../custom_components/customRadioButton';
 import {CarConfigContext} from '../../store/context_api/carContext';
+import {UserConfigContext} from '../../store/context_api/userContext';
+import LocalizedStrings from 'react-native-localization';
+
+var localFile = require('../../languages/postAdLocale.json');
+let localizedStrings = new LocalizedStrings(localFile);
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -16,6 +21,9 @@ const UploadThirdStep = ({onScreenChange}) => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
   const navigation = useNavigation();
   const [selectedValue, setSelectedValue] = useState('0');
+
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
+  localizedStrings.setLanguage(userConfig.language);
 
   const onSetCarDetails = keyValue => {
     setCarDetails({...carDetails, ...keyValue});
@@ -27,9 +35,11 @@ const UploadThirdStep = ({onScreenChange}) => {
         <View style={{flex: 1}}>
           <Spacer bottom={8} />
 
-          <Text style={styles.title}>Car Details 1 of 3</Text>
+          <Text style={styles.title}>
+            {localizedStrings.CreateAdIndex.Step3Title}
+          </Text>
           <Text style={styles.subtitle}>
-            note: (*) fields are compulsory to be filled up
+            {localizedStrings.CreateAdIndex.Step3Title}
           </Text>
 
           <Spacer bottom={24} />
@@ -106,7 +116,7 @@ const UploadThirdStep = ({onScreenChange}) => {
           <View style={{flex: 1}}>
             <PrimaryButton
               onPress={() => onScreenChange(1)}
-              title="Back"
+              title={localizedStrings.CreateAdIndex.BackBtn}
               color={theme.secondaryBlue}
             />
           </View>
@@ -115,7 +125,7 @@ const UploadThirdStep = ({onScreenChange}) => {
             <PrimaryButton
               onPress={() => onScreenChange(carDetails.details_type ? 3 : 4)}
               color={theme.primaryBlue}
-              title="Next"
+              title={localizedStrings.CreateAdIndex.NextBtn}
             />
           </View>
         </View>

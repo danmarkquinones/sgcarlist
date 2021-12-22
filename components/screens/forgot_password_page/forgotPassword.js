@@ -12,8 +12,15 @@ const ForgotPassword = ({navigation}) => {
   const [contact, setContact] = useState('');
 
   const onSubmit = async () => {
-    const res = await api.POST({number: '9287666301'}, 'users/reset-password');
-    navigation.navigate('Verification', {fromForgotPassword: true});
+    const params = {number: contact};
+    const res = await api.POST(params, 'users/reset-password');
+    if (res?.data?.success) {
+      navigation.navigate('Verification', {fromForgotPassword: true});
+    } else {
+      alert('Oops! Something went wrong.');
+    }
+    console.log(res);
+    // 
   };
 
   return (
@@ -68,6 +75,6 @@ const ForgotPassword = ({navigation}) => {
       </View>
     </View>
   );
-};
+};;
 
 export default ForgotPassword;

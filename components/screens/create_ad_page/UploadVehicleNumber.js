@@ -11,12 +11,20 @@ import CustomRadioButton from '../../custom_components/customRadioButton';
 import Spacer from '../../custom_components/spacer';
 import {fetchLocations} from '../../store/api_calls/cars_api';
 import {CarConfigContext} from '../../store/context_api/carContext';
+import LocalizedStrings from 'react-native-localization';
+import {UserConfigContext} from '../../store/context_api/userContext';
+
+var localFile = require('../../languages/postAdLocale.json');
+let localizedStrings = new LocalizedStrings(localFile);
 
 const {width, height} = Dimensions.get('screen');
 
 const UploadVehicleNumber = ({onScreenChange}) => {
   const [carDetails, setCarDetails, onReset] = useContext(CarConfigContext);
   const [locations, setLocations] = useState([]);
+
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
+  localizedStrings.setLanguage(userConfig.language);
 
   const onSetCarDetails = keyValue => {
     setCarDetails({...carDetails, ...keyValue});
@@ -56,9 +64,11 @@ const UploadVehicleNumber = ({onScreenChange}) => {
       <View style={styles.container}>
         <View>
           <Spacer bottom={8} />
-          <Text style={styles.title}>Preffered Viewing Area</Text>
+          <Text style={styles.title}>
+            {localizedStrings.CreateAdIndex.ViewingArea}
+          </Text>
           <Text style={styles.subtitle}>
-            note: (*) fields are compulsory to be filled up
+            {localizedStrings.CreateAdIndex.Note}
           </Text>
           <Spacer bottom={40} />
           {/* <View>
@@ -135,7 +145,7 @@ const UploadVehicleNumber = ({onScreenChange}) => {
           <View style={{flex: 1}}>
             <PrimaryButton
               onPress={() => navigation.goBack(null)}
-              title="Back"
+              title={localizedStrings.CreateAdIndex.BackBtn}
               color={theme.secondaryBlue}
             />
           </View>
@@ -144,7 +154,7 @@ const UploadVehicleNumber = ({onScreenChange}) => {
             <PrimaryButton
               onPress={() => onScreenChange(1)}
               color={theme.primaryBlue}
-              title="Next"
+              title={localizedStrings.CreateAdIndex.NextBtn}
             />
           </View>
         </View>

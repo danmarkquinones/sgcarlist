@@ -14,12 +14,19 @@ import Spacer from '../../custom_components/spacer';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import {CarConfigContext} from '../../store/context_api/carContext';
 import ImageSlider from 'react-native-image-slider';
+import {UserConfigContext} from '../../store/context_api/userContext';
+import LocalizedStrings from 'react-native-localization';
+
+var localFile = require('../../languages/postAdLocale.json');
+let localizedStrings = new LocalizedStrings(localFile);
 
 const initialLayout = {width: Dimensions.get('window').width};
 
 const UploadSeventhStep = ({onScreenChange}) => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
-  console.log(carDetails.images);
+
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
+  localizedStrings.setLanguage(userConfig.language);
 
   const navigation = useNavigation();
   const [index, setIndex] = useState(0);
@@ -194,7 +201,7 @@ const UploadSeventhStep = ({onScreenChange}) => {
         <View style={{flex: 1}}>
           <PrimaryButton
             onPress={() => onScreenChange(5)}
-            title="Back"
+            title={localizedStrings.CreateAdIndex.BackBtn}
             color={theme.secondaryBlue}
           />
         </View>
@@ -203,7 +210,7 @@ const UploadSeventhStep = ({onScreenChange}) => {
           <PrimaryButton
             onPress={() => onScreenChange(7)}
             color={theme.primaryBlue}
-            title="Next"
+            title={localizedStrings.CreateAdIndex.NextBtn}
           />
         </View>
       </View>

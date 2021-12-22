@@ -1,24 +1,62 @@
 {
   "en" : {
-      "ProfileIndex":{
+      "CreateAdIndex":{
           "Title" : " Got a car to sell?",
           "Subtitle" : "Let us help you with the right product",
           "CardTitle" : "Sell it on Carlist.SG" , 
           "CardSubTitle" : "List your car on Carlist.sg and get direct inquiries from interested buyers",
           "SellingPrice" : "Selling Price",
           "SellingTime":"Selling Time",
-          "Convenience":"Convenience"
+          "Convenience":"Convenience",
+          "PostAdBtn":"CREATE AD",
+          "FooterTxt": "To post more than one ad,",
+          "ContactUs": "contact us",
+          "ViewingArea": "Preffered Viewing Area",
+          "Note": "note: (*) fields are compulsary to be filled up",
+          "BackBtn": "Back",
+          "NextBtn": "Next",
+          "Step2Title": "Package Options",
+          "Step2Subtitle": "Packages that we offer for your car advertisement:",
+          "Step3Title": "Car Details 1 of 3",
+          "Step3Subtitle": "note: (*) fields are compulsory to be filled up",
+          "Step4Title": "Car Details 2 of 3",
+          "Step4Subtitle": "note: (*) fields are compulsory to be filled up",
+          "Step5Title": "Car Details 3 of 3",
+          "Step5Subtitle": "note: (*) fields are compulsory to be filled up",
+          "Step6Title": "Upload Pictures",
+          "Step6Subtitle": "Upload requirements: You can upload upto 9 images. Total image file size should not exceed 6MB and it's dimension should not exceed (4800 x 3600)pixels.",
+          "Step8Title": "You are on the last step to create your ad.",
+          "ProceedBtn": "PROCEED"
       }
   },
   "zh" : {
-      "ProfileIndex":{
+      "CreateAdIndex":{
           "Title" : "个人资料",
           "Subtitle" : "编辑",
           "CardTitle"  : "全名" , 
           "CardSubTitle" : "手机号码",
           "SellingPrice" : "切换到销售",
           "SellingTime":"买",
-          "Convenience":"卖"
+          "Convenience":"手机号码",
+          "PostAdBtn":"卖",
+          "FooterTxt": "切换到销售",
+          "ContactUs": "全名s",
+          "ViewingArea": "切换到销售",
+          "Note": "手机号码",
+          "BackBtn": "卖",
+          "NextBtn": "卖",
+          "Step2Title": "切换到销售",
+          "Step2Subtitle": "切换到销售切换到销售:",
+          "Step3Title": "切换到销售",
+          "Step3Subtitle": "切换到销售切换到销售:",
+          "Step4Title": "切换到销售",
+          "Step4Subtitle": "切换到销售切换到销售:",
+          "Step5Title": "切换到销售",
+          "Step5Subtitle": "切换到销售切换到销售:",
+          "Step6Title": "切换到销售",
+          "Step6Subtitle": "切换到销售切换到销售:",
+          "Step8Title": "切换到销售切换到销售:",
+          "ProceedBtn": "卖"
       }
   }
 }

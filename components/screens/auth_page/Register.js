@@ -27,7 +27,7 @@ const Register = props => {
       user_last_name: lastName,
       user_email: email,
       role_name: 'Advertiser',
-      contact_number: '9287666301',
+      contact_number: contact,
       password: password,
       password_confirmation: confirmPassword,
       sms: true,
