@@ -1,0 +1,76 @@
+{
+  "en" : {
+      "Login":{
+          "Username" : "Username",
+          "Password": "Password",
+          "Forgot": "Forgot Password",
+          "LoginBtn": "Login",
+          "DontHaveAccount": "Don't have an account? ",
+          "SignUp": "Sign up now!",
+          "TermsAndCondition1": "By using this service, you confirm that you have read, understood and that you accept our ",
+          "TermsAndCondition2": "Terms and Conditions"
+      },
+      "ForgotPassword":{
+        "Header": "Forgot Password",
+        "Title" : "We will send you a One Time Password on this mobile number",
+        "PhoneNumber": "Phone Number",
+        "SubmitBtn": "Submit"
+      },
+      "Register":{
+        "FirstName": "First Name",
+        "LastName" : "Last Name",
+        "Email": "Email",
+        "PhoneNumber": "Phone Number",
+        "Password": "Password",
+        "ConfirmPassword": "Confirm Password",
+        "SignUpBtn": "Sign Up",
+        "AlreadyHaveAccount": "Already have an account?",
+        "SignIn": "Sign in"
+    },
+    "Otp": {
+      "Header": "Verification",
+      "Title": "We will send you a One Time Password on this mobile number",
+      "Otp": "OTP",
+      "DidntReceive": "Didn't receive code? ",
+      "RequestAgain": "Request Again!",
+      "SubmitBtn": "Submit"
+    }
+  },
+  "zh" : {
+    "Login":{
+      "Username" : "收藏夹",
+      "Password": "保存的汽车",
+      "Forgot": "固定过滤器",
+      "LoginBtn": "保存的汽车",
+      "DontHaveAccount": "固定过滤器? ",
+      "SignUp": "固定过滤器固定过滤器!",
+      "TermsAndCondition1": "固定过滤器固定过滤器固定过滤器固定过滤器固定过滤器固定过滤器 ",
+      "TermsAndCondition2": "固定过滤器"
+  },
+  "ForgotPassword":{
+    "Header": "定过滤器",
+    "Title" : "固定过滤器固定过滤器!",
+    "PhoneNumber": "收藏夹",
+    "SubmitBtn": "藏夹"
+},
+"Register":{
+  "FirstName": "保存的 汽车",
+  "LastName" : "保存的",
+  "Email": "的汽车",
+  "PhoneNumber": "P定过滤器",
+  "Password": "定过滤器",
+  "ConfirmPassword": "过滤器",
+  "SignUpBtn": "定过滤器",
+  "AlreadyHaveAccount": "定过滤器定过滤器?",
+  "SignIn": "定过滤器"
+},
+    "Otp": {
+      "Header": "过滤器",
+      "Title": "定过滤器定过滤器",
+      "Otp": "OTP",
+      "DidntReceive": "定过滤器定过滤器? ",
+      "RequestAgain": "定过滤器!",
+      "SubmitBtn": "过滤"
+    }
+  }
+}

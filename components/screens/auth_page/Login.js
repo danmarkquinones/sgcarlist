@@ -9,6 +9,10 @@ import Kjur from '../../store/helpers/jwt';
 import {api} from '../../store/api_calls/useApi';
 import {UserConfigContext} from '../../store/context_api/userContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LocalizedStrings from 'react-native-localization';
+
+var localFile = require('../../languages/authLocale.json');
+let localizedStrings = new LocalizedStrings(localFile);
 
 const Login = props => {
   const {width, height} = Dimensions.get('screen');
@@ -17,8 +21,10 @@ const Login = props => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isFetching, setIsFetching] = useState(false);
-  const [userConfig, setUserConfig] = useContext(UserConfigContext);
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
+  localizedStrings.setLanguage(userConfig.language);
 
   const onLogin = async () => {
     setIsFetching(true);
@@ -77,7 +83,7 @@ const Login = props => {
               onChange={setUsername}
               borderColor={theme.primaryBlue}
               height={50}
-              placeholder="Username"
+              placeholder={localizedStrings.Login.Username}
             />
             <Spacer bottom={16} />
             <PrimaryInput
@@ -85,7 +91,7 @@ const Login = props => {
               onChange={setPassword}
               borderColor={theme.primaryBlue}
               height={50}
-              placeholder="Password"
+              placeholder={localizedStrings.Login.Password}
               isPassword
             />
             <Spacer bottom={24} />
@@ -96,7 +102,7 @@ const Login = props => {
                 color: '#20A8F4',
                 fontWeight: 'bold',
               }}>
-              Forgot Password?
+              {localizedStrings.Login.Forgot}
             </Text>
             <Spacer bottom={48} />
 
@@ -104,7 +110,7 @@ const Login = props => {
               disabled={isDisabled}
               color={'#254A7C'}
               onPress={onLogin}
-              title="Login"
+              title={localizedStrings.Login.LoginBtn}
               txtStyle={{color: theme.white, fontWeight: 'bold'}}
             />
 
@@ -114,19 +120,20 @@ const Login = props => {
                 textAlign: 'center',
                 fontWeight: 'bold',
               }}>
-              Don't have an account?{' '}
+              {localizedStrings.Login.DontHaveAccount}
               <Text
                 onPress={() => navigation.navigate('Register')}
                 style={{color: '#20A8F4'}}>
-                Sign up now!
+                {localizedStrings.Login.SignUp}
               </Text>
             </Text>
             <Spacer bottom={48} />
 
             <Text style={{textAlign: 'center', fontSize: 12}}>
-              By using this service, you confirm that you have read, understood
-              and that you accept our{' '}
-              <Text style={{color: '#20A8F4'}}>Terms and Conditions</Text>
+              {localizedStrings.Login.TermsAndCondition1}
+              <Text style={{color: '#20A8F4'}}>
+                {localizedStrings.Login.TermsAndCondition2}
+              </Text>
             </Text>
           </View>
         </View>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, Dimensions, Image} from 'react-native';
 import {theme} from '../../contants/colors';
 import {TabView, TabBar} from 'react-native-tab-view';
@@ -11,12 +11,20 @@ import Spacer from '../../custom_components/spacer';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import {useNavigation} from '@react-navigation/core';
 import {api} from '../../store/api_calls/useApi';
+import LocalizedStrings from 'react-native-localization';
+import {UserConfigContext} from '../../store/context_api/userContext';
+
+var localFile = require('../../languages/authLocale.json');
+let localizedStrings = new LocalizedStrings(localFile);
 
 const initialLayout = {width: Dimensions.get('window').width};
 
 const Verification = props => {
   const {route} = props;
-  console.log(props);
+
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
+  localizedStrings.setLanguage(userConfig.language);
+
   const {width, height} = Dimensions.get('screen');
   const navigation = useNavigation();
   const [index, setIndex] = useState(0);
@@ -68,7 +76,7 @@ const Verification = props => {
         flex: 1,
         backgroundColor: theme.white,
       }}>
-      <CustomHeader title="Verification" />
+      <CustomHeader title={localizedStrings.Otp.Header} />
 
       <View style={{flex: 1, justifyContent: 'flex-start'}}>
         {/* <TabView
@@ -104,16 +112,18 @@ const Verification = props => {
           <PrimaryButton
             onPress={onVerifyOtp}
             color={theme.primaryBlue}
-            title="Submit"
+            title={localizedStrings.Otp.SubmitBtn}
             txtStyle={{textTransform: 'capitalize', color: theme.white}}
           />
         </View>
 
         <View style={{padding: 24, zIndex: 20}}>
           <Text style={{textAlign: 'center', color: theme.black, fontSize: 12}}>
-            By using this service, you confirm that you have read, understood
-            and that you accept our{' '}
-            <Text style={{color: '#20A8F4'}}>Terms and Conditions</Text>
+            {localizedStrings.Login.TermsAndCondition1}
+            <Text style={{color: '#20A8F4'}}>
+              {' '}
+              {localizedStrings.Login.TermsAndCondition2}
+            </Text>
           </Text>
         </View>
       </View>

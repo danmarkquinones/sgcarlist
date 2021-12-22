@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useContext} from 'react';
 import {Text, View, Image, Dimensions, ScrollView} from 'react-native';
 import {theme} from '../../contants/colors';
 import logo from '../../../assets/images/carlistsg_white.png';
@@ -7,9 +7,17 @@ import Spacer from '../../custom_components/spacer';
 import {PrimaryButton} from '../../custom_components/customButtons';
 import {api} from '../../store/api_calls/useApi';
 import PhoneInput from 'react-native-phone-number-input';
+import LocalizedStrings from 'react-native-localization';
+import {UserConfigContext} from '../../store/context_api/userContext';
+
+var localFile = require('../../languages/authLocale.json');
+let localizedStrings = new LocalizedStrings(localFile);
 
 const Register = props => {
   const {navigation} = props;
+
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
+  localizedStrings.setLanguage(userConfig.language);
 
   const phoneInput = useRef(null);
   const [firstName, setFirstName] = useState('');
@@ -93,21 +101,21 @@ const Register = props => {
               onChange={setFirstName}
               borderColor={theme.primaryBlue}
               height={50}
-              placeholder="First Name"
+              placeholder={localizedStrings.Register.FirstName}
             />
             <Spacer bottom={24} />
             <PrimaryInput
               onChange={setLastName}
               borderColor={theme.primaryBlue}
               height={50}
-              placeholder="Last Name"
+              placeholder={localizedStrings.Register.LastName}
             />
             <Spacer bottom={24} />
             <PrimaryInput
               onChange={setEmail}
               borderColor={theme.primaryBlue}
               height={50}
-              placeholder="Email"
+              placeholder={localizedStrings.Register.Email}
             />
             <Spacer bottom={24} />
             <PhoneInput
@@ -115,6 +123,7 @@ const Register = props => {
               defaultValue={contact}
               defaultCode="SG"
               layout="first"
+              placeholder={localizedStrings.Register.PhoneNumber}
               containerStyle={{
                 width: '100%',
                 height: 55,
@@ -137,7 +146,7 @@ const Register = props => {
               onChange={setPassword}
               borderColor={theme.primaryBlue}
               height={50}
-              placeholder="Password"
+              placeholder={localizedStrings.Register.Password}
               isPassword
             />
             <Spacer bottom={24} />
@@ -145,7 +154,7 @@ const Register = props => {
               onChange={setConfirmPassword}
               borderColor={theme.primaryBlue}
               height={50}
-              placeholder="Confirm password"
+              placeholder={localizedStrings.Register.ConfirmPassword}
               isPassword
             />
             <Spacer bottom={24} />
@@ -154,23 +163,24 @@ const Register = props => {
               disabled={disabled}
               color={'#254A7C'}
               onPress={onSignUp}
-              title="Sign Up"
+              title={localizedStrings.Register.SignUpBtn}
               txtStyle={{color: theme.white}}
             />
             <Spacer bottom={24} />
             <Text style={{textAlign: 'center'}}>
-              Already have an account?{' '}
+              {localizedStrings.Register.AlreadyHaveAccount}
               <Text
                 onPress={() => navigation.navigate('Login')}
                 style={{color: '#20A8F4'}}>
-                Sign in!
+                {localizedStrings.Register.SignIn}
               </Text>
             </Text>
             <Spacer bottom={24} />
             <Text style={{textAlign: 'center', fontSize: 12}}>
-              By using this service, you confirm that you have read, understood
-              and that you accept our{' '}
-              <Text style={{color: '#20A8F4'}}>Terms and Conditions</Text>
+              {localizedStrings.Login.TermsAndCondition1}
+              <Text style={{color: '#20A8F4'}}>
+                {localizedStrings.Login.TermsAndCondition2}
+              </Text>
             </Text>
             <Spacer bottom={24} />
           </View>

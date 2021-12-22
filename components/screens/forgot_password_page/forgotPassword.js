@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useContext} from 'react';
 import {View, Text} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import {theme} from '../../contants/colors';
@@ -6,10 +6,19 @@ import {PrimaryButton} from '../../custom_components/customButtons';
 import CustomHeader from '../../custom_components/customHeader';
 import Spacer from '../../custom_components/spacer';
 import {api} from '../../store/api_calls/useApi';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LocalizedStrings from 'react-native-localization';
+import {UserConfigContext} from '../../store/context_api/userContext';
+
+var localFile = require('../../languages/authLocale.json');
+let localizedStrings = new LocalizedStrings(localFile);
 
 const ForgotPassword = ({navigation}) => {
   const phoneInput = useRef(null);
   const [contact, setContact] = useState('');
+
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
+  localizedStrings.setLanguage(userConfig.language);
 
   const onSubmit = async () => {
     const params = {number: contact};
@@ -20,16 +29,16 @@ const ForgotPassword = ({navigation}) => {
       alert('Oops! Something went wrong.');
     }
     console.log(res);
-    // 
+    //
   };
 
   return (
     <View style={{flex: 1, backgroundColor: theme.lightBlue}}>
-      <CustomHeader title="Forgot Password" />
+      <CustomHeader title={localizedStrings.ForgotPassword.Header} />
       <Spacer bottom={48} />
       <View style={{paddingHorizontal: 24}}>
         <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 20}}>
-          We will send you a One Time Password on this mobile number
+          {localizedStrings.ForgotPassword.Title}
         </Text>
         <Spacer bottom={24} />
 
@@ -39,6 +48,7 @@ const ForgotPassword = ({navigation}) => {
           defaultCode="SG"
           value={contact}
           layout="first"
+          placeholder={localizedStrings.ForgotPassword.PhoneNumber}
           containerStyle={{
             width: '100%',
             height: 55,
@@ -61,20 +71,21 @@ const ForgotPassword = ({navigation}) => {
           disabled={!contact}
           color={'#254A7C'}
           onPress={onSubmit}
-          title="Submit"
+          title={localizedStrings.ForgotPassword.SubmitBtn}
           txtStyle={{color: theme.white}}
         />
       </View>
 
       <View style={{padding: 24, flex: 1, justifyContent: 'flex-end'}}>
         <Text style={{textAlign: 'center', color: theme.black, fontSize: 12}}>
-          By using this service, you confirm that you have read, understood and
-          that you accept our{' '}
-          <Text style={{color: '#20A8F4'}}>Terms and Conditions</Text>
+          {localizedStrings.Login.TermsAndCondition1}
+          <Text style={{color: '#20A8F4'}}>
+            {localizedStrings.Login.TermsAndCondition2}
+          </Text>
         </Text>
       </View>
     </View>
   );
-};;
+};
 
 export default ForgotPassword;
