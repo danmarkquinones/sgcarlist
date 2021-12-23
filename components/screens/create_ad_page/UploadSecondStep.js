@@ -40,9 +40,8 @@ const UploadSecondStep = ({onScreenChange}) => {
   }, []);
 
   const getPackages = async () => {
-    const res = await api.GET('/product_advertisement_packages');
+    const res = await api.GET('/advertisement_packages/');
     setIsLoading(false);
-    console.log(res.data.data);
     setPackages(res.data.data);
   };
 
@@ -63,7 +62,7 @@ const UploadSecondStep = ({onScreenChange}) => {
 
           {!isLoading
             ? packages.map(item => {
-                return item.package_name === 'star_ad' ? (
+                return item.package_name === 'Star Ad' ? (
                   <TouchableOpacity
                     onPress={() =>
                       onSetCarDetails({
