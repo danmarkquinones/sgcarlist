@@ -31,7 +31,7 @@ const MobileVerification = ({otp, setOtp}) => {
         placeholder={localizedStrings.Otp.Otp}
       />
       <Spacer bottom={24} />
-      <Text
+      {/* <Text
         style={{
           textAlign: 'center',
           fontWeight: 'bold',
@@ -40,7 +40,7 @@ const MobileVerification = ({otp, setOtp}) => {
         <Text style={{color: '#20A8F4'}}>
           {localizedStrings.Otp.RequestAgain}
         </Text>
-      </Text>
+      </Text> */}
     </View>
   );
 };
