@@ -39,6 +39,7 @@ export const CarConfigContextProvider = props => {
     description: '',
     offPeak: '',
     images: [],
+    details_type: true,
   };
   const [carDetails, setCarDetails] = useState(initialValue);
 
