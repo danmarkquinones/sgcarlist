@@ -65,17 +65,14 @@ const UploadEighthStep = () => {
 
   const uploadImages = async () => {
     const images = carDetails.images[0];
-    console.log(images);
+    
     const payload = {
       type: 'image',
       file: images.uri,
       filename: images.fileName,
     };
 
-    console.log(payload);
-
     let res = await api.POST_IMAGE(payload, '/images');
-    console.log('RESPONSE', res);
   };
 
   return (

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {Platform} from 'react-native';
 import {API_BASE_URL} from '@env';
 import Kjur from '../helpers/jwt';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,9 +35,41 @@ const POST_IMAGE = async (payload, route) => {
   axiosConfig.headers['Content-Type'] = 'multipart/form-data';
 
   const form = new FormData();
-  form.append('file', payload.file);
-  form.append('type', payload.type);
-  form.append('filename', payload.filename);
+
+  // const uriParts = payload.file.split('.');
+  // const fileType = uriParts[uriParts.length - 1];
+
+  // console.log('image', {
+  //   name: 'profilePic',
+  //   type: `image/${fileType}`,
+  //   uri:
+  //     Platform.OS === 'ios' ? photo.uri.replace('file://', '') : payload.file,
+  // });
+
+  // form.append('image', {
+  //   name: 'profilePic',
+  //   type: `image/${fileType}`,
+  //   uri:
+  //     Platform.OS === 'ios' ? photo.uri.replace('file://', '') : payload.file,
+  // });
+  // form.append(
+  //   'image',
+  //   Platform.OS === 'android'
+  //     ? payload.file
+  //     : payload.file.replace('file://', ''),
+  // );
+  // form.append('type', payload.type);
+
+  console.log('PAYLOD NAME', payload);
+
+  form.append('image', {
+    name: payload.filename,
+    type: 'image/*',
+    uri:
+      Platform.OS === 'android'
+        ? payload.file
+        : payload.file.replace('file://', ''),
+  });
 
   return axios
     .post(`${API_BASE_URL}${route}`, form, axiosConfig)
