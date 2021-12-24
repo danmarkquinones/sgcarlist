@@ -16,12 +16,20 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useNavigation} from '@react-navigation/core';
 import {CarConfigContext} from '../../store/context_api/carContext';
 import {api} from '../../store/api_calls/useApi';
+import {UserConfigContext} from '../../store/context_api/userContext';
+import LocalizedStrings from 'react-native-localization';
+
+var localFile = require('../../languages/postAdLocale.json');
+let localizedStrings = new LocalizedStrings(localFile);
 
 const UploadSecondStep = ({onScreenChange}) => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
   const navigation = useNavigation();
   const [packages, setPackages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
+  localizedStrings.setLanguage(userConfig.language);
 
   const onSetCarDetails = keyValue => {
     setCarDetails({...carDetails, ...keyValue});
@@ -32,9 +40,8 @@ const UploadSecondStep = ({onScreenChange}) => {
   }, []);
 
   const getPackages = async () => {
-    const res = await api.GET('/product_advertisement_packages');
+    const res = await api.GET('/advertisement_packages/');
     setIsLoading(false);
-    console.log(res.data.data);
     setPackages(res.data.data);
   };
 
@@ -43,9 +50,11 @@ const UploadSecondStep = ({onScreenChange}) => {
       <View style={styles.container}>
         <Spacer bottom={8} />
 
-        <Text style={styles.title}>Package Options</Text>
+        <Text style={styles.title}>
+          {localizedStrings.CreateAdIndex.Step2Title}
+        </Text>
         <Text style={styles.subtitle}>
-          Packages that we offer for your car advertisement:
+          {localizedStrings.CreateAdIndex.Step2Subtitle}
         </Text>
         <Spacer bottom={24} />
         <View>
@@ -53,7 +62,7 @@ const UploadSecondStep = ({onScreenChange}) => {
 
           {!isLoading
             ? packages.map(item => {
-                return item.package_name === 'star_ad' ? (
+                return item.package_name === 'Star Ad' ? (
                   <TouchableOpacity
                     onPress={() =>
                       onSetCarDetails({
@@ -262,7 +271,7 @@ const UploadSecondStep = ({onScreenChange}) => {
           <View style={{flex: 1}}>
             <PrimaryButton
               onPress={() => onScreenChange(0)}
-              title="Back"
+              title={localizedStrings.CreateAdIndex.BackBtn}
               color={theme.secondaryBlue}
             />
           </View>
@@ -271,7 +280,7 @@ const UploadSecondStep = ({onScreenChange}) => {
             <PrimaryButton
               onPress={() => onScreenChange(2)}
               color={theme.primaryBlue}
-              title="Next"
+              title={localizedStrings.CreateAdIndex.NextBtn}
             />
           </View>
         </View>

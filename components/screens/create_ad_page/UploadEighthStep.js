@@ -8,9 +8,17 @@ import {CarConfigContext} from '../../store/context_api/carContext';
 import {api} from '../../store/api_calls/useApi';
 import {RNS3} from 'react-native-aws3';
 import {aws} from '../../store/helpers/keys';
+import {UserConfigContext} from '../../store/context_api/userContext';
+import LocalizedStrings from 'react-native-localization';
+
+var localFile = require('../../languages/postAdLocale.json');
+let localizedStrings = new LocalizedStrings(localFile);
 
 const UploadEighthStep = () => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
+
+  const [userConfig, setUserConfig] = useContext(UserConfigContext);
+  localizedStrings.setLanguage(userConfig.language);
 
   const onSubmit = async () => {
     const payload = {
@@ -51,32 +59,27 @@ const UploadEighthStep = () => {
 
     uploadImages();
 
-    let res = await api.POST(payload, '/products');
-    console.log(res);
+    // let res = await api.POST(payload, '/products');
+    // console.log(res);
   };
 
-  const uploadImages = () => {
-    // const images = carDetails.images;
-    // const config = {
-    //   keyPrefix: 's3/',
-    //   bucket: 'sgcarlist-app',
-    //   region: 'ap-southeast-1',
-    //   accessKey: '',
-    //   secretKey: '',
-    //   successActionStatus: 201,
-    // };
-    // images.forEach(image => {
-    //   RNS3.put(image, config).then(response => {
-    //     console.log(response);
-    //   });
-    // });
+  const uploadImages = async () => {
+    const images = carDetails.images[0];
+    console.log(images);
+    const payload = {
+      type: 'image',
+      file: images.uri,
+    };
+
+    let res = await api.POST_IMAGE(payload, '/images');
+    console.log('RESPONSE', res);
   };
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: theme.white}}>
       <View style={{padding: 24, flex: 1}}>
         <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center'}}>
-          You are on the last step to {'\n'} create your ad.
+          {localizedStrings.CreateAdIndex.Step8Title}
         </Text>
         <Spacer bottom={40} />
 
@@ -94,7 +97,7 @@ const UploadEighthStep = () => {
           <PrimaryButton
             onPress={onSubmit}
             color={theme.primaryBlue}
-            title="Proceed"
+            title={localizedStrings.CreateAdIndex.ProceedBtn}
           />
         </View>
       </View>

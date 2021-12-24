@@ -37,20 +37,20 @@ const PostAds = () => {
       />
       <ScrollView style={{flex: 1}}>
         <Spacer bottom={24} />
-        <Text style={styles.title}>{localizedStrings.ProfileIndex.Title}</Text>
+        <Text style={styles.title}>{localizedStrings.CreateAdIndex.Title}</Text>
         <Spacer bottom={4} />
         <Text style={styles.subtitle}>
-          {localizedStrings.ProfileIndex.Subtitle}
+          {localizedStrings.CreateAdIndex.Subtitle}
         </Text>
         <Spacer bottom={24} />
         <View style={{paddingHorizontal: 24}}>
           <Card containerStyle={{borderRadius: 8}}>
             <Text style={styles.cardTitle}>
-              {localizedStrings.ProfileIndex.CardTitle}
+              {localizedStrings.CreateAdIndex.CardTitle}
             </Text>
             <Spacer bottom={4} />
             <Text style={styles.cardSubtitle}>
-              {localizedStrings.ProfileIndex.CardSubTitle}
+              {localizedStrings.CreateAdIndex.CardSubTitle}
             </Text>
 
             <Spacer bottom={32} />
@@ -61,7 +61,7 @@ const PostAds = () => {
                 alignItems: 'center',
               }}>
               <Text style={styles.itemTitle}>
-                {localizedStrings.ProfileIndex.SellingPrice}
+                {localizedStrings.CreateAdIndex.SellingPrice}
               </Text>
               <View style={{flexDirection: 'row'}}>
                 {[...Array(5)].map((_, i) => (
@@ -83,7 +83,7 @@ const PostAds = () => {
                 alignItems: 'center',
               }}>
               <Text style={styles.itemTitle}>
-                {localizedStrings.ProfileIndex.SellingTime}
+                {localizedStrings.CreateAdIndex.SellingTime}
               </Text>
               <View style={{flexDirection: 'row'}}>
                 {[...Array(3)].map((_, i) => (
@@ -119,7 +119,7 @@ const PostAds = () => {
                 alignItems: 'center',
               }}>
               <Text style={styles.itemTitle}>
-                {localizedStrings.ProfileIndex.Convenience}
+                {localizedStrings.CreateAdIndex.Convenience}
               </Text>
               <View style={{flexDirection: 'row'}}>
                 {[...Array(4)].map((_, i) => (
@@ -146,7 +146,7 @@ const PostAds = () => {
                 navigation.navigate('CreateAdIndex');
                 onReset();
               }}
-              title="Create Ad"
+              title={localizedStrings.CreateAdIndex.PostAdBtn}
               color={theme.primaryBlue}
             />
           </Card>
@@ -239,9 +239,13 @@ const PostAds = () => {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Text style={styles.footerText}> To post more than one ad, </Text>
+          <Text style={styles.footerText}>
+            {localizedStrings.CreateAdIndex.FooterTxt}
+          </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Help')}>
-            <Text style={{color: '#20A8F4'}}>contact us</Text>
+            <Text style={{color: '#20A8F4'}}>
+              {localizedStrings.CreateAdIndex.ContactUs}
+            </Text>
           </TouchableOpacity>
         </View>
 
