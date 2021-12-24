@@ -28,6 +28,27 @@ const POST = async (params, route) => {
     });
 };
 
+const POST_IMAGE = async (payload, route) => {
+  const bearerToken = await AsyncStorage.getItem('bearerToken');
+  axiosConfig.headers['Authorization'] = `Bearer ${bearerToken}`;
+  axiosConfig.headers['Content-Type'] = 'multipart/form-data';
+
+  const form = new FormData();
+  form.append('file', payload.file);
+  form.append('type', payload.type);
+
+  return axios
+    .post(`${API_BASE_URL}${route}`, form, axiosConfig)
+    .then(function (response) {
+      console.log(response.data);
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+      return error;
+    });
+};
+
 const GET = (route, params) => {
   const token = Kjur.encode(params ? params : {});
 
@@ -66,18 +87,25 @@ const DELETE = async (route, params) => {
 
   axiosConfig.headers['Authorization'] = `Bearer ${bearerToken}`;
 
-  return axios
-    .delete(`${API_BASE_URL}${route}`, {token: token}, axiosConfig)
-    .then(res => {
-      console.log('DELET', res);
-      return res;
-    })
-    .catch(error => {
-      return {error: error.message, status: 500};
-    });
+  // return axios
+  //   .delete(`${API_BASE_URL}${route}`, {token: token}, axiosConfig)
+  //   .then(res => {
+  //     console.log('DELET', res);
+  //     return res;
+  //   })
+  //   .catch(error => {
+  //     return {error: error.message, status: 500};
+  //   });
+
+  return axios.delete(`${API_BASE_URL}${route}`, {
+    headers: axiosConfig.headers,
+    data: {
+      token: token,
+    },
+  });
 };
 
-export const api = {POST, GET, UPDATE, DELETE};
+export const api = {POST, GET, UPDATE, DELETE, POST_IMAGE};
 
 export const logout = () => {
   AsyncStorage.setItem('isLoggedIn', '0');

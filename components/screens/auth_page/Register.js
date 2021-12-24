@@ -134,6 +134,7 @@ const Register = props => {
               textContainerStyle={{
                 paddingVertical: 0,
                 borderRadius: 5,
+                backgroundColor: theme.white,
               }}
               textInputStyle={{fontSize: 14}}
               codeTextStyle={{fontSize: 14}}

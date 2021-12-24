@@ -59,25 +59,20 @@ const UploadEighthStep = () => {
 
     uploadImages();
 
-    let res = await api.POST(payload, '/products');
-    console.log(res);
+    // let res = await api.POST(payload, '/products');
+    // console.log(res);
   };
 
-  const uploadImages = () => {
-    // const images = carDetails.images;
-    // const config = {
-    //   keyPrefix: 's3/',
-    //   bucket: 'sgcarlist-app',
-    //   region: 'ap-southeast-1',
-    //   accessKey: '',
-    //   secretKey: '',
-    //   successActionStatus: 201,
-    // };
-    // images.forEach(image => {
-    //   RNS3.put(image, config).then(response => {
-    //     console.log(response);
-    //   });
-    // });
+  const uploadImages = async () => {
+    const images = carDetails.images[0];
+    console.log(images);
+    const payload = {
+      type: 'image',
+      file: images.uri,
+    };
+
+    let res = await api.POST_IMAGE(payload, '/images');
+    console.log('RESPONSE', res);
   };
 
   return (

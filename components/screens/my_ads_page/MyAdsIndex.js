@@ -51,6 +51,8 @@ const MyAdsIndex = () => {
 
     const res = await api.GET('/advertiser', params);
 
+    console.log(res);
+
     if (res?.data?.success) {
       setProducts(res.data.data[0].advertiser_products);
       setIsLoading(false);
@@ -61,8 +63,11 @@ const MyAdsIndex = () => {
   };
 
   const onDeleteProduct = async id => {
-    const res = await api.DELETE('/products/delete', {id});
-    console.log(res);
+    // const res = await api.DELETE('/products/delete', {id});
+
+    const filteredProducts = products.filter(product => product._id !== id);
+    setProducts(filteredProducts);
+    // console.log(res);
   };
 
   const onMarkAsSold = async id => {
@@ -122,6 +127,6 @@ const MyAdsIndex = () => {
       </View>
     </View>
   );
-};
+};;
 
 export default MyAdsIndex;
