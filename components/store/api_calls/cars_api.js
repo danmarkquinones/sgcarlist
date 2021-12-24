@@ -144,7 +144,7 @@ export const addProductReview = async (data , rating) => {
 
     const encodedData = Kjur.encode(obj)
 
-    console.log(obj)
+    console.log(encodedData)
 
     return await axios.post(`${API_BASE_URL}/products-review/add`,
         {token:encodedData},

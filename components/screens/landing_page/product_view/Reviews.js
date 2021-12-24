@@ -9,6 +9,7 @@ import { fetchProductReview } from '../../../store/api_calls/cars_api'
 import moment from "moment";
 import { Rating } from 'react-native-elements'
 import CommentForm from '../../../reusable_components/commentForm'
+import Pagination from '../../../reusable_components/pagination'
 
 const Reviews = (props) => {
 
@@ -16,7 +17,8 @@ const Reviews = (props) => {
     const [reviews , setReviews] = useState([])
     const [showForm , setShowForm] = useState(false)
     const isFocused = useIsFocused()
-    const [page , setPage] = useState(1)
+    const [pagination , setPagination] = useState({total:"", page:1 ,numOfPage:""})
+    const [loading , setLoading] = useState(false)
 
     const getAverage = () => {
         const sum = reviews.reduce((a, b) => +a + +b.review_score, 0);
@@ -38,24 +40,33 @@ const Reviews = (props) => {
         setShowForm(!showForm)
     }
 
-    useEffect(() => {
-        if(isFocused){
-            const getReviews = fetchProductReview(item._id , page)
+    const onGetReviews = () => {
+        setLoading(true)
+        const getReviews = fetchProductReview(item._id , pagination.page)
 
-            getReviews.then((res)=>{
-                if(res.data){
-                    let sortedData = res.data.data
-                    console.log(res.data.total_reviews_count)
-                    // sortedData.sort(function(a,b){
-                    //     return new Date(moment(b.date_created).format()) - new Date(moment(a.date_created).format());
-                    // });
-                    setReviews(sortedData)
-                }
-            }).catch((e)=>{
-                console.log('error reviews' , e)
-            })
+        getReviews.then((res)=>{
+            if(res.data){
+                let sortedData = res.data.data
+                console.log(res.data.data)
+                setPagination({
+                    ...pagination , 
+                    total:res.data.total_reviews_count,
+                    numOfPage:Math.ceil(res.data.total_reviews_count/10)
+                })
+                setReviews(sortedData)
+                setLoading(false)
+            }
+        }).catch((e)=>{
+            console.log('error reviews' , e)
+            setLoading(false)
+        })
+    }
+
+    useEffect(() => {
+        if(isFocused || pagination.page){
+            onGetReviews()
         }
-    }, [isFocused])
+    }, [isFocused , pagination.page])
     
 
     return (
@@ -96,8 +107,10 @@ const Reviews = (props) => {
                 </TouchableOpacity>
 
                 <View>
-                    <Text style={productStyles.reviewCommentLabel}>{reviews.length} Comment(s)</Text>
-                    <FlatList
+                    <Text style={productStyles.reviewCommentLabel}>{pagination.total} Comment(s)</Text>
+
+                    {loading? <Text>Loading...</Text>
+                    :<FlatList
                         keyExtractor={(item)=>item._id}
                         data={reviews}
                         renderItem={({item,index})=>(
@@ -106,7 +119,8 @@ const Reviews = (props) => {
                                     <View style={productStyles.commenterHeaderContainer}>
                                         <Text style={productStyles.commenter}>
                                             {item.is_anonymous?
-                                                `#User.${item._id.substring(item._id.length-4,)}`
+                                                // `#User.${item._id.substring(item._id.length-4,)}`
+                                                "Anonymous User"
                                                 :`${item.first_name} ${item.last_name}`
                                             }
                                         </Text>
@@ -121,7 +135,9 @@ const Reviews = (props) => {
                                 </View>
                             </View>
                         )}
-                    />
+                    />}
+
+                    <Pagination pagination={pagination} setPagination={setPagination}/>
                 </View>
             </View>
 
