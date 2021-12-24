@@ -69,7 +69,10 @@ const UploadEighthStep = () => {
     const payload = {
       type: 'image',
       file: images.uri,
+      filename: images.fileName,
     };
+
+    console.log(payload);
 
     let res = await api.POST_IMAGE(payload, '/images');
     console.log('RESPONSE', res);
