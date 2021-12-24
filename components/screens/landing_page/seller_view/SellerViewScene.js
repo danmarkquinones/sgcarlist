@@ -12,6 +12,7 @@ import {sellersStyles} from '../../../styles/sellersStyles';
 import { useIsFocused } from '@react-navigation/native';
 import { getAdvertiserReviews } from '../../../store/api_calls/seller_api';
 import moment from 'moment';
+import Pagination from '../../../reusable_components/pagination';
 
 export const Listings = props => {
   const {config, setConfig, navigation} = props;
@@ -115,7 +116,8 @@ export const Reviews = props => {
   const [showForm, setShowForm] = useState(false);
   const [reviews, setReviews] = useState([]);
   const isFocused = useIsFocused()
-  const [page , setPage] = useState(1)
+  const [pagination , setPagination] = useState({total:"", page:1 ,numOfPage:""})
+  const [loading , setLoading] = useState(false)
 
   const getAverage = () => {
     const sum = reviews.reduce((a, b) => +a + +b.review_score, 0);
@@ -137,24 +139,33 @@ export const Reviews = props => {
     setShowForm(!showForm);
   };
 
-  useEffect(() => {
-    if(isFocused){
-        const getReviews = getAdvertiserReviews(data.advertisement_contact_details._id , page)
+  const onFetchReviews = () => {
+    setLoading(true)
+    const getReviews = getAdvertiserReviews(data.advertisement_contact_details._id , pagination.page)
 
-        getReviews.then((res)=>{
-            if(res.data){
-                let sortedData = res.data.data
-                console.log('reviews' , sortedData)
-                // sortedData.sort(function(a,b){
-                //     return new Date(moment(b.date_created).format()) - new Date(moment(a.date_created).format());
-                // });
-                setReviews(sortedData)
-            }
-        }).catch((e)=>{
-            console.log('error reviews' , e)
-        })
+    getReviews.then((res)=>{
+        if(res.data){
+            let sortedData = res.data.data
+            // console.log('reviews' , sortedData)
+            setPagination({
+              ...pagination , 
+              total:res.data.total_reviews_count,
+              numOfPage:Math.ceil(res.data.total_reviews_count/10)
+            })
+            setReviews(sortedData)
+            setLoading(false)
+        }
+    }).catch((e)=>{
+        console.log('error reviews' , e)
+        setLoading(false)
+    })
+  }
+
+  useEffect(() => {
+    if(isFocused || pagination.page){
+      onFetchReviews()
     }
-  }, [isFocused])
+  }, [isFocused || pagination.page])
 
   return (
     <ScrollView
@@ -197,9 +208,11 @@ export const Reviews = props => {
         </TouchableOpacity>
         <Text style={{marginTop: 10}}>{reviews.length} review(s)</Text>
       </View>
-      <View style={{flex: 1}}>
-        {reviews.length?
-            <FlatList
+      <View 
+        // style={{flex: 1}}
+      >
+        {loading?<Text>Loading...</Text>
+          :<FlatList
             contentContainerStyle={{paddingBottom: 40}}
             data={reviews}
             keyExtractor={item => item._id}
@@ -209,7 +222,8 @@ export const Reviews = props => {
                   <View style={sellersStyles.commenterHeaderContainer}>
                       <Text style={sellersStyles.commenter}>
                           {item.is_anonymous?
-                              `#User.${item._id.substring(item._id.length-4,)}`
+                              // `#User.${i}`
+                              'Anonymous User'
                               :`${item.first_name} ${item.last_name}`
                           }
                       </Text>
@@ -220,10 +234,17 @@ export const Reviews = props => {
                 <Text style={sellersStyles.commentRate}>{item.review_score}/5</Text>
               </View>
             )}
+            ListFooterComponent={()=>(
+              <Text>Hello</Text>
+            )}
           />
-        :null}
-      </View>
+        }  
 
+{/* <Text>Hello</Text> */}
+          {/* <Pagination pagination={pagination} setPagination={setPagination}/> */}
+
+      </View>
+                     
       <Overlay isVisible={showForm} onBackdropPress={onCancel}>
         <CommentForm
           type="seller"

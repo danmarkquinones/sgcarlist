@@ -64,6 +64,7 @@ const CommentForm = (props) => {
                 if(res.data){
                     setCommentArray([res.data.data, ...commentArray])
                     onCancel()
+                    console.log(res.data.data)
                 }
             }).catch((e)=>{
                 console.log('error adding review' , e)
@@ -73,6 +74,7 @@ const CommentForm = (props) => {
                 if(res.data){
                     setCommentArray([res.data.data, ...commentArray])
                     onCancel()
+                    console.log(res.data.data)
                 }
             }).catch((e)=>{
                 console.log('error adding review' , e)
