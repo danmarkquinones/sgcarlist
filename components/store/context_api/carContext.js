@@ -41,6 +41,7 @@ export const CarConfigContextProvider = props => {
     images: [],
     details_type: true,
     product_image_id: [],
+    isLoading: false,
   };
   const [carDetails, setCarDetails] = useState(initialValue);
 

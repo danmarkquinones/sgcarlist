@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {ScrollView, View, Text, Image} from 'react-native';
 import {theme} from '../../contants/colors';
 import Spacer from '../../custom_components/spacer';
@@ -23,6 +23,7 @@ const UploadEighthStep = () => {
   let ids = [];
 
   const onSubmit = async () => {
+    setCarDetails({...carDetails, isLoading: true});
     let product_image_id = await uploadImages();
     postProduct(product_image_id);
   };
@@ -67,7 +68,12 @@ const UploadEighthStep = () => {
     };
 
     let res = await api.POST(payload, '/products');
-    console.log(res);
+    setCarDetails({...carDetails, isLoading: false});
+    if (res.success) {
+      navigation.navigate('LandingStacks');
+    } else {
+      alert('Something went wrong!');
+    }
   };
 
   const uploadImages = async () => {
@@ -80,7 +86,11 @@ const UploadEighthStep = () => {
       };
 
       const res = await api.POST_IMAGE(payload, '/images');
-      ids = [...ids, res.data._id];
+      if (res.success) {
+        ids = [...ids, res.data._id];
+      } else {
+        ids = [];
+      }
     }
 
     return ids;
@@ -114,6 +124,6 @@ const UploadEighthStep = () => {
       </View>
     </ScrollView>
   );
-};;
+};
 
 export default UploadEighthStep;
