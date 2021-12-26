@@ -55,6 +55,7 @@ const UploadFifthStep = ({onScreenChange}) => {
   const navigation = useNavigation();
   const [selectedValue, setSelectedValue] = useState('');
   const [carBrands, setCarBrands] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const [userConfig, setUserConfig] = useContext(UserConfigContext);
   localizedStrings.setLanguage(userConfig.language);
@@ -78,6 +79,22 @@ const UploadFifthStep = ({onScreenChange}) => {
         console.log('call failed', e);
       });
   }, []);
+
+  useEffect(() => {
+    if (
+      carDetails.car_brand &&
+      carDetails.car_model &&
+      carDetails.car_condition &&
+      carDetails.asking_price &&
+      carDetails.transmission &&
+      carDetails.fuel_type &&
+      carDetails.mileage
+    ) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [carDetails]);
 
   return (
     <ScrollView style={{flex: 1}}>
@@ -291,6 +308,7 @@ const UploadFifthStep = ({onScreenChange}) => {
           <Spacer left={48} />
           <View style={{flex: 1}}>
             <PrimaryButton
+              disabled={isDisabled}
               onPress={() => onScreenChange(5)}
               color={theme.primaryBlue}
               title={localizedStrings.CreateAdIndex.NextBtn}

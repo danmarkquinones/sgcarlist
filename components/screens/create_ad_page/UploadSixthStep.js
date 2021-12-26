@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   View,
   Text,
@@ -31,6 +31,7 @@ const height = Dimensions.get('window').height;
 
 const UploadSixthStep = ({onScreenChange}) => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const [userConfig, setUserConfig] = useContext(UserConfigContext);
   localizedStrings.setLanguage(userConfig.language);
@@ -60,6 +61,14 @@ const UploadSixthStep = ({onScreenChange}) => {
     });
   };
 
+  useEffect(() => {
+    if (carDetails.images.length) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [carDetails.images]);
+
   const requestCameraPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
@@ -81,8 +90,6 @@ const UploadSixthStep = ({onScreenChange}) => {
       console.warn(err);
     }
   };
-
-  console.log(carDetails);
 
   const requestStoragePermission = async () => {
     try {
@@ -107,96 +114,98 @@ const UploadSixthStep = ({onScreenChange}) => {
   };
 
   return (
-    <ScrollView style={{flex: 1}}>
-      <View style={styles.container}>
-        <View style={{flex: 1}}>
-          <Spacer bottom={8} />
+    <View style={{flex: 1, backgroundColor: theme.lightBlue}}>
+      <ScrollView style={{flex: 1, backgroundColor: theme.lightBlue}}>
+        <View style={styles.container}>
+          <View style={{flex: 1}}>
+            <Spacer bottom={8} />
 
-          <Text style={styles.title}>
-            {' '}
-            {localizedStrings.CreateAdIndex.Step6Title}
-          </Text>
-          <Text style={styles.subtitle}>
-            {localizedStrings.CreateAdIndex.Step6Subtitle}
-          </Text>
+            <Text style={styles.title}>
+              {localizedStrings.CreateAdIndex.Step6Title}
+            </Text>
+            <Text style={styles.subtitle}>
+              {localizedStrings.CreateAdIndex.Step6Subtitle}
+            </Text>
 
-          <Spacer bottom={24} />
+            <Spacer bottom={24} />
 
-          <TouchableOpacity onPress={requestStoragePermission}>
-            <View
-              style={{
-                width: '100%',
-                height: 150,
-                backgroundColor: theme.white,
-                borderRadius: 5,
-                borderWidth: 1,
-                borderColor: '#C2BEBE',
-                borderStyle: 'dashed',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Icon name="images" size={50} color="#C2BEBE" />
-              <Text>Upload Images</Text>
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={requestStoragePermission}>
+              <View
+                style={{
+                  width: '100%',
+                  height: 150,
+                  backgroundColor: theme.white,
+                  borderRadius: 5,
+                  borderWidth: 1,
+                  borderColor: '#C2BEBE',
+                  borderStyle: 'dashed',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Icon name="images" size={50} color="#C2BEBE" />
+                <Text>Upload Images</Text>
+              </View>
+            </TouchableOpacity>
 
-          {carDetails.images.length ? (
-            <Text style={{marginVertical: 16}}>Image Preview</Text>
-          ) : null}
+            {carDetails.images.length ? (
+              <Text style={{marginVertical: 16}}>Image Preview</Text>
+            ) : null}
 
-          {carDetails.images.length
-            ? carDetails.images.map((image, i) => (
-                <View key={i}>
-                  <MaterialCommunityIcons
-                    onPress={() => onRemoveImage(image.uri)}
-                    style={{
-                      zIndex: 10,
-                      position: 'absolute',
-                      right: 20,
-                      top: 20,
-                    }}
-                    name="close"
-                    size={24}
-                    color="#C2BEBE"
-                  />
-                  <Image
-                    style={{
-                      width: '100%',
-                      height: 200,
-                      borderRadius: 8,
-                      marginBottom: 16,
-                    }}
-                    source={{uri: image.uri}}
-                  />
-                </View>
-              ))
-            : null}
+            {carDetails.images.length
+              ? carDetails.images.map((image, i) => (
+                  <View key={i}>
+                    <MaterialCommunityIcons
+                      onPress={() => onRemoveImage(image.uri)}
+                      style={{
+                        zIndex: 10,
+                        position: 'absolute',
+                        right: 20,
+                        top: 20,
+                      }}
+                      name="close"
+                      size={24}
+                      color="#C2BEBE"
+                    />
+                    <Image
+                      style={{
+                        width: '100%',
+                        height: 200,
+                        borderRadius: 8,
+                        marginBottom: 16,
+                      }}
+                      source={{uri: image.uri}}
+                    />
+                  </View>
+                ))
+              : null}
+          </View>
         </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-          }}>
-          <View style={{flex: 1}}>
-            <PrimaryButton
-              onPress={() => onScreenChange(4)}
-              title={localizedStrings.CreateAdIndex.BackBtn}
-              color={theme.secondaryBlue}
-            />
-          </View>
-          <Spacer left={48} />
-          <View style={{flex: 1}}>
-            <PrimaryButton
-              onPress={() => onScreenChange(6)}
-              color={theme.primaryBlue}
-              title={localizedStrings.CreateAdIndex.NextBtn}
-            />
-          </View>
+      </ScrollView>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+          margin: 24,
+        }}>
+        <View style={{flex: 1}}>
+          <PrimaryButton
+            onPress={() => onScreenChange(4)}
+            title={localizedStrings.CreateAdIndex.BackBtn}
+            color={theme.secondaryBlue}
+          />
+        </View>
+        <Spacer left={48} />
+        <View style={{flex: 1}}>
+          <PrimaryButton
+            disabled={isDisabled}
+            onPress={() => onScreenChange(6)}
+            color={theme.primaryBlue}
+            title={localizedStrings.CreateAdIndex.NextBtn}
+          />
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

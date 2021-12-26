@@ -15,6 +15,8 @@ let axiosConfig = {
 const POST = async (params, route) => {
   const token = Kjur.encode(params);
 
+  console.log(token);
+
   const bearerToken = await AsyncStorage.getItem('bearerToken');
 
   axiosConfig.headers['Authorization'] = `Bearer ${bearerToken}`;
@@ -35,32 +37,6 @@ const POST_IMAGE = async (payload, route) => {
   axiosConfig.headers['Content-Type'] = 'multipart/form-data';
 
   const form = new FormData();
-
-  // const uriParts = payload.file.split('.');
-  // const fileType = uriParts[uriParts.length - 1];
-
-  // console.log('image', {
-  //   name: 'profilePic',
-  //   type: `image/${fileType}`,
-  //   uri:
-  //     Platform.OS === 'ios' ? photo.uri.replace('file://', '') : payload.file,
-  // });
-
-  // form.append('image', {
-  //   name: 'profilePic',
-  //   type: `image/${fileType}`,
-  //   uri:
-  //     Platform.OS === 'ios' ? photo.uri.replace('file://', '') : payload.file,
-  // });
-  // form.append(
-  //   'image',
-  //   Platform.OS === 'android'
-  //     ? payload.file
-  //     : payload.file.replace('file://', ''),
-  // );
-  // form.append('type', payload.type);
-
-  console.log('PAYLOD NAME', payload);
 
   form.append('image', {
     name: payload.filename,

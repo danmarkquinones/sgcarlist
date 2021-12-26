@@ -20,7 +20,14 @@ const UploadEighthStep = () => {
   const [userConfig, setUserConfig] = useContext(UserConfigContext);
   localizedStrings.setLanguage(userConfig.language);
 
+  let ids = [];
+
   const onSubmit = async () => {
+    let product_image_id = await uploadImages();
+    postProduct(product_image_id);
+  };
+
+  const postProduct = async product_image_id => {
     const payload = {
       package_price: carDetails.price,
       product_name: carDetails.title,
@@ -55,24 +62,28 @@ const UploadEighthStep = () => {
         city: carDetails.location.city,
       },
       selected_ads_id: carDetails.ads_id,
+      product_image_id: product_image_id,
+      is_verified: true,
     };
 
-    uploadImages();
-
-    // let res = await api.POST(payload, '/products');
-    // console.log(res);
+    let res = await api.POST(payload, '/products');
+    console.log(res);
   };
 
   const uploadImages = async () => {
-    const images = carDetails.images[0];
-    
-    const payload = {
-      type: 'image',
-      file: images.uri,
-      filename: images.fileName,
-    };
+    const images = carDetails.images;
 
-    let res = await api.POST_IMAGE(payload, '/images');
+    for (let i = 0; i < images.length; i++) {
+      const payload = {
+        file: images[i].uri,
+        filename: images[i].fileName,
+      };
+
+      const res = await api.POST_IMAGE(payload, '/images');
+      ids = [...ids, res.data._id];
+    }
+
+    return ids;
   };
 
   return (

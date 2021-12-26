@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {View, Text, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {scaleFont} from '../../../utils/scale';
 import {theme} from '../../contants/colors';
@@ -20,7 +20,7 @@ const height = Dimensions.get('window').height;
 const UploadThirdStep = ({onScreenChange}) => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
   const navigation = useNavigation();
-  const [selectedValue, setSelectedValue] = useState('0');
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const [userConfig, setUserConfig] = useContext(UserConfigContext);
   localizedStrings.setLanguage(userConfig.language);
@@ -28,6 +28,18 @@ const UploadThirdStep = ({onScreenChange}) => {
   const onSetCarDetails = keyValue => {
     setCarDetails({...carDetails, ...keyValue});
   };
+
+  useEffect(() => {
+    if (
+      carDetails.plate_number &&
+      carDetails.owner_id_type &&
+      carDetails.owner_id
+    ) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [carDetails]);
 
   return (
     <ScrollView contentContainerStyle={{flex: 1}}>
@@ -123,6 +135,7 @@ const UploadThirdStep = ({onScreenChange}) => {
           <Spacer left={48} />
           <View style={{flex: 1}}>
             <PrimaryButton
+              disabled={isDisabled}
               onPress={() => onScreenChange(carDetails.details_type ? 3 : 4)}
               color={theme.primaryBlue}
               title={localizedStrings.CreateAdIndex.NextBtn}

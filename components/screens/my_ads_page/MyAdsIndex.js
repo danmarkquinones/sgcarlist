@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {Text, View, FlatList} from 'react-native';
+import {Text, View, FlatList, RefreshControl} from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 import {useNavigation} from '@react-navigation/core';
 import {ListCard} from '../../custom_components/customCards';
@@ -37,6 +37,7 @@ const MyAdsIndex = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     fetchAdvertiserProducts();
@@ -75,6 +76,12 @@ const MyAdsIndex = () => {
     console.log(res);
   };
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchAdvertiserProducts();
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
   return (
     <View style={{flex: 1, backgroundColor: theme.lightBlue}}>
       <CustomHeader
@@ -103,6 +110,9 @@ const MyAdsIndex = () => {
             data={products}
             keyExtractor={item => item.id}
             showsHorizontalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             renderItem={({item, index}) => (
               <ListCard
                 onPress={() => navigation.navigate('ProductView', item)}

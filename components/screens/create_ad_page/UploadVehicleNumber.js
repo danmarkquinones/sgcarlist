@@ -22,6 +22,7 @@ const {width, height} = Dimensions.get('screen');
 const UploadVehicleNumber = ({onScreenChange}) => {
   const [carDetails, setCarDetails, onReset] = useContext(CarConfigContext);
   const [locations, setLocations] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const [userConfig, setUserConfig] = useContext(UserConfigContext);
   localizedStrings.setLanguage(userConfig.language);
@@ -58,6 +59,14 @@ const UploadVehicleNumber = ({onScreenChange}) => {
       location: selectedLocation,
     });
   };
+
+  useEffect(() => {
+    if (Object.keys(carDetails.location).length && carDetails.street) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [carDetails]);
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: theme.lightBlue}}>
@@ -152,6 +161,7 @@ const UploadVehicleNumber = ({onScreenChange}) => {
           <Spacer left={48} />
           <View style={{flex: 1}}>
             <PrimaryButton
+              disabled={isDisabled}
               onPress={() => onScreenChange(1)}
               color={theme.primaryBlue}
               title={localizedStrings.CreateAdIndex.NextBtn}

@@ -120,8 +120,8 @@ const UploadSeventhStep = ({onScreenChange}) => {
               justifyContent: 'space-between',
               alignItems: 'center',
             }}>
-            <Text>2012</Text>
             <Text>{carDetails.mileage} KM</Text>
+            <Text>{carDetails.car_condition}</Text>
           </View>
           <View
             style={{
@@ -135,31 +135,6 @@ const UploadSeventhStep = ({onScreenChange}) => {
             }}>
             <Text>{carDetails.transmission}</Text>
             <Text>{carDetails.engince_capacity} cc</Text>
-          </View>
-          <View
-            style={{
-              borderTopWidth: 0.5,
-              borderTopColor: theme.black,
-              padding: 16,
-              backgroundColor: theme.white,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Text>White</Text>
-            <Text>Used car</Text>
-          </View>
-          <View
-            style={{
-              borderTopWidth: 0.5,
-              borderTopColor: theme.black,
-              padding: 16,
-              backgroundColor: theme.white,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-            <Text>Jurong Singapore</Text>
           </View>
         </View>
       ) : null}

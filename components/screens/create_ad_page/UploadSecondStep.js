@@ -27,6 +27,7 @@ const UploadSecondStep = ({onScreenChange}) => {
   const navigation = useNavigation();
   const [packages, setPackages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const [userConfig, setUserConfig] = useContext(UserConfigContext);
   localizedStrings.setLanguage(userConfig.language);
@@ -44,6 +45,14 @@ const UploadSecondStep = ({onScreenChange}) => {
     setIsLoading(false);
     setPackages(res.data.data);
   };
+
+  useEffect(() => {
+    if (carDetails.ads_id && carDetails.title && carDetails.description) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [carDetails]);
 
   return (
     <ScrollView style={{flex: 1}}>
@@ -278,6 +287,7 @@ const UploadSecondStep = ({onScreenChange}) => {
           <Spacer left={48} />
           <View style={{flex: 1}}>
             <PrimaryButton
+              disabled={isDisabled}
               onPress={() => onScreenChange(2)}
               color={theme.primaryBlue}
               title={localizedStrings.CreateAdIndex.NextBtn}
