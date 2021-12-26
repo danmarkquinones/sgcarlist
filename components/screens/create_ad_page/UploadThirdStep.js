@@ -97,7 +97,7 @@ const UploadThirdStep = ({onScreenChange}) => {
           </View>
           <Spacer bottom={24} />
 
-          <View style={{flexDirection: 'row'}}>
+          {/* <View style={{flexDirection: 'row'}}>
             <CustomRadioButton
               data={[
                 {
@@ -114,7 +114,7 @@ const UploadThirdStep = ({onScreenChange}) => {
               onSelectRadio={value => onSetCarDetails({details_type: value})}
               isHorizontal
             />
-          </View>
+          </View> */}
           <Spacer bottom={24} />
         </View>
 

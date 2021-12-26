@@ -82,6 +82,11 @@ const MyAdsIndex = () => {
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
+  const onChange = value => {
+    setSortBy({...sortBy, sort: value});
+    // setFilters({...filters, sort: value});
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: theme.lightBlue}}>
       <CustomHeader
@@ -96,7 +101,12 @@ const MyAdsIndex = () => {
         isTitleCenter
       />
 
-      <SorterComponent sortBy={sortBy} config={config} setConfig={setConfig} />
+      <SorterComponent
+        sortBy={sortBy}
+        config={config}
+        setConfig={setConfig}
+        onChange={onChange}
+      />
 
       <View style={{flex: 1}}>
         <Spacer bottom={16} />
