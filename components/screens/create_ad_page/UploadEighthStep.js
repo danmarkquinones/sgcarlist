@@ -25,7 +25,9 @@ const UploadEighthStep = () => {
   const onSubmit = async () => {
     setCarDetails({...carDetails, isLoading: true});
     let product_image_id = await uploadImages();
-    postProduct(product_image_id);
+    setTimeout(() => {
+      postProduct(product_image_id);
+    }, 3000);
   };
 
   const postProduct = async product_image_id => {
@@ -64,10 +66,10 @@ const UploadEighthStep = () => {
       },
       selected_ads_id: carDetails.ads_id,
       product_image_id: product_image_id,
-      is_verified: true,
     };
 
     let res = await api.POST(payload, '/products');
+    console.log(res);
     setCarDetails({...carDetails, isLoading: false});
     if (res.success) {
       navigation.navigate('LandingStacks');

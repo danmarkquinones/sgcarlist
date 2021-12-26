@@ -98,7 +98,7 @@ export const ListCard = props => {
                     <Icon />
                   </MenuTrigger>
                   <MenuOptions>
-                    <MenuOption onSelect={() => alert(`Edit`)} text="Edit" />
+                    {/* <MenuOption onSelect={() => alert(`Edit`)} text="Edit" /> */}
                     <MenuOption
                       onSelect={() => deleteProduct(car._id)}
                       text="Remove"
