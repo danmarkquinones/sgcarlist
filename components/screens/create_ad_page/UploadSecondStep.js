@@ -19,6 +19,7 @@ import {api} from '../../store/api_calls/useApi';
 import {UserConfigContext} from '../../store/context_api/userContext';
 import LocalizedStrings from 'react-native-localization';
 import {SkeletonSquareCard} from '../../custom_components/customCardLoaders';
+import PackageCard from './PackageCard';
 
 var localFile = require('../../languages/postAdLocale.json');
 let localizedStrings = new LocalizedStrings(localFile);
@@ -72,158 +73,12 @@ const UploadSecondStep = ({onScreenChange}) => {
 
           {!isLoading ? (
             packages.map(item => {
-              return item.package_name === 'Star Ad' ? (
-                <TouchableOpacity
-                  onPress={() =>
-                    onSetCarDetails({
-                      price: item.package_price,
-                      ads_id: item._id,
-                    })
-                  }>
-                  <View
-                    style={{
-                      width: '100%',
-                      backgroundColor: '#fff',
-                      borderRadius: 5,
-                      justifyContent: 'space-between',
-                      alignItems: 'flex-start',
-                      overflow: 'hidden',
-                    }}>
-                    <View
-                      style={{
-                        backgroundColor: '#EA3636',
-                        width: '100%',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        padding: 8,
-                      }}>
-                      <Text style={{color: theme.white}}>
-                        GET 3x MORE SALES INQUIRIES
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        backgroundColor:
-                          carDetails.ads_id === item._id
-                            ? theme.primaryBlue
-                            : theme.white,
-                        width: '100%',
-                        padding: 16,
-                      }}>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}>
-                        <Text
-                          style={{
-                            fontSize: 32,
-                            color: '#36D828',
-                            fontWeight: 'bold',
-                          }}>
-                          S${item.package_price}{' '}
-                        </Text>
-                        <View>
-                          <Text
-                            style={{
-                              fontSize: 14,
-                              color:
-                                carDetails.ads_id === item._id
-                                  ? theme.white
-                                  : '#4F4A4A',
-                              paddingRight: 16,
-                            }}>
-                            till vehicle is sold (with 1 day StarAd {'\n'}
-                            exposure)
-                          </Text>
-                        </View>
-                      </View>
-                      <View
-                        style={{
-                          width: '100%',
-                          borderBottomWidth: StyleSheet.hairlineWidth,
-                          borderBottomColor: '#bbb',
-                          marginVertical: 8,
-                        }}
-                      />
-                      <Text
-                        style={{
-                          color:
-                            carDetails.ads_id === item._id
-                              ? theme.white
-                              : '#4F4A4A',
-                        }}>
-                        Sell it fast with StarAd package as you will get over
-                        100,000 views a day.{'\n'}
-                      </Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity
-                  style={{marginBottom: 24}}
-                  onPress={() =>
-                    onSetCarDetails({
-                      price: item.package_price,
-                      ads_id: item._id,
-                    })
-                  }>
-                  <View
-                    style={{
-                      width: '100%',
-                      backgroundColor:
-                        carDetails.ads_id === item._id
-                          ? theme.primaryBlue
-                          : theme.white,
-                      borderRadius: 5,
-                      justifyContent: 'space-between',
-                      alignItems: 'flex-start',
-                      padding: 16,
-                    }}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                      }}>
-                      <Text
-                        style={{
-                          fontSize: 32,
-                          color: '#2C9C22',
-                          fontWeight: 'bold',
-                        }}>
-                        S${item.package_price}{' '}
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          color:
-                            carDetails.ads_id === item._id
-                              ? theme.white
-                              : '#4F4A4A',
-                        }}>
-                        till vehicle is sold
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        width: '100%',
-                        borderBottomWidth: StyleSheet.hairlineWidth,
-                        borderBottomColor: '#bbb',
-                        marginVertical: 8,
-                      }}
-                    />
-                    <Text
-                      style={{
-                        color:
-                          carDetails.ads_id === item._id
-                            ? theme.white
-                            : '#4F4A4A',
-                      }}>
-                      This package will allow you to post a normal "Direct
-                      Owner" advertisement.
-                    </Text>
-                  </View>
-                </TouchableOpacity>
+              return (
+                <PackageCard
+                  item={item}
+                  onSetCarDetails={onSetCarDetails}
+                  carDetails={carDetails}
+                />
               );
             })
           ) : (
@@ -239,10 +94,10 @@ const UploadSecondStep = ({onScreenChange}) => {
                 height={150}
                 borderRadius={5}
               />
+
+              <Spacer bottom={16} />
             </View>
           )}
-
-          <Spacer bottom={16} />
 
           {/* <Spacer bottom={24} />
           <View>

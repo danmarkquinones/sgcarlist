@@ -205,6 +205,7 @@ const UploadFifthStep = ({onScreenChange}) => {
               value={carDetails.asking_price}
               onChange={val => onSetCarDetails({asking_price: val})}
               placeholder="Asking Price"
+              keyboardType={'numeric'}
             />
           </View>
           <Spacer bottom={8} />
@@ -246,6 +247,7 @@ const UploadFifthStep = ({onScreenChange}) => {
               value={carDetails.mileage}
               onChange={val => onSetCarDetails({mileage: val})}
               placeholder="Mileage"
+              keyboardType={'numeric'}
             />
           </View>
           <Spacer bottom={8} />

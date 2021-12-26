@@ -12,6 +12,7 @@ import {CarConfigContext} from '../../store/context_api/carContext';
 import {CustomPicker} from '../../custom_components/customPicker';
 import {UserConfigContext} from '../../store/context_api/userContext';
 import LocalizedStrings from 'react-native-localization';
+import moment from 'moment';
 
 var localFile = require('../../languages/postAdLocale.json');
 let localizedStrings = new LocalizedStrings(localFile);
@@ -92,8 +93,8 @@ const UploadFourthStep = ({onScreenChange}) => {
               mode="date"
               placeholder="MM/DD/YYYY"
               format="MM/DD/YYYY"
-              minDate="05/01/2016"
-              maxDate="05/01/2025"
+              minDate="05/01/2000"
+              maxDate={moment().format('MM/DD/YYYY')}
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               showIcon={false}
@@ -123,6 +124,7 @@ const UploadFourthStep = ({onScreenChange}) => {
             </Text>
             <Spacer bottom={8} />
             <PrimaryInput
+              keyboardType={'numeric'}
               value={carDetails.engine_capacity}
               onChange={val => onSetCarDetails({engine_capacity: val})}
               placeholder="Engine Capacity"
@@ -139,6 +141,7 @@ const UploadFourthStep = ({onScreenChange}) => {
               )}
               value={carDetails.omv}
               onChange={val => onSetCarDetails({omv: val})}
+              keyboardType={'numeric'}
               placeholder=""
             />
           </View>
@@ -148,6 +151,7 @@ const UploadFourthStep = ({onScreenChange}) => {
             <Text style={styles.label}>ARF :</Text>
             <Spacer bottom={8} />
             <PrimaryInput
+              keyboardType={'numeric'}
               LeftIcon={() => (
                 <Text style={{width: 20, fontWeight: 'bold'}}>S$</Text>
               )}
@@ -162,6 +166,7 @@ const UploadFourthStep = ({onScreenChange}) => {
             <Text style={styles.label}>COE :</Text>
             <Spacer bottom={8} />
             <PrimaryInput
+              keyboardType={'numeric'}
               LeftIcon={() => (
                 <Text style={{width: 20, fontWeight: 'bold'}}>S$</Text>
               )}
@@ -186,8 +191,8 @@ const UploadFourthStep = ({onScreenChange}) => {
               mode="date"
               placeholder="MM/DD/YYYY"
               format="MM/DD/YYYY"
-              minDate="05/01/2016"
-              maxDate="05/01/2025"
+              minDate="05/01/2020"
+              maxDate="05/01/2030"
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               showIcon={false}
@@ -217,6 +222,7 @@ const UploadFourthStep = ({onScreenChange}) => {
             </Text>
             <Spacer bottom={8} />
             <PrimaryInput
+              keyboardType={'numeric'}
               value={carDetails.number_of_owners}
               onChange={val => onSetCarDetails({number_of_owners: val})}
               placeholder="Number of Owners"

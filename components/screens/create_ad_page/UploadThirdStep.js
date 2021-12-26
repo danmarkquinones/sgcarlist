@@ -10,12 +10,27 @@ import CustomRadioButton from '../../custom_components/customRadioButton';
 import {CarConfigContext} from '../../store/context_api/carContext';
 import {UserConfigContext} from '../../store/context_api/userContext';
 import LocalizedStrings from 'react-native-localization';
+import {CustomPicker} from '../../custom_components/customPicker';
 
 var localFile = require('../../languages/postAdLocale.json');
 let localizedStrings = new LocalizedStrings(localFile);
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
+const ID_TYPES = [
+  'Business (e.g. 51234567M)',
+  'Club/Association/Organisation (e.g. T08PQ1234A)',
+  'Company (e.g. 198912345K)',
+  'Foreign Company (e.g. T08FC1234A)',
+  'Foreign Identification Number (e.g. F/G1234567N)',
+  'Government (e.g. T08GA1234A)',
+  'Limited Liability Partnership (e.g. T08LL1234A)',
+  'Limited Partnership (e.g. T08LP1234A)',
+  'Professional (e.g. T08PQ1234A)',
+  'Singapore NRIC (e.g. S1234567D)',
+  'Statutory Board (e.g. T08GB1234A)',
+];
 
 const UploadThirdStep = ({onScreenChange}) => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
@@ -75,10 +90,11 @@ const UploadThirdStep = ({onScreenChange}) => {
               Owner ID Type <Text style={{color: theme.red}}>*</Text>
             </Text>
             <Spacer bottom={8} />
-            <PrimaryInput
+            <CustomPicker
+              placeholder="Select ID Type"
+              items={ID_TYPES}
               value={carDetails.owner_id_type}
               onChange={val => onSetCarDetails({owner_id_type: val})}
-              placeholder="ID Type"
             />
           </View>
 
@@ -88,11 +104,13 @@ const UploadThirdStep = ({onScreenChange}) => {
             <Text style={styles.label}>
               Owner ID <Text style={{color: theme.red}}>*</Text>
             </Text>
+            <Text>Input last four characters eg. 567D</Text>
             <Spacer bottom={8} />
             <PrimaryInput
               value={carDetails.owner_id}
               onChange={val => onSetCarDetails({owner_id: val})}
               placeholder="Owner ID"
+              maxLength={4}
             />
           </View>
           <Spacer bottom={24} />

@@ -10,8 +10,10 @@ const CustomRadioButton = ({
 }) => {
   return (
     <View style={{flexDirection: isHorizontal ? 'column' : 'row'}}>
-      {data.map(item => (
-        <TouchableWithoutFeedback onPress={() => onSelectRadio(item.value)}>
+      {data.map((item, i) => (
+        <TouchableWithoutFeedback
+          key={i}
+          onPress={() => onSelectRadio(item.value)}>
           <View
             style={{
               flexDirection: 'row',

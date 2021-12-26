@@ -16,6 +16,8 @@ const PrimaryInput = ({
   textAlignVertical,
   isPassword,
   LeftIcon,
+  maxLength,
+  keyboardType,
 }) => {
   return (
     <View
@@ -45,9 +47,11 @@ const PrimaryInput = ({
         multiline={multiline}
         textAlignVertical={textAlignVertical}
         secureTextEntry={isPassword ? isPassword : false}
+        maxLength={maxLength ? maxLength : null}
+        keyboardType={keyboardType ? keyboardType : 'default'}
       />
       {Icon && <Icon />}
-      {Unit && <Unit/>}
+      {Unit && <Unit />}
     </View>
   );
 };
