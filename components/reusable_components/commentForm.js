@@ -8,6 +8,10 @@ import { Rating } from 'react-native-ratings';
 import { UserConfigContext } from '../store/context_api/userContext'
 import { addProductReview } from '../store/api_calls/cars_api'
 import { addAdvertiserReview } from '../store/api_calls/seller_api'
+import LocalizedStrings from 'react-native-localization';
+
+var localFile = require('../languages/productLocale.json')
+let localizedStrings = new LocalizedStrings(localFile)
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -16,6 +20,7 @@ const CommentForm = (props) => {
     const {type , item , onCancel , commentArray , setCommentArray} = props 
     const [userConfig , setUserConfig] = useContext(UserConfigContext)
     const [rating , setRating] = useState(3)
+    localizedStrings.setLanguage(userConfig.language)
     const [form , setForm] = useState({
         comment:'',
         itemId:type==="product"?item._id:item.advertisement_contact_details._id,
@@ -25,7 +30,7 @@ const CommentForm = (props) => {
         userId:'',
     })
 
-    console.log(form)
+    // console.log(form)
 
     useEffect(()=>{
         if(!form.anonymous){
@@ -86,7 +91,7 @@ const CommentForm = (props) => {
     return (
         <View style={styles.container}>
             <View>
-                <Text style={styles.headerText}>Add a Review</Text>
+                <Text style={styles.headerText}>{localizedStrings.CommentForm.HeaderAdd}</Text>
             </View>
             <Divider/>
 
@@ -95,7 +100,7 @@ const CommentForm = (props) => {
                     <View
                         style={styles.anonymityContainer}
                     >
-                        <Text style={styles.commentLabel}>Hide my name? : </Text>
+                        <Text style={styles.commentLabel}>{localizedStrings.CommentForm.Hide} : </Text>
                         <Switch
                             trackColor={{ false: theme.gray, true: theme.secondaryBlue }}
                             thumbColor={form.anonymous? theme.primaryBlue : theme.white}
@@ -108,10 +113,10 @@ const CommentForm = (props) => {
                     {!form.anonymous?
                         <View>
                             <View style={{marginVertical:5}}>
-                                <PrimaryInput value={form.fname} onChange={(text)=>onChange('fname',text)} placeholder="First Name" borderColor={theme.gray}/>
+                                <PrimaryInput value={form.fname} onChange={(text)=>onChange('fname',text)} placeholder={localizedStrings.CommentForm.Fname} borderColor={theme.gray}/>
                             </View>
                             <View style={{marginVertical:5}}>
-                                <PrimaryInput value={form.lname} onChange={(text)=>onChange('lname',text)} placeholder="Last Name" borderColor={theme.gray}/>
+                                <PrimaryInput value={form.lname} onChange={(text)=>onChange('lname',text)} placeholder={localizedStrings.CommentForm.Lname} borderColor={theme.gray}/>
                             </View>
                         </View>
                     :null}
@@ -119,16 +124,16 @@ const CommentForm = (props) => {
             :null}
             
             <View style={styles.rateContainer}>
-                <Text style={styles.ratelabel}>Rate : </Text>
+                <Text style={styles.ratelabel}>{localizedStrings.CommentForm.Rate} : </Text>
                 <Rating imageSize={20} onFinishRating={onRating}/>
             </View>
             <View>
-                <Text style={styles.commentLabel}>Comment/Review : </Text>
+                <Text style={styles.commentLabel}>{localizedStrings.CommentForm.Comment} : </Text>
                 <PrimaryInput value={form.comment} onChange={(text)=>onChange('comment',text)} multiline={true} borderColor={theme.gray} editable={true} height={100} textAlignVertical="top"/>
             </View>
             <View style={styles.btnContainer}>
-                <PrimaryButton title="Submit" onPress={onSubmit} color={theme.primaryBlue} />
-                <OffCancelButton title="Cancel" onPress={onCancel}/>
+                <PrimaryButton title={localizedStrings.CommentForm.Submit} onPress={onSubmit} color={theme.primaryBlue} />
+                <OffCancelButton title={localizedStrings.CommentForm.Cancel} onPress={onCancel}/>
             </View>
         </View>
     )

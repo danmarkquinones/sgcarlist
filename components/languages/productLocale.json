@@ -20,7 +20,17 @@
             "Comments":"Comment(s)",
             "Similar":"Similar Cars",
             "ContactDealer":"Contact Dealer"
-        } 
+        },
+        "CommentForm":{
+            "HeaderAdd":"Add a Review",
+            "Rate":"Rating",
+            "Comment" : "Comment/Review",
+            "Hide":"Hide my name?",
+            "Fname" : "First Name",
+            "Lname":"Last Name",
+            "Submit" : "Submit",
+            "Cancel" : "Cancel"
+        }
     },
     "zh" : {
         "SingleProductView":{
@@ -43,6 +53,16 @@
             "Comments":"评论",
             "Similar":"同类车",
             "ContactDealer":"联系经销商"
-        } 
+        } ,
+        "CommentForm":{
+            "HeaderAdd":"添加评论",
+            "Rate":"评分",
+            "Comment" : "评论/评论",
+            "Hide":"隐藏我的名字?",
+            "Fname" : "名",
+            "Lname":"姓",
+            "Submit" : "提交",
+            "Cancel" : "取消"
+        }
     }
 }
