@@ -45,6 +45,8 @@ const POST_IMAGE = async (payload, route) => {
         : payload.file.replace('file://', ''),
   });
 
+  form.append('type', 'image');
+
   return axios
     .post(`${API_BASE_URL}${route}`, form, axiosConfig)
     .then(function (response) {

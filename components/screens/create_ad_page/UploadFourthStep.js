@@ -91,10 +91,10 @@ const UploadFourthStep = ({onScreenChange}) => {
               }}
               date={carDetails.registration_date}
               mode="date"
-              placeholder="MM/DD/YYYY"
-              format="MM/DD/YYYY"
-              minDate="05/01/2000"
-              maxDate={moment().format('MM/DD/YYYY')}
+              placeholder="YYYY-MM-DD"
+              format="YYYY-MM-DD"
+              minDate="2000-05-01"
+              maxDate={moment().format('YYYY-MM-DD')}
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               showIcon={false}
@@ -189,10 +189,10 @@ const UploadFourthStep = ({onScreenChange}) => {
               }}
               date={carDetails.coe_expiry_date}
               mode="date"
-              placeholder="MM/DD/YYYY"
-              format="MM/DD/YYYY"
-              minDate="05/01/2020"
-              maxDate="05/01/2030"
+              placeholder="YYYY-MM-DD"
+              format="YYYY-MM-DD"
+              minDate="2020-05-01"
+              maxDate="2035-05-01"
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               showIcon={false}
