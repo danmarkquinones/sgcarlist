@@ -81,10 +81,20 @@ export const ListCard = props => {
     onMarkAsSold,
   } = props;
 
+
+  console.log(car);
+
   return (
     <View style={customCardStyles.listCardContainer}>
       <View style={customCardStyles.imageListContainer}>
-        <Image style={customCardStyles.listCarImage} source={car.url} />
+        {car.product_image_urls.length ? (
+          <Image
+            style={customCardStyles.listCarImage}
+            source={{uri: car.product_image_urls[0].metadata.thumb_url}}
+          />
+        ) : (
+          <View style={customCardStyles.listCarImage} />
+        )}
       </View>
       <View style={customCardStyles.textListBodyContainer}>
         <View style={customCardStyles.listCardHeader}>
