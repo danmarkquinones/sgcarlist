@@ -29,7 +29,14 @@ export const SquareCard = props => {
           </View>
         )}
         <View style={customCardStyles.imageSquareContainer}>
-          <Image style={customCardStyles.carSquareImage} source={car.url} />
+          {car.product_image_urls.length ? (
+            <Image
+              style={customCardStyles.carSquareImage}
+              source={{uri: car.product_image_urls[0].metadata.thumb_url}}
+            />
+          ) : (
+            <></>
+          )}
         </View>
         <View style={customCardStyles.textBodyContainer}>
           <Text numberOfLines={2} style={customCardStyles.carName}>

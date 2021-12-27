@@ -12,10 +12,17 @@ import SorterComponent from '../../reusable_components/sorterComponent';
 import {cars} from '../../contants/dummyCarData';
 import {api} from '../../store/api_calls/useApi';
 import {UserConfigContext} from '../../store/context_api/userContext';
+import {SkeletonSquareCard} from '../../custom_components/customCardLoaders';
+
+const wait = timeout => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+};
 
 const MyAdsIndex = () => {
   const navigation = useNavigation();
   const [userConfig] = useContext(UserConfigContext);
+
+  const [page, setPage] = useState(1);
 
   const [config, setConfig] = useState({
     sortBy: 'ascending',
@@ -43,11 +50,13 @@ const MyAdsIndex = () => {
     fetchAdvertiserProducts();
   }, []);
 
-  const fetchAdvertiserProducts = async () => {
+  const fetchAdvertiserProducts = async value => {
+    setIsLoading(true);
     const params = {
       _id: userConfig.userDetails._id,
       page: 1,
       limit: 10,
+      sort: value ? value : sortBy.sort,
     };
 
     const res = await api.GET('/advertiser', params);
@@ -64,7 +73,7 @@ const MyAdsIndex = () => {
   };
 
   const onDeleteProduct = async id => {
-    // const res = await api.DELETE('/products/delete', {id});
+    const res = await api.DELETE('/products/delete', {id});
 
     const filteredProducts = products.filter(product => product._id !== id);
     setProducts(filteredProducts);
@@ -78,12 +87,14 @@ const MyAdsIndex = () => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
+    setIsLoading(true);
     fetchAdvertiserProducts();
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
   const onChange = value => {
     setSortBy({...sortBy, sort: value});
+    fetchAdvertiserProducts(value);
     // setFilters({...filters, sort: value});
   };
 
@@ -114,6 +125,26 @@ const MyAdsIndex = () => {
           <PrimaryInput placeholder="Search your listed car" />
         </View> */}
         <Spacer bottom={16} />
+
+        {isLoading && (
+          <FlatList
+            contentContainerStyle={{padding: 8}}
+            showsHorizontalScrollIndicator={false}
+            data={[...Array(6)]}
+            keyExtractor={(item, index) => index}
+            renderItem={({item}) => (
+              <>
+                <SkeletonSquareCard
+                  width={'100%'}
+                  height={115}
+                  borderRadius={5}
+                />
+                <Spacer bottom={8} />
+              </>
+            )}
+          />
+        )}
+
         {!isLoading && products.length ? (
           <FlatList
             contentContainerStyle={{alignItems: 'center'}}
