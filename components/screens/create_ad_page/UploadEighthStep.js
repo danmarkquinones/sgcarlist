@@ -55,7 +55,6 @@ const UploadEighthStep = () => {
       accessories: carDetails.accessories,
       product_description: carDetails.description,
       details_type: true,
-      product_image_url: null,
       product_condition: carDetails.car_condition,
       product_brand_id: carDetails.car_brand,
       is_off_peak_car: false,
@@ -72,7 +71,7 @@ const UploadEighthStep = () => {
     let res = await api.POST(payload, '/products');
 
     setCarDetails({...carDetails, isLoading: false});
-    if (res.data.success) {
+    if (res?.data?.success) {
       navigation.pop();
     } else {
       alert('Something went wrong!');
