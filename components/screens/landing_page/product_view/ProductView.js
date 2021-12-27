@@ -41,10 +41,23 @@ const ProductView = (props) => {
         inFavorites:false
     })
 
+    const [images , setImages] = useState([])
+
     localizedStrings.setLanguage(userConfig.language)
+
+   
 
     useEffect(() => {
         if(isFocused){
+            const productImages = item.product_image_urls
+            var arrayImgs = []
+            productImages.forEach(el=>{
+                arrayImgs.push(el.metadata.image_url)
+            })
+
+            setImages(arrayImgs)
+            console.log('IMAGES' , arrayImgs)
+
             const value = isInFavorites(item._id)
             value.then((res)=>
                 setConfig({...config , inFavorites:res})
@@ -85,9 +98,9 @@ const ProductView = (props) => {
                         style={productStyles.backIcon}
                     />
                     <View style={productStyles.imageIcon}>
-                        <Text style={productStyles.imageIconNumber}>6</Text>
+                        <Text style={productStyles.imageIconNumber}>{images.length}</Text>
                         <EntIcon
-                            onPress={() => navigation.navigate('ImageViewer')}
+                            onPress={() => navigation.navigate('ImageViewer' , images)}
                             name="images"
                             size={25}
                             color={theme.white}
@@ -95,7 +108,7 @@ const ProductView = (props) => {
                     </View>
                     
                     <View style={productStyles.sliderContainer}>
-                        <ImageSliderView windowWidth={windowWidth}/>
+                        <ImageSliderView windowWidth={windowWidth} images={images}/>
                     </View>
                 </View>
 
