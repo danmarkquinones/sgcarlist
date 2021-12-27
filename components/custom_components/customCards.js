@@ -81,13 +81,12 @@ export const ListCard = props => {
     onMarkAsSold,
   } = props;
 
-
   console.log(car);
 
   return (
     <View style={customCardStyles.listCardContainer}>
       <View style={customCardStyles.imageListContainer}>
-        {car.product_image_urls.length ? (
+        {car?.product_image_urls?.length ? (
           <Image
             style={customCardStyles.listCarImage}
             source={{uri: car.product_image_urls[0].metadata.thumb_url}}
@@ -155,7 +154,7 @@ export const ListCard = props => {
 };
 
 export const GridCard = props => {
-  const {car, Icon, inFavorites, onPress} = props;
+  const {car, Icon, inFavorites, onPress, deleteProduct, onMarkAsSold} = props;
   return (
     <View style={customCardStyles.gridCardContainer}>
       {Icon && (
@@ -165,7 +164,22 @@ export const GridCard = props => {
               <Icon />
             </TouchableOpacity>
           ) : (
-            <Icon />
+            <Menu>
+              <MenuTrigger>
+                <Icon />
+              </MenuTrigger>
+              <MenuOptions>
+                {/* <MenuOption onSelect={() => alert(`Edit`)} text="Edit" /> */}
+                <MenuOption
+                  onSelect={() => deleteProduct(car._id)}
+                  text="Remove"
+                />
+                <MenuOption
+                  onSelect={() => onMarkAsSold(car._id)}
+                  text="Mark as Sold"
+                />
+              </MenuOptions>
+            </Menu>
           )}
         </View>
       )}

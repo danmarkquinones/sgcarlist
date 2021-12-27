@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {Text, View, FlatList, RefreshControl} from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 import {useNavigation} from '@react-navigation/core';
-import {ListCard} from '../../custom_components/customCards';
+import {GridCard, ListCard} from '../../custom_components/customCards';
 import {theme} from '../../contants/colors';
 import PrimaryInput from '../../custom_components/customInput';
 import Spacer from '../../custom_components/spacer';
@@ -147,23 +147,40 @@ const MyAdsIndex = () => {
 
         {!isLoading && products.length ? (
           <FlatList
-            contentContainerStyle={{alignItems: 'center'}}
+            key={config.isGridView}
+            contentContainerStyle={{
+              alignItems: config.isGridView ? 'flex-start' : 'center',
+              justifyContent: 'space-between',
+              paddingBottom: 150,
+            }}
+            numColumns={config.isGridView ? 2 : 1}
             data={products}
             keyExtractor={item => item.id}
             showsHorizontalScrollIndicator={false}
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
-            renderItem={({item, index}) => (
-              <ListCard
-                onPress={() => navigation.navigate('ProductView', item)}
-                car={item}
-                Icon={() => <Icon name="kebab-horizontal" size={20} solid />}
-                sellerMode={true}
-                deleteProduct={onDeleteProduct}
-                onMarkAsSold={onMarkAsSold}
-              />
-            )}
+            renderItem={({item, index}) => {
+              return config.isGridView ? (
+                <GridCard
+                  onPress={() => navigation.navigate('ProductView', item)}
+                  car={item}
+                  Icon={() => <Icon name="kebab-horizontal" size={20} solid />}
+                  sellerMode={true}
+                  deleteProduct={onDeleteProduct}
+                  onMarkAsSold={onMarkAsSold}
+                />
+              ) : (
+                <ListCard
+                  onPress={() => navigation.navigate('ProductView', item)}
+                  car={item}
+                  Icon={() => <Icon name="kebab-horizontal" size={20} solid />}
+                  sellerMode={true}
+                  deleteProduct={onDeleteProduct}
+                  onMarkAsSold={onMarkAsSold}
+                />
+              );
+            }}
           />
         ) : null}
 
