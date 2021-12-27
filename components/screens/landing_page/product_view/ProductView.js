@@ -1,4 +1,4 @@
-import React , {useState , useEffect} from 'react';
+import React , {useState , useEffect , useContext} from 'react';
 import { View , Text , Image , Dimensions, ScrollView, TouchableOpacity} from 'react-native';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
 import MatComIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,6 +17,11 @@ import { addToSavedCars, isInFavorites, onCallUser, removeToSavedCars } from '..
 import { useIsFocused } from '@react-navigation/native';
 import { fetchSimilarCars, showProductPassIPAddress } from '../../../store/api_calls/cars_api';
 import Reviews from './Reviews';
+import LocalizedStrings from 'react-native-localization';
+import { UserConfigContext } from '../../../store/context_api/userContext';
+
+var localFile = require('../../../languages/productLocale.json')
+let localizedStrings = new LocalizedStrings(localFile)
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -26,6 +31,7 @@ const ProductView = (props) => {
     const {navigation , route} = props
     const item = route.params
     const isFocused = useIsFocused()
+    const [userConfig , setUserConfig] = useContext(UserConfigContext)
 
     const [config , setConfig] = useState({
         sortBy:'ascending',
@@ -34,6 +40,8 @@ const ProductView = (props) => {
         sellerDetails:{name:'Lorem Ipsum' , location:'Jurong , Singapore'},
         inFavorites:false
     })
+
+    localizedStrings.setLanguage(userConfig.language)
 
     useEffect(() => {
         if(isFocused){
@@ -119,11 +127,11 @@ const ProductView = (props) => {
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
                             <MatComIcon name="calendar" color={theme.black} size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>Manufactured : {item.product_edition}</Text>
+                            <Text style={productStyles.singleSecDetailsText}>{localizedStrings.SingleProductView.ManufactureDate} : {item.product_edition}</Text>
                         </View>
                         <View style={productStyles.singleSecDetailsCont}>
                             <MatComIcon name="speedometer" color={theme.black} size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>Mileage : {item.product_mileage} KM</Text>
+                            <Text style={productStyles.singleSecDetailsText}>{localizedStrings.SingleProductView.Mileage} : {item.product_mileage} KM</Text>
                         </View>
                     </View>
 
@@ -132,11 +140,11 @@ const ProductView = (props) => {
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
                             <FAIcon name="gear" color={theme.black} size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>Transmission : {item.product_transmission}</Text>
+                            <Text style={productStyles.singleSecDetailsText}>{localizedStrings.SingleProductView.Transmission} : {item.product_transmission}</Text>
                         </View>
                         <View style={productStyles.singleSecDetailsCont}>
                             <MatComIcon name="engine-outline" color={theme.black} size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>Engine Cap : {item.product_cc} cc</Text>
+                            <Text style={productStyles.singleSecDetailsText}>{localizedStrings.SingleProductView.Engine} : {item.product_cc} cc</Text>
                         </View>
                     </View>
 
@@ -145,11 +153,11 @@ const ProductView = (props) => {
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
                             <FAIcon name="circle" color={theme.black} size={20} color="gray"/>
-                            <Text style={productStyles.singleSecDetailsText}>Type : {item.vehicle_type}</Text>
+                            <Text style={productStyles.singleSecDetailsText}>{localizedStrings.SingleProductView.Type} : {item.vehicle_type}</Text>
                         </View>
                         <View style={productStyles.singleSecDetailsCont}>
                             <FA5Icon name="car" color={theme.black} size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>Condition : {item.product_condition}</Text>
+                            <Text style={productStyles.singleSecDetailsText}>{localizedStrings.SingleProductView.Condition} : {item.product_condition}</Text>
                         </View>
                     </View>
 
@@ -158,11 +166,11 @@ const ProductView = (props) => {
                     <View style={productStyles.rowSecDetailsCont}>
                         <View style={productStyles.singleSecDetailsCont}>
                             <EntIcon name="location" color={theme.black} size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>Location : Jurong</Text>
+                            <Text style={productStyles.singleSecDetailsText}>{localizedStrings.SingleProductView.Location} : Jurong</Text>
                         </View>
                         <View style={productStyles.singleSecDetailsCont}>
                             <FA5Icon name="users" color={theme.black} size={20}/>
-                            <Text style={productStyles.singleSecDetailsText}>No. of owners : {item.number_of_owners}</Text>
+                            <Text style={productStyles.singleSecDetailsText}>{localizedStrings.SingleProductView.NumberOfOwners} : {item.number_of_owners}</Text>
                         </View>
                     </View>
 
@@ -187,11 +195,11 @@ const ProductView = (props) => {
                 </View>
 
                 <View style={productStyles.specsContainer}>
-                    <SpecsView item={item}/>
+                    <SpecsView item={item} localizedStrings={localizedStrings} isFocused={isFocused}/>
                 </View>
                 
                 <View style={productStyles.sellerContainer}>
-                    <Reviews item={item}/>
+                    <Reviews item={item} localizedStrings={localizedStrings}/>
                 </View>
 
                 <View style={productStyles.adContainer}>
@@ -199,7 +207,7 @@ const ProductView = (props) => {
                 </View>
 
                 <View style={productStyles.similarCars}>
-                    <Text style={productStyles.similarCarsText}>Similar Cars</Text>
+                    <Text style={productStyles.similarCarsText}>{localizedStrings.SingleProductView.Similar}</Text>
                     <FlatList
                         horizontal={true}
                         data={config.similarCars}
@@ -222,7 +230,7 @@ const ProductView = (props) => {
             <View style={productStyles.contactButtonContainer}>
                 <PrimaryButton 
                     onPress={()=>onCallUser(item.advertisement_contact_details.user_contact_details.contact_numbers)} 
-                    title="CONTACT DEALER" 
+                    title={localizedStrings.SingleProductView.ContactDealer} 
                     color={theme.primaryBlue} 
                     Icon={()=><MatIcon name="call" size={20} color={theme.white}/>}
                 />
