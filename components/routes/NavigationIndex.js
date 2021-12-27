@@ -21,6 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LocalizedStrings from 'react-native-localization';
 import { getLanguage } from '../store/helpers/languageFunctions';
 import ForgotPassword from '../screens/forgot_password_page/forgotPassword';
+import TermsService from '../screens/profile_page/tos/TermsService';
 
 var localFile = require('../languages/navigationLocale.json');
 let localizedStrings = new LocalizedStrings(localFile);
@@ -99,6 +100,11 @@ const RootStack = () => {
       <Stack.Screen
         name="ForgotPassword"
         component={ForgotPassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="TOS"
+        component={TermsService}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

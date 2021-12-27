@@ -94,7 +94,7 @@ const Login = props => {
               placeholder={localizedStrings.Login.Password}
               isPassword
             />
-            <Spacer bottom={24} />
+            {/* <Spacer bottom={24} />
             <Text
               onPress={() => navigation.navigate('ForgotPassword')}
               style={{
@@ -103,7 +103,7 @@ const Login = props => {
                 fontWeight: 'bold',
               }}>
               {localizedStrings.Login.Forgot}
-            </Text>
+            </Text> */}
             <Spacer bottom={48} />
 
             <PrimaryButton
@@ -131,7 +131,9 @@ const Login = props => {
 
             <Text style={{textAlign: 'center', fontSize: 12}}>
               {localizedStrings.Login.TermsAndCondition1}
-              <Text style={{color: '#20A8F4'}}>
+              <Text
+                onPress={() => navigation.navigate('TOS')}
+                style={{color: '#20A8F4'}}>
                 {localizedStrings.Login.TermsAndCondition2}
               </Text>
             </Text>
