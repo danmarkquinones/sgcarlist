@@ -107,7 +107,7 @@ const BuyerLanding = (props) => {
             </View>
 
             <View>
-                <FavoritesLists refreshing={refreshing} handleSeeMore={handleSeeMore} {...props}/>
+                <FavoritesLists localizedStrings={localizedStrings} refreshing={refreshing} handleSeeMore={handleSeeMore} {...props}/>
             </View>
             
 
@@ -120,7 +120,7 @@ const BuyerLanding = (props) => {
             </View>
 
             <View>
-                <QualifiedLists refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/>
+                <QualifiedLists localizedStrings={localizedStrings} refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/>
             </View>
             
 
@@ -133,7 +133,7 @@ const BuyerLanding = (props) => {
             </View>
 
             <View>
-                <HotDealsLists refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/>
+                <HotDealsLists localizedStrings={localizedStrings} refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/>
             </View>
 
             <View style={landingStyles.listHeaderContainer}>
@@ -145,7 +145,7 @@ const BuyerLanding = (props) => {
             </View>
             
             <View>
-                <NewCarLists refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/> 
+                <NewCarLists localizedStrings={localizedStrings} refreshing={refreshing} {...props} handleSeeMore={handleSeeMore}/> 
             </View>
 
             <View style={landingStyles.adContainer}>

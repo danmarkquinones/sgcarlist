@@ -203,7 +203,7 @@ const PinnedFilters = ({config , setConfig , navigation , localizedStrings}) => 
                         }
                     />
                 :!isLoading&&pinnedFilters.length===0?
-                    <SimpleFallback message='No Pinned Filter'/>
+                    <SimpleFallback message={localizedStrings.Fallbacks.NoPinnedFilter}/>
                 :<FlatList
                         data={pinnedFilters}
                         keyExtractor={item=>item.id}

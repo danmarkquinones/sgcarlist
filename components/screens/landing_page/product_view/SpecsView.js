@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React , {useState , useEffect} from 'react'
 import { View , Text , Dimensions } from 'react-native'
 import { productStyles } from '../../../styles/productStyle'
 import { TabView, TabBar } from 'react-native-tab-view';
@@ -9,14 +9,10 @@ const initialLayout = { width: Dimensions.get('window').width };
 
 const SpecsView = (props) => {
 
-    const {item} = props 
+    const {item , localizedStrings , isFocused} = props 
     
     const [index, setIndex] = useState(0);
-    const [routes] = useState([
-        { key: 'first', title: 'Description' },
-        { key: 'second', title: 'Features' },
-        { key: 'third', title: 'Accessories' },
-    ]);
+    const [routes, setRoutes] = useState([]);
 
     const renderScene = ({ route }) => {
         switch (route.key) {
@@ -30,6 +26,16 @@ const SpecsView = (props) => {
                 return null;
         }
     };
+
+    useEffect(()=>{
+        if(isFocused){
+            setRoutes([
+                { key: 'first', title: localizedStrings.SingleProductView.Description },
+                { key: 'second', title: localizedStrings.SingleProductView.Features },
+                { key: 'third', title: localizedStrings.SingleProductView.Accessories },
+            ])
+        }
+    },[isFocused])
 
     return (
         <View style={{height:300 , backgroundColor:theme.black}}>

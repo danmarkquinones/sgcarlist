@@ -13,7 +13,7 @@ import Pagination from '../../../reusable_components/pagination'
 
 const Reviews = (props) => {
 
-    const {item} = props
+    const {item , localizedStrings} = props
     const [reviews , setReviews] = useState([])
     const [showForm , setShowForm] = useState(false)
     const isFocused = useIsFocused()
@@ -74,7 +74,7 @@ const Reviews = (props) => {
             <View style={productStyles.reviewBody}>
 
                 <View style={productStyles.ratingHeaderContainer}>
-                    <Text style={productStyles.reviewLabel}>Car Reviews</Text>
+                    <Text style={productStyles.reviewLabel}>{localizedStrings.SingleProductView.Reviews}</Text>
                     {reviews.length?
                         <View style={productStyles.aveScoreBody}>
                             <View style={productStyles.aveScoreContainer}>
@@ -103,11 +103,11 @@ const Reviews = (props) => {
                 
 
                 <TouchableOpacity onPress={()=>setShowForm(!showForm)}>
-                    <PrimaryInput placeholder="Add your review to this car." editable={false} borderColor={theme.gray}/>
+                    <PrimaryInput placeholder={localizedStrings.SingleProductView.AddYourReview} editable={false} borderColor={theme.gray}/>
                 </TouchableOpacity>
 
                 <View>
-                    <Text style={productStyles.reviewCommentLabel}>{pagination.total} Comment(s)</Text>
+                    <Text style={productStyles.reviewCommentLabel}>{pagination.total} {localizedStrings.SingleProductView.Comments}</Text>
 
                     {loading? <Text>Loading...</Text>
                     :<FlatList
