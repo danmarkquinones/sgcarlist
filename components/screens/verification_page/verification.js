@@ -56,7 +56,7 @@ const Verification = props => {
   const onVerifyOtp = async () => {
     const params = {
       username: route.params.params.user_email,
-      otp: otp,
+      otp: parseInt(otp),
     };
     let res = await api.POST(params, '/users/verify-otp');
     if (res?.data?.success) {
@@ -105,9 +105,11 @@ const Verification = props => {
           style={{padding: 24, zIndex: 2}}
         /> */}
 
-        <MobileVerification otp={otp} setOtp={setOtp} />
+        <View style={{flex: 1}}>
+          <MobileVerification otp={otp} setOtp={setOtp} />
+        </View>
 
-        <View style={{paddingHorizontal: 24, zIndex: 20, marginBottom: 150}}>
+        <View style={{flex: 1, paddingHorizontal: 24, zIndex: 20}}>
           <Spacer bottom={24} />
           <PrimaryButton
             onPress={onVerifyOtp}
@@ -120,8 +122,9 @@ const Verification = props => {
         <View style={{padding: 24, zIndex: 20}}>
           <Text style={{textAlign: 'center', color: theme.black, fontSize: 12}}>
             {localizedStrings.Login.TermsAndCondition1}
-            <Text style={{color: '#20A8F4'}}>
-              {' '}
+            <Text
+              onPress={() => navigation.navigate('TOS')}
+              style={{color: '#20A8F4'}}>
               {localizedStrings.Login.TermsAndCondition2}
             </Text>
           </Text>

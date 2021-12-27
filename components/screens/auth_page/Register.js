@@ -179,7 +179,9 @@ const Register = props => {
             <Spacer bottom={24} />
             <Text style={{textAlign: 'center', fontSize: 12}}>
               {localizedStrings.Login.TermsAndCondition1}
-              <Text style={{color: '#20A8F4'}}>
+              <Text
+                onPress={() => navigation.navigate('TOS')}
+                style={{color: '#20A8F4'}}>
                 {localizedStrings.Login.TermsAndCondition2}
               </Text>
             </Text>
