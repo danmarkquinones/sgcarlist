@@ -9,7 +9,7 @@ import { FetchFailed } from '../../../custom_components/customFallbacks';
 
 const QualifiedLists = (props) => {
 
-    const {navigation , handleSeeMore , refreshing} = props 
+    const {navigation , handleSeeMore , refreshing , localizedStrings} = props 
 
     const [data , setData] = useState([])
     const [isLoading , setIsLoading] = useState(false)
@@ -51,7 +51,7 @@ const QualifiedLists = (props) => {
                 }
             />
         :!isLoading&&data.length===0?
-            <FetchFailed message="There seems to be a problem getting your request, please try again later"/>
+            <FetchFailed message={localizedStrings.Fallbacks.NoData}/>
         :<FlatList
             horizontal
             data={data}

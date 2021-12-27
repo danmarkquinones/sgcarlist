@@ -15,7 +15,8 @@
             "ButtonText" : "Contact Dealer"
         },
         "Fallbacks":{
-            "NoSavedCars" : "No saved car."
+            "NoSavedCars" : "No saved car.",
+            "NoPinnedFilter" : "No pinned filter."
         }
     },
     "zh" : {
@@ -34,7 +35,8 @@
             "ButtonText" : "联系经销商"
         },
         "Fallbacks":{
-            "NoSavedCars" : "没有保存的汽车"
+            "NoSavedCars" : "没有保存的汽车.",
+            "NoPinnedFilter" : "无固定过滤器."
         }
     }
 }

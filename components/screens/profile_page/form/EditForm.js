@@ -8,6 +8,7 @@ import { updateProfile } from '../../../store/api_calls/user_api'
 import { UserConfigContext } from '../../../store/context_api/userContext'
 import { editFormStyles } from './editFormStyles';
 import LocalizedStrings from 'react-native-localization';
+import { useToast } from "react-native-toast-notifications";
 
 var localFile = require('../../../languages/profileLocale.json')
 let localizedStrings = new LocalizedStrings(localFile)
@@ -23,6 +24,7 @@ const EditForm = (props) => {
         contact:''
     })
     localizedStrings.setLanguage(userConfig.language)
+    const toast = useToast();
 
     useEffect(() => {
         setProfileForm({
@@ -64,9 +66,13 @@ const EditForm = (props) => {
                     }
                 })
                 console.log(res)
+                toast.show('Profile Updated!' , {type: "success"})
+                setTimeout(()=>navigation.goBack(),2000)
+                
             }
         }).catch((e)=>{
             console.log(e)
+            toast.show(e , {type: "error"})
         })
 
         

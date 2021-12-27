@@ -10,7 +10,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 const FavoritesLists = (props) => {
 
-    const {navigation , handleSeeMore , refreshing} = props 
+    const {navigation , handleSeeMore , refreshing , localizedStrings} = props 
 
     const [data , setData] = useState([])
     const [isLoading , setIsLoading] = useState(false)
@@ -38,11 +38,11 @@ const FavoritesLists = (props) => {
         }
     }, [isFocused])
 
-    useEffect(() => {
-        if(refreshing){
-            fetchData()
-        }
-    }, [refreshing])
+    // useEffect(() => {
+    //     if(refreshing){
+    //         fetchData()
+    //     }
+    // }, [refreshing])
 
     return (
         isLoading?
@@ -56,7 +56,7 @@ const FavoritesLists = (props) => {
                 }
             />
         :!isLoading&&data.length===0?
-            <FetchFailed message="You do not have saved cars in your list. You can add some by clicking the star in each car preview"/>
+            <FetchFailed message={localizedStrings.Fallbacks.NoFavorites}/>
         :<FlatList
             horizontal
             data={data}
