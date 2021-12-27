@@ -4,12 +4,7 @@ import ImageSlider from 'react-native-image-slider';
 
 const ImageSliderView = (props) => {
 
-    const images = [
-        'https://placeimg.com/640/640/nature',
-        'https://placeimg.com/640/640/people',
-        'https://placeimg.com/640/640/animals',
-        'https://placeimg.com/640/640/beer',
-    ]
+    const {images} = props
 
     const {windowWidth} = props 
 

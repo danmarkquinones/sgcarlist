@@ -11,17 +11,8 @@ const windowHeight = Dimensions.get('window').height;
 
 const ImageViewer = (props) => {
 
-    const {navigation} = props
-
-    const images = [
-        'https://placeimg.com/640/640/nature',
-        'https://placeimg.com/640/640/people',
-        'https://placeimg.com/640/640/animals',
-        'https://placeimg.com/640/640/beer',
-        'https://placeimg.com/640/640/any',
-        'https://placeimg.com/640/640/car',
-        'https://placeimg.com/640/640/insect',
-    ]
+    const {navigation,route} = props
+    const images = route.params
 
     return (
         <SafeAreaView style={{flex:1 , position:'relative'}}>
@@ -35,8 +26,23 @@ const ImageViewer = (props) => {
             <ImageSlider
                 images={images}
                 customSlide={({ index, item, style, width }) => (
-                    <View key={index} style={{display:'flex', flex:1}}>
-                        <Image source={{ uri: item }} style={{height:windowHeight , width:windowWidth}} />
+                    <View 
+                        key={index} 
+                        style={{
+                            display:'flex', 
+                            flex:1,
+                            alignItems:'center',
+                            justifyContent:'center'
+                        }}
+                    >
+                        <Image source={{ uri: item }} 
+                            resizeMode={'contain'}
+                            style={{
+                                width: windowWidth,
+                                height: undefined,
+                                aspectRatio: 1,
+                            }} 
+                        />
                     </View>
                 )}
             />
