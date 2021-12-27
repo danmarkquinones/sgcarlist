@@ -10,12 +10,15 @@ import {RNS3} from 'react-native-aws3';
 import {aws} from '../../store/helpers/keys';
 import {UserConfigContext} from '../../store/context_api/userContext';
 import LocalizedStrings from 'react-native-localization';
+import {useNavigation} from '@react-navigation/native';
 
 var localFile = require('../../languages/postAdLocale.json');
 let localizedStrings = new LocalizedStrings(localFile);
 
 const UploadEighthStep = () => {
   const [carDetails, setCarDetails] = useContext(CarConfigContext);
+
+  const navigation = useNavigation();
 
   const [userConfig, setUserConfig] = useContext(UserConfigContext);
   localizedStrings.setLanguage(userConfig.language);
@@ -25,9 +28,7 @@ const UploadEighthStep = () => {
   const onSubmit = async () => {
     setCarDetails({...carDetails, isLoading: true});
     let product_image_id = await uploadImages();
-    setTimeout(() => {
-      postProduct(product_image_id);
-    }, 3000);
+    postProduct(product_image_id);
   };
 
   const postProduct = async product_image_id => {
@@ -69,10 +70,10 @@ const UploadEighthStep = () => {
     };
 
     let res = await api.POST(payload, '/products');
-    console.log(res);
+
     setCarDetails({...carDetails, isLoading: false});
-    if (res.success) {
-      navigation.navigate('LandingStacks');
+    if (res.data.success) {
+      navigation.pop();
     } else {
       alert('Something went wrong!');
     }

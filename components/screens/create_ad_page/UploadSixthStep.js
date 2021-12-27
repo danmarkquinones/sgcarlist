@@ -37,9 +37,15 @@ const UploadSixthStep = ({onScreenChange}) => {
   localizedStrings.setLanguage(userConfig.language);
 
   const onSetCarDetails = newImages => {
+    let imgs = [...carDetails.images, ...newImages];
+
+    if (imgs.length > 9) {
+      imgs = imgs.slice(0, 9);
+    }
+
     setCarDetails({
       ...carDetails,
-      images: [...carDetails.images, ...newImages],
+      images: imgs,
     });
   };
 
@@ -49,7 +55,8 @@ const UploadSixthStep = ({onScreenChange}) => {
   };
 
   const openGallery = async () => {
-    const result = await launchImageLibrary({selectionLimit: 2});
+    const result = await launchImageLibrary({selectionLimit: 4});
+
     onSetCarDetails(result.assets);
   };
 

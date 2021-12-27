@@ -15,10 +15,8 @@ let axiosConfig = {
 const POST = async (params, route) => {
   const token = Kjur.encode(params);
 
-  console.log(token);
-
   const bearerToken = await AsyncStorage.getItem('bearerToken');
-
+  axiosConfig.headers['Content-Type'] = 'application/json;charset=UTF-8';
   axiosConfig.headers['Authorization'] = `Bearer ${bearerToken}`;
 
   return axios
